@@ -1,3 +1,6 @@
+<?php
+    use shumenxc as xc;
+?>
 <!doctype html>
 <html lang="en">
 <head>

@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class DB {
     // initial connection
     public static $dbName = 'shumenxc_meteo';
