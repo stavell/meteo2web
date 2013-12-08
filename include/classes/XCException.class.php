@@ -10,4 +10,15 @@ namespace shumenxc;
 
 class XCException extends \Exception {
 
+
+    public function __construct($message = "", $code = "") {
+
+        \DB::insert('logs',array(array(
+            'message' => $message,
+            'exception' => var_export(debug_backtrace(),1)
+        )));
+
+        parent::__construct($this->message,$this->code);
+    }
+
 } 
