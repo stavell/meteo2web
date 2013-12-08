@@ -30,6 +30,14 @@
             files: [],
             readyFiles:[],
             cache:{},
+            setFiles: function(files) {
+                ImgLoader.init();
+                ImgLoader.files = files;
+            },
+            init: function(){
+                ImgLoader.readyFiles = [];
+                ImgLoader.cache = {};
+            },
             startLoading: function() {
                 for(var idx in ImgLoader.files) {
                     var file = ImgLoader.files[idx];
@@ -56,6 +64,10 @@
 
         var updateBackground = function() {
             var img = ImgLoader.files.pop();
+            if(!img) {
+                fetchFiles();
+                return;
+            }
             $('html').css({backgroundImage:'url("'+img.url+'")'});
             var time = new Date(img.timestamp*1000);
             $('.progressInfo').text(time.toTimeString());
@@ -67,11 +79,14 @@
             updateBackground();
         };
 
-        $.get('api.php', {method: 'getPhotosForInterval',params:['<?=strtotime("-5 hour");?>',null,0]}).done(function(response){
-            ImgLoader.files = response;
-            ImgLoader.startLoading();
-        });
+        var fetchFiles = function(){
+            $.get('api.php', {method: 'getPhotosForInterval',params:['<?=strtotime("-3 hour");?>',null,0]}).done(function(response){
+                ImgLoader.setFiles(response);
+                ImgLoader.startLoading();
+            });
+        };
 
+        fetchFiles();
     });
 
     </script>
