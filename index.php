@@ -67,16 +67,10 @@
             updateBackground();
         };
 
-
         $.get('api.php', {method: 'getPhotosForInterval',params:['<?=strtotime("-5 hour");?>',null,0]}).done(function(response){
             ImgLoader.files = response;
             ImgLoader.startLoading();
         });
-
-
-
-
-
 
     });
 
