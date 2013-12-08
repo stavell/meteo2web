@@ -15,7 +15,11 @@ class XCException extends \Exception {
 
         \DB::insert('logs',array(array(
             'message' => $message,
-            'exception' => var_export(debug_backtrace(),1)
+            'exception' => var_export(array(
+                'request' => $_REQUEST,
+                '_server' => $_SERVER,
+                'trace' => debug_backtrace()
+            ),1)
         )));
 
         parent::__construct($this->message,$this->code);
