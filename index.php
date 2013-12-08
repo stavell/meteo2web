@@ -1,76 +1,95 @@
 <?php
+    require_once('config.php');
     use shumenxc as xc;
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
 
-
-<style>
-html {
-background-color: #2d2d2d;            
-background-repeat: no-repeat;
-            background-size: cover;
-            background-clip: border-box;
-        }
-</style>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-3807106-7', 'stavl.com');
-  ga('send', 'pageview');
-
-</script>
-
-<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-
-<script type="text/javascript">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 
 
-$(document).ready(function() {
+    <style>
+    html {
+    background-color: #2d2d2d;
+    background-repeat: no-repeat;
+                background-size: cover;
+                background-clip: border-box;
+            }
+    </style>
 
-function preload(arrayOfImages) {
-    $(arrayOfImages).each(function(){
-        $('<img/>')[0].src = this;
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-3807106-7', 'stavl.com');ga('send', 'pageview');</script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var ImgLoader = {
+            files: [],
+            readyFiles:[],
+            cache:{},
+            startLoading: function() {
+                for(var idx in ImgLoader.files) {
+                    var file = ImgLoader.files[idx];
+                    var src = file.url;
+                    ImgLoader.cache[src] = new Image();
+                    ImgLoader.cache[src].onload = ImgLoader.onImageLoaded;
+                    ImgLoader.cache[src].src = src;
+                }
+            },
+            onImageLoaded: function() {
+                ImgLoader.readyFiles.push(this.src);
+                if(ImgLoader.onProgressUpdate) ImgLoader.onProgressUpdate(ImgLoader.readyFiles.length);
+                if(ImgLoader.onFinish && ImgLoader.readyFiles.length == ImgLoader.files.length) ImgLoader.onFinish();
+            },
+            onFinish: null,
+            onProgressUpdate: null
+        };
+
+
+        ImgLoader.onProgressUpdate = function(done) {
+            $('.progressInfo').text(done+'/'+ImgLoader.files.length);
+        };
+
+
+        var updateBackground = function() {
+            var img = ImgLoader.files.pop();
+            $('html').css({backgroundImage:'url("'+img.url+'")'});
+            var time = new Date(img.timestamp*1000);
+            $('.progressInfo').text(time.toTimeString());
+            setTimeout(updateBackground,400);
+        };
+
+
+        ImgLoader.onFinish = function() {
+            updateBackground();
+        };
+
+
+        $.get('api.php', {method: 'getPhotosForInterval',params:['<?=strtotime("-20 hour");?>','<?=strtotime("-5 hour");?>',0]}).done(function(response){
+            ImgLoader.files = response;
+            ImgLoader.startLoading();
+        });
+
+
+
+
+
+
     });
-}
 
-<?php
-$aFiles = scandir('upload/',true);
-$sFiles = '"upload/'.implode('","upload/',array_slice($aFiles,0,10)).'"';
+    </script>
 
-?>
-
-
- images = [<?php echo $sFiles;?>];
- 
-preload(images);
-
-i=10;
-
-t = setInterval(function(){
-if(i==-1) i=10;
-//$('#time').text(i+' minutes ago');
-//$('#image').attr({'src':images[i]});
-$('html').css({'background-image':'url("'+images[i]+'")'});
-
-i--;
-},600);
-
-
-});
-
-</script>
-
+</head>
 
 <body>
-<span id="time"></span>
-<br/>
-<img id="image" />
+
+<span class="progressInfo" style="background-color:rgba(0,0,0,0.3); padding:5px; color:#ccc; border-radius: 5px;"></span>
+
+
+
 </body>
+
 </html>

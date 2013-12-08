@@ -36,11 +36,15 @@ class FileUpload {
 
         fclose($handle);
 
-        \DB::insert('files', array(array(
+        $aFile = array(
             'filename' => $sFileName,
             'id_device' => $this->aDevice['id']
-        )));
-    }
+        );
 
+        \DB::insert('files', array($aFile));
+        $aFile['id'] = \DB::insertId();
+
+        return $aFile;
+    }
 
 } 

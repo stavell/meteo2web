@@ -30,10 +30,10 @@ class DB {
     public static $param_char = '%';
     public static $named_param_seperator = '_';
     public static $success_handler = false;
-    public static $error_handler = true;
-    public static $throw_exception_on_error = false;
+    public static $error_handler = false;
+    public static $throw_exception_on_error = true;
     public static $nonsql_error_handler = null;
-    public static $throw_exception_on_nonsql_error = false;
+    public static $throw_exception_on_nonsql_error = true;
     public static $nested_transactions = false;
 
     // internal
@@ -862,11 +862,12 @@ class DBTransaction {
 
 }
 
-class MeekroDBException extends Exception {
+class MeekroDBException extends \shumenxc\XCException {
     protected $query = '';
 
     function __construct($message='', $query='') {
-        parent::__construct($message);
+        parent::setAdditionalInfo($query);
+        parent::__construct($message,$query);
         $this->query = $query;
     }
 
