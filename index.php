@@ -68,7 +68,7 @@
         };
 
 
-        $.get('api.php', {method: 'getPhotosForInterval',params:['<?=strtotime("-20 hour");?>','<?=strtotime("-5 hour");?>',0]}).done(function(response){
+        $.get('api.php', {method: 'getPhotosForInterval',params:['<?=strtotime("-5 hour");?>',null,0]}).done(function(response){
             ImgLoader.files = response;
             ImgLoader.startLoading();
         });
