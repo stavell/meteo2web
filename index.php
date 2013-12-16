@@ -13,11 +13,15 @@
 
     <style>
     html {
-    background-color: #2d2d2d;
-    background-repeat: no-repeat;
-                background-size: cover;
-                background-clip: border-box;
-            }
+        background-color: #2d2d2d;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-clip: border-box;
+        -webkit-transition: opacity 0.25s ease-in-out;
+        -moz-transition: opacity 0.25s ease-in-out;
+        -o-transition: opacity 0.25s ease-in-out;
+        transition: background-image 0.25s ease-in-out;
+    }
     </style>
 
     <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-3807106-7', 'stavl.com');ga('send', 'pageview');</script>
@@ -71,7 +75,7 @@
             $('html').css({backgroundImage:'url("'+img.url+'")'});
             var time = new Date(img.timestamp*1000);
             $('.progressInfo').text(time.toTimeString());
-            setTimeout(updateBackground,400);
+            setTimeout(updateBackground,500);
         };
 
 
