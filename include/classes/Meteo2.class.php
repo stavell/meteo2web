@@ -8,31 +8,30 @@
 
 namespace shumenxc;
 
-
 class Meteo2 {
 
-
-    public static function getPhotosForInterval($nFrom, $nTo = 0,$bAsc = true) {
-        if(empty($nFrom)) throw new XCInvalidParam;
-
-        $nTo = !empty($nTo) ? $nTo : time();
+    public static function getPhotosForPeriod($from, $nPeriod = 60, $bAsc = true) {
+        $from = $from == date("Y-m-d H:i:s",strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
 
         return \DB::query(sprintf("
             SELECT
               UNIX_TIMESTAMP(f.created_time) as timestamp,
               file2url(f.id) AS url
             FROM files f
+            JOIN (
+              SELECT
+                @timeFrom:='%s',
+                @period:=%s
+            ) t
             WHERE 1
-            AND f.created_time BETWEEN '%s' AND '%s'
+            AND f.created_time BETWEEN BINARY @timeFrom AND BINARY DATE_ADD(@timeFrom,INTERVAL @period MINUTE)
             ORDER BY f.created_time %s
-        ",date("Y-m-d H:i:s",$nFrom),date("Y-m-d H:i:s",$nTo), $bAsc?'ASC':'DESC'));
-
+        ",$from,$nPeriod, $bAsc?'ASC':'DESC'));
     }
 
 
-
     //from mysql date or php strtotime argument
-    public static function getWeatherDataForInterval($from,$nPeriod = 60,$nSegments = 10) {
+    public static function getWeatherDataForPeriod($from,$nPeriod = 60,$nSegments = 10) {
         $from = $from == date("Y-m-d H:i:s",strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
 
         $sQuery = "
