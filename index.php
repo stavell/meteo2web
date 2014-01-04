@@ -87,7 +87,7 @@ use shumenxc as xc;
                     $('#dataBlocksContainer').html(null);
 
                     $.each(response,function(idx,data){
-                        $('#dataBlocksContainer').append(createDataBlock(data));
+                        $('#dataBlocksContainer').prependChild(createDataBlock(data));
                     });
 
                 });
