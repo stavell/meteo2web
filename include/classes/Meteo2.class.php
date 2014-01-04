@@ -30,4 +30,44 @@ class Meteo2 {
     }
 
 
+
+    //from mysql date or php strtotime argument
+    public static function getWeatherDataForInterval($from,$nPeriod = 60,$nSegments = 10) {
+        $from = $from == date("Y-m-d H:i:s",strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
+
+        $sQuery = "
+           SELECT
+               ROUND(AVG(d.temperature),1)		AS temperature,
+               CEIL(AVG(d.humidity))		 	AS humidity,
+               ROUND(AVG(d.pressure),1) 		AS pressure,
+               CEIL(ABS(
+                       DEGREES(
+                           ATAN2(
+                               AVG(SIN(RADIANS(d.wind_dir))),
+                               AVG(COS(RADIANS(d.wind_dir)))
+                           )
+                       )
+                   )
+               )			 					AS wind_dir,
+               SUM(d.wind_count)				AS wind_count,
+               SUM(d.samples)					AS samples,
+               UNIX_TIMESTAMP(d.created_time)	AS timestamp
+           FROM data_avg d
+           JOIN (
+               SELECT
+                   @period:=%d,
+                   @segments:=%d,
+                   @timeFrom:='%s'
+           ) t
+           WHERE 1
+               AND d.created_time BETWEEN BINARY @timeFrom AND BINARY DATE_ADD(@timeFrom,INTERVAL @period MINUTE)
+           GROUP BY UNIX_TIMESTAMP(d.created_time) DIV ((@period DIV @segments)*60)
+           ORDER BY d.created_time DESC
+           LIMIT ".(int)$nSegments;
+
+        return \DB::query(sprintf($sQuery,(int)$nPeriod,(int)$nSegments,$from));
+    }
+
+
+
 } 
