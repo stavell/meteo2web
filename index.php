@@ -97,7 +97,7 @@ use shumenxc as xc;
                 var $block = $('#dataBlockPrototype').clone().removeAttr('id');
 
                 $block.find('.temperature').text(data.temperature+' ℃');
-                $block.find('.humidity').text(data.humidity+'%');
+                $block.find('.humidity').text('💧 '+data.humidity+'%');
                 $block.find('.pressure').text(data.pressure+' mb');
                 $block.find('.windDir').text(data.wind_dir+'°');
                 $block.find('.windSpeed').text(data.wind_count+' m/s');
