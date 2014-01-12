@@ -1,5 +1,5 @@
 <?php
-require_once('config.php');
+require_once('config.inc.php');
 use shumenxc as xc;
 ?>
 <!DOCTYPE html>
@@ -159,18 +159,6 @@ use shumenxc as xc;
             background-color:rgba(255,255,255,0.3);
             border-top-right-radius: 10px;
             border-top-left-radius: 10px;
-        }
-
-        #blurMask {
-            background: rgba(255,255,255,0.5);
-            position: absolute;
-            top:-20px;
-            bottom: -20px;
-            left: -20px;
-            right: -20px;
-            -webkit-filter: blur(10px);
-            filter: blur(10px);
-
         }
 
         .dataBlock {

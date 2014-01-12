@@ -18,10 +18,10 @@
 
 class DB {
     // initial connection
-    public static $dbName = 'shumenxc_meteo';
-    public static $user = 'thermo';
-    public static $password = 'thermopass';
-    public static $host = 'stavl.com';
+    public static $dbName = MYSQL_DB;
+    public static $user = MYSQL_USER;
+    public static $password = MYSQL_PASS;
+    public static $host = MYSQL_HOST;
     public static $port = null;
     public static $encoding = 'utf-8';
 

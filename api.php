@@ -1,6 +1,6 @@
 <?php
     use shumenxc as xc;
-    require_once('config.php');
+    require_once('config.inc.php');
 
     header("Content-type: text/json; charset=UTF-8");
 
