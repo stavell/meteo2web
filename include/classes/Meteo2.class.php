@@ -69,4 +69,29 @@ class Meteo2 {
 
 
 
+    public function weatherPhoto() {
+        if(!empty($_FILES) && !$_FILES['file']['error'] ) {
+
+            $oFileUpload = new FileUpload();
+            $oFileUpload->uploadFile(
+                MD5(file_get_contents($_FILES["file"]["tmp_name"])).'.'.pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION),
+                $_FILES["file"]["tmp_name"]
+            );
+
+            unlink($_FILES["file"]["tmp_name"]);
+
+        } else throw new XCException("Bad photo");
+
+        return $this->getStationSettings();
+    }
+
+
+
+
+
+    public function getStationSettings() {
+        return \DB::query('SELECT s.key, s.value as value FROM settings s where disabled != 1');
+    }
+
+
 } 
