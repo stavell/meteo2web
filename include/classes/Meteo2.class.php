@@ -86,7 +86,24 @@ class Meteo2 {
     }
 
 
+    public function weatherData($aParams) {
+        $aMap = array('p'=>'pressure','h'=>'humidity','t'=>'temperature','w'=>'wind_dir','s'=>'wind_count');
+        $aPieces = explode(',',$aParams['data']);
+        if(count($aPieces) < count($aMap)) throw new XCException("Invalid Number of dataparams");
 
+        $aData = array('id'=>0);
+        foreach($aPieces as $piece) {
+            $aPiece = explode(':',$piece);
+            if(count($aPiece) != 2) throw new XCException("Broken data");
+            $aData[$aMap[$aPiece[0]]] = $aPiece[1];
+        }
+
+        $aData['created_time'] = date("Y-m-d H:i:s");
+
+        \DB::insert('data',array($aData));
+
+        return array();
+    }
 
 
     public function getStationSettings() {
