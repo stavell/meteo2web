@@ -14,7 +14,7 @@ try {
     echo json_encode(call_user_func_array(array($oMeteo2,$sMethod),$aParams),JSON_NUMERIC_CHECK);
 
 } catch (Exception $e) {
-    http_response_code(400);
+//    http_response_code(400);
     echo json_encode($e->getMessage());
 }
 
