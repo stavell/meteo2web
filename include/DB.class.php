@@ -15,13 +15,12 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 class DB {
     // initial connection
-    public static $dbName = MYSQL_DB;
-    public static $user = MYSQL_USER;
-    public static $password = MYSQL_PASS;
-    public static $host = MYSQL_HOST;
+    public static $dbName = METEO2_DB_DB;
+    public static $user = METEO2_DB_USER;
+    public static $password = METEO2_DB_PASS;
+    public static $host = METEO2_DB_HOST;
     public static $port = null;
     public static $encoding = 'utf-8';
 
