@@ -2,7 +2,7 @@
     use shumenxc as xc;
     require_once('config.inc.php');
 
-    header("Content-type: text/json; charset=UTF-8");
+    header("Content-type: application/json; charset=UTF-8");
 
 try {
     $oMeteo2 = new xc\Meteo2();

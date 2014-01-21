@@ -1,6 +1,6 @@
 <?php
 
-define('MYSQL_HOST', 'stavl.com');
-define('MYSQL_USER', 'meteo2');
-define('MYSQL_PASS', 'meteo2@pass');
-define('MYSQL_DB', 'shumenxc_meteo');
+define('METEO2_DB_HOST', 'stavl.com');
+define('METEO2_DB_USER', 'meteo2');
+define('METEO2_DB_PASS', 'meteo2@pass');
+define('METEO2_DB_DB', 'shumenxc_meteo');
