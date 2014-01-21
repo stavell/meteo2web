@@ -29,9 +29,6 @@ class FileUpload {
             urlencode($sFileName)
         );
 
-
-        \DB::startTransaction();
-
         $handle = fopen($sUrl, "w");
         if(!$handle) throw new XCException('Can not open file device');
 
@@ -47,7 +44,6 @@ class FileUpload {
         \DB::insert('files', array($aFile));
         $aFile['id'] = \DB::insertId();
 
-        \DB::commit();
 
         return $aFile;
     }
