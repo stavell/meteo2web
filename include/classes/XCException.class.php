@@ -14,15 +14,22 @@ class XCException extends \Exception {
 
     public function __construct($message = "", $query = "") {
 
-        \DB::insert('logs',array(array(
-            'message' => $message,
-            'exception' => var_export(array(
-                'request' => $_REQUEST,
-                '_server' => $_SERVER,
+//        \DB::insert('logs',array(array(
+//            'message' => $message,
+//            'exception' => var_export(array(
+//                'request' => $_REQUEST,
+//                '_server' => $_SERVER,
 //                'trace' => debug_backtrace(),
-                'additionalInfo' => $this->additionalInfo
-            ),1)
-        )));
+//                'additionalInfo' => $this->additionalInfo
+//            ),1)
+//        )));
+
+        error_log(var_export(array(
+            'request' => $_REQUEST,
+            '_server' => $_SERVER,
+            'trace' => debug_backtrace(),
+            'additionalInfo' => $this->additionalInfo
+        ),1));
 
         parent::__construct($this->message,$this->code);
     }
