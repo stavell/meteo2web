@@ -19,7 +19,7 @@ class XCException extends \Exception {
             'exception' => var_export(array(
                 'request' => $_REQUEST,
                 '_server' => $_SERVER,
-                'trace' => debug_backtrace(),
+//                'trace' => debug_backtrace(),
                 'additionalInfo' => $this->additionalInfo
             ),1)
         )));
