@@ -16,7 +16,7 @@ use shumenxc as xc;
         $(document).ready(function() {
 
             var timeParams = {
-                timeFrom: '-5 hour',
+                timeFrom: '-1 hour',
                 period:60
             };
 

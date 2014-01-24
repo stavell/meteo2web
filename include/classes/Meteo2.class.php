@@ -102,7 +102,7 @@ class Meteo2 {
 
         \DB::insert('data',array($aData));
 
-        return array();
+        return array($aData);
     }
 
 
