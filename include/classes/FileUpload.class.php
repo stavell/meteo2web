@@ -30,9 +30,9 @@ class FileUpload {
         );
 
         $handle = fopen($sUrl, "w");
-        if(!$handle) throw new XCException('Can not open file device');
+        if(!$handle) throw new XCException('Can not open file device or file exists');
 
-        fputs($handle,file_get_contents($sFilePath));
+        fputs($handle, file_get_contents($sFilePath));
 
         fclose($handle);
 

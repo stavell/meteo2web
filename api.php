@@ -2,6 +2,9 @@
     use shumenxc as xc;
     require_once('config.inc.php');
 
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
     header("Content-type: application/json; charset=UTF-8");
 
 try {
