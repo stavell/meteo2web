@@ -164,11 +164,10 @@
     <div id="dataBlockPrototype" class="dataBlock">
         <div class="windSpeed"></div>
         <div class="windDir"></div>
-        <div class="humidity"></div>
         <div class="pressure"></div>
+        <div class="humidity"></div>
         <div class="temperature"></div>
         <div class="time"></div>
-        <div class="end"></div>
     </div>
 </div>
 

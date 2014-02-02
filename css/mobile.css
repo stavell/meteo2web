@@ -1,45 +1,57 @@
 .dataBlock {
-    padding: 3px;
-    border: 1px solid rgba(0,0,0,0.2);
+    padding: 0.3em;
+    border: 0.01em solid rgba(0,0,0,0.2);
     font-weight: bold;
     color: #2d2d2d;
     font-family: sans-serif;
-    margin: 5px;
-    border-radius: 5px;
-    font-size: 18pt;
-    line-height: 1.5em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    font-size: 1.8em;
 }
+
+.dataBlock:nth-child(odd)> div:last-child {
+    background: #2d2d2d;
+    color: rgba(255,255,255,0.95);
+}
+
+.dataBlock:nth-child(even)> div:last-child {
+    background: rgba(0,0,0,0.5);
+    color: rgba(255,255,255,0.95);
+}
+
 
 .dataBlock > div {
     display: inline-block;
-    background: #ccc;
-    margin:3px 3px 3px 3px;
-    padding: 5px;
-    border-radius: 5px;
+    background: rgba(0,0,0,0.1);
+    margin:0.3em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    text-align: right;
 }
 
 .dataBlock > .windSpeed {
-
+    width: 4.5em;
 }
 .dataBlock > .windDir {
-
+    width: 2em;
 }
 .dataBlock > .humidity {
-
+    width: 4em;
 }
 .dataBlock > .pressure {
-
+    width: 4.1em;
 }
 .dataBlock > .temperature {
-
+    width: 3.5em;
 }
 .dataBlock > .time {
     float: left;
+    width: 3em;
+    text-align: center;
 }
 .dataBlock > .end {
     clear: both;
     float: none;
     display: none;
 }
-
 
