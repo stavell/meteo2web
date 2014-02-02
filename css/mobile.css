@@ -1,0 +1,45 @@
+.dataBlock {
+    padding: 3px;
+    border: 1px solid rgba(0,0,0,0.2);
+    font-weight: bold;
+    color: #2d2d2d;
+    font-family: sans-serif;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 18pt;
+    line-height: 1.5em;
+}
+
+.dataBlock > div {
+    display: inline-block;
+    background: #ccc;
+    margin:3px 3px 3px 3px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.dataBlock > .windSpeed {
+
+}
+.dataBlock > .windDir {
+
+}
+.dataBlock > .humidity {
+
+}
+.dataBlock > .pressure {
+
+}
+.dataBlock > .temperature {
+
+}
+.dataBlock > .time {
+    float: left;
+}
+.dataBlock > .end {
+    clear: both;
+    float: none;
+    display: none;
+}
+
+
