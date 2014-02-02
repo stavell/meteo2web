@@ -26,13 +26,13 @@ class Meteo2 {
             WHERE 1
             AND f.created_time BETWEEN BINARY @timeFrom AND BINARY DATE_ADD(@timeFrom,INTERVAL @period MINUTE)
             ORDER BY f.created_time %s
-        ",$from,$nPeriod, $bAsc?'ASC':'DESC'));
+        ", $from, $nPeriod, $bAsc ? 'ASC' : 'DESC'));
     }
 
 
     //from mysql date or php strtotime argument
-    public static function getWeatherDataForPeriod($from,$nPeriod = 60,$nSegments = 10) {
-        $from = $from == date("Y-m-d H:i:s",strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
+    public static function getWeatherDataForPeriod($from, $nPeriod = 60,$nSegments = 10, $bAsc = false) {
+        $from = $from == date("Y-m-d H:i:s", strtotime($from)) ? $from : date("Y-m-d H:i:s", strtotime($from, time()));
 
         $sQuery = "
            SELECT
@@ -62,10 +62,10 @@ class Meteo2 {
            WHERE 1
                AND d.created_time BETWEEN BINARY @timeFrom AND BINARY DATE_ADD(@timeFrom,INTERVAL @period MINUTE)
            GROUP BY UNIX_TIMESTAMP(d.created_time) DIV ((@period DIV @segments)*60)
-           ORDER BY d.created_time DESC
+           ORDER BY d.created_time %s
            LIMIT ".(int)$nSegments;
 
-        return \DB::query(sprintf($sQuery,(int)$nPeriod,(int)$nSegments,$from));
+        return \DB::query(sprintf($sQuery, (int)$nPeriod, (int)$nSegments, $from, $bAsc ? 'ASC' : 'DESC'));
     }
 
 

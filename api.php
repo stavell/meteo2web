@@ -10,7 +10,7 @@
 try {
     $oMeteo2 = new xc\Meteo2();
     $sMethod = !empty($_REQUEST['method']) ? $_REQUEST['method'] : false;
-    $aParams = !empty($_REQUEST['params']) ? $_REQUEST['params'] : array($_REQUEST);
+    $aParams = !empty($_REQUEST['params']) ? json_decode($_REQUEST['params'],1) : array($_REQUEST);
 
     if(!$sMethod || !method_exists($oMeteo2,$sMethod)) throw new xc\XCException('Invalid Method');
 

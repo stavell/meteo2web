@@ -13,7 +13,8 @@
 
                 var timeParams = {
                     timeFrom: '-1 hour',
-                    period:60
+                    period:60,
+                    asc: false
                 };
 
                 var ImgLoader = {
@@ -66,7 +67,7 @@
 
                 var loadPhotos = function(timeParams){
                     if(!timeParams) return;
-                    $.get('api.php', {method: 'getPhotosForPeriod',params:[timeParams.timeFrom,timeParams.period,0]}).done(function(response){
+                    $.get('api.php', {method: 'getPhotosForPeriod',params:JSON.stringify([timeParams.timeFrom, timeParams.period, false])}).done(function(response){
                         ImgLoader.setFiles(response);
                         ImgLoader.onFinish = function() {
                             updateBackground();
@@ -76,12 +77,12 @@
                 };
 
                 var loadData = function(timeParams){
-                    $.get('api.php',{method:'getWeatherDataForPeriod', params:[timeParams.timeFrom,timeParams.period,12]}).done(function(response){
+                    $.get('api.php',{method:'getWeatherDataForPeriod', params:JSON.stringify([timeParams.timeFrom, timeParams.period, 12, timeParams.asc])}).done(function(response){
 
                         $('#dataBlocksContainer').html(null);
 
                         $.each(response,function(idx,data){
-                            $('#dataBlocksContainer').prepend(createDataBlock(data));
+                            $('#dataBlocksContainer').append(createDataBlock(data));
                         });
 
                     });
@@ -115,8 +116,10 @@
 
 
                 if(isMobileURL()) {
+                    timeParams.asc = false;
                     updateData()
                 } else {
+                    timeParams.asc = true;
                     loadPhotos(timeParams);
                     updateData();
                 }
@@ -128,11 +131,6 @@
                 return location.hash.toLowerCase() == '#m' ? true : false;
             }
 
-
-            var onHashChange = function(){
-                loadCSS(onCSSLoad);
-            }
-
             var loadCSS = function(cb) {
                 $.get('css/' + (isMobileURL() ? 'mobile.css' : 'default.css' )).complete(function(r){
                     $('#pageStyle').text(r.responseText);
@@ -140,6 +138,9 @@
                 });
             }
 
+            var onHashChange = function(){
+                loadCSS(onCSSLoad);
+            }
 
             $(window).bind('hashchange', onHashChange);
             $(window).trigger('hashchange');
