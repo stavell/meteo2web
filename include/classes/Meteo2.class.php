@@ -29,7 +29,7 @@ class Meteo2 {
         ", $from, $nPeriod, $bAsc ? 'ASC' : 'DESC'));
     }
 
-
+    //6.5 oborota na propelera za sek = 1 m/s
     //from mysql date or php strtotime argument
     public static function getWeatherDataForPeriod($from, $nPeriod = 60,$nSegments = 10, $bAsc = false) {
         $from = $from == date("Y-m-d H:i:s", strtotime($from)) ? $from : date("Y-m-d H:i:s", strtotime($from, time()));
@@ -49,7 +49,7 @@ class Meteo2 {
                        )
                    )
                )			 					AS wind_dir,
-               SUM(d.wind_count)				AS wind_count,
+               SUM(d.wind_count) / 390  		AS wind_count,
                SUM(d.samples)					AS samples,
                UNIX_TIMESTAMP(d.created_time)	AS timestamp
            FROM data_avg d
