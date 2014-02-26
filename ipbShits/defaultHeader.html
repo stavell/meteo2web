@@ -1,0 +1,130 @@
+<script type="text/javascript">
+
+    var timeParams = {};
+    var loadData = function(timeParams){};
+    var createDataBlock = function(data){};
+    var updateData = function(){};
+
+
+    jQuery(document).ready(function() {
+        timeParams = {
+            timeFrom: '-3 hour',
+            period:180,
+            asc: false
+        };
+
+        loadData = function(timeParams){
+            jQuery.get('http://stavl.com/meteo2/api.php',{method:'getWeatherDataForPeriod', params:JSON.stringify([timeParams.timeFrom, timeParams.period, 12, timeParams.asc])}).done(function(response){
+                jQuery('#dataBlocksContainer').html(null);
+
+                jQuery.each(response,function(idx,data){
+                    jQuery('#dataBlocksContainer').append(createDataBlock(data));
+                });
+
+            });
+        };
+
+        createDataBlock = function(data) {
+            var jBlock = jQuery('#dataBlockPrototype').clone().removeAttr('id');
+
+            jBlock.find('.temperature').text(data.temperature+' ℃');
+            jBlock.find('.humidity').text(data.humidity+'% rH');
+            jBlock.find('.pressure').text(data.pressure+' mb');
+            jBlock.find('.windDir').text(data.wind_dir+'°');
+            jBlock.find('.windSpeed').text(data.wind_count+' m/s');
+
+            var date = new Date(data.end_timestamp*1000);
+            jBlock.find('.time').text(getFormatedTime(date));
+
+            return jBlock;
+        };
+
+
+        var getFormatedTime = function(date) {
+            return (date.getHours() < 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes();
+        };
+
+
+        updateDataTimeout = null;
+        updateData = function() {
+            if(updateDataTimeout) clearTimeout(updateDataTimeout);
+            loadData(timeParams);
+            updateDataTimeout = setTimeout(updateData,60*1000)
+        };
+
+        timeParams.asc = true;
+
+        jQuery('a[minutes]').click(function(event){
+            jQuery('a[minutes]').css({'color':'#ccc','text-decoration':'none'});
+            jQuery(this).css({'color':'white','text-decoration':'underline'});
+            timeParams.period = parseInt(jQuery(this).attr('minutes'));
+            timeParams.timeFrom = '- '+parseInt(jQuery(this).attr('minutes'))+'minute';
+            updateData();
+        });
+
+        jQuery('a[minutes="60"]').click();
+    });
+
+</script>
+<style>
+
+    #dataBlocksContainer {
+    }
+
+    #meteoContainer {
+        left: 15px;
+        position: absolute;
+    }
+
+    .dataBlock {
+        float:left;
+        margin: 3px;
+        padding: 3px;
+        width: 50px;
+        height: 89px;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #ccc;
+        font-size:12px;
+        line-height: 1.3em;
+    }
+
+    .dataBlock:nth-child(2n+1) {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    .dataBlock > div {
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    #timeButtons {
+        padding: 2px 0 2px 5px;
+    }
+    #timeButtons > a {
+        padding-right: 10px;
+    }
+
+</style>
+<div id="meteoContainer">
+    <div id="timeButtons">
+        <a href="#" style="color:#ccc" minutes="15">15 мин</a>
+        <a href="#" style="color:#ccc" minutes="30">30 мин</a>
+        <a href="#" style="color:#ccc" minutes="60">1 час</a>
+        <a href="#" style="color:#ccc" minutes="180">3 часа</a>
+        <a href="#" style="color:#ccc" minutes="360">6 часа</a>
+        <a href="#" style="color:#ccc" minutes="720">12 часа</a>
+        <a href="#" style="color:#ccc" minutes="1440">24 часа</a>
+    </div>
+    <div id="dataBlocksContainer"></div>
+    <div style="clear:both;"></div>
+</div>
+
+<div style="display:none">
+    <div id="dataBlockPrototype" class="dataBlock">
+        <div class="windSpeed"></div>
+        <div class="windDir"></div>
+        <div class="pressure"></div>
+        <div class="humidity"></div>
+        <div class="temperature"></div>
+        <div class="time"></div>
+    </div>
+</div>
