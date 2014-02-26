@@ -49,7 +49,7 @@ class Meteo2 {
                        )
                    )
                )			 					AS wind_dir,
-               SUM(d.wind_count) / 390  		AS wind_count,
+               ROUND(SUM(d.wind_count) / 390,1) AS wind_count,
                SUM(d.samples)					AS samples,
                UNIX_TIMESTAMP(d.created_time)	AS timestamp
            FROM data_avg d
