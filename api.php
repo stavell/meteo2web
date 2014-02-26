@@ -6,6 +6,7 @@
     ini_set('display_errors', 1);
 
     header("Content-type: application/json; charset=UTF-8");
+    header('Access-Control-Allow-Origin: *');
 
 try {
     $oMeteo2 = new xc\Meteo2();
