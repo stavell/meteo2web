@@ -23,12 +23,12 @@
     background: rgba(0,0,0,0.1);
     margin:0.2em;
     padding: 0.5em;
-    border-radius: 1em;
+    border-radius: 1em 0em 1em 0em;
     text-align: right;
 }
 
 .dataBlock > .windSpeed {
-    width: 4.5em;
+    width: 4em;
 }
 .dataBlock > .windDir {
     width: 2em;
