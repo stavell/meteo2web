@@ -8,7 +8,11 @@
 
     <script type="text/javascript">
 
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        var isMobileURL = function(){
+            return location.hash.toLowerCase() == '#m' ? true : false;
+        }
+
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && !isMobileURL()) {
             window.location.href = window.location.href+'#m';
         }
 
@@ -130,11 +134,6 @@
                 }
 
             };
-
-
-            var isMobileURL = function(){
-                return location.hash.toLowerCase() == '#m' ? true : false;
-            }
 
             var loadCSS = function(cb) {
                 $.get('css/' + (isMobileURL() ? 'mobile.css' : 'default.css' )).complete(function(r){
