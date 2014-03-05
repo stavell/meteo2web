@@ -51,7 +51,10 @@ class Meteo2 {
                )			 					AS wind_dir,
                ROUND(SUM(d.wind_count) / 390,1) AS wind_count,
                SUM(d.samples)					AS samples,
-               UNIX_TIMESTAMP(d.created_time)	AS timestamp
+               UNIX_TIMESTAMP(d.created_time)	AS timestamp,
+               UNIX_TIMESTAMP(MIN(d.created_time))	AS start_timestamp,
+               UNIX_TIMESTAMP(MAX(d.created_time))	AS end_timestamp,
+               UNIX_TIMESTAMP(AVG(d.created_time))	AS avg_timestamp
            FROM data_avg d
            JOIN (
                SELECT
