@@ -8,6 +8,10 @@
 
     <script type="text/javascript">
 
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            window.location.href = window.location.href+'#m';
+        }
+
         $(document).ready(function() {
 
             var onCSSLoad = function() {
@@ -129,7 +133,7 @@
 
 
             var isMobileURL = function(){
-                return location.hash.toLowerCase() == '#m' ||  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false;
+                return location.hash.toLowerCase() == '#m' ? true : false;
             }
 
             var loadCSS = function(cb) {
