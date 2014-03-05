@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="js/detectmobilebrowser.js"></script>
 
     <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-3807106-7', 'stavl.com');ga('send', 'pageview');</script>
 
@@ -130,7 +129,7 @@
 
 
             var isMobileURL = function(){
-                return location.hash.toLowerCase() == '#m' || $.browser.mobile ? true : false;
+                return location.hash.toLowerCase() == '#m' ||  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false;
             }
 
             var loadCSS = function(cb) {
