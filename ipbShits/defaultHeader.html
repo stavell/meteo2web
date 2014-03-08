@@ -4,9 +4,12 @@
     var loadData = function(timeParams){};
     var createDataBlock = function(data){};
     var updateData = function(){};
-
+    var storage = {};
 
     jQuery(document).ready(function() {
+
+        storage = jQuery.localStorage;
+
         timeParams = {
             timeFrom: '-3 hour',
             period:180,
@@ -60,15 +63,22 @@
             timeParams.period = parseInt(jQuery(this).attr('minutes'));
             timeParams.timeFrom = '- '+parseInt(jQuery(this).attr('minutes'))+'minute';
             updateData();
+            storage.set('timeParams',timeParams);
         });
 
-        jQuery('a[minutes="60"]').click();
+        if(storage.get('timeParams')) {
+            timeParams = storage.get('timeParams');
+            jQuery('a[minutes="'+timeParams.period+'"]').click();
+        } else {
+            jQuery('a[minutes="60"]').click();
+        }
     });
 
 </script>
 <style>
 
     #dataBlocksContainer {
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
 
     #meteoContainer {
@@ -97,7 +107,7 @@
     }
 
     #timeButtons {
-        padding: 2px 0 2px 5px;
+        padding: 2px 0 1px 5px;
     }
     #timeButtons > a {
         padding-right: 10px;
