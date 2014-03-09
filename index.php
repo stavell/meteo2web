@@ -231,7 +231,7 @@ $(document).ready(function() {
                 ,scaleOverride: true
                 ,scaleSteps : ((Math.max.apply(Math, datasets[key].data) - Math.min.apply(Math, datasets[key].data)) / datasets[key].step) + 1
                 ,scaleStepWidth : datasets[key].step
-                ,scaleStartValue : Math.min.apply(Math, datasets[key].data) - (1*datasets[key].step)
+                ,scaleStartValue : Math.min.apply(Math, datasets[key].data) - (key == 'windSpeed' ? 0 : datasets[key].step)
                 ,scaleLabel : "<%=value%>"+datasets[key].label
                 ,scaleFontFamily : "Verdana, Arial, Helvetica, sans-serif"
                 ,animationSteps : 60
