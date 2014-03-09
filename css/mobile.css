@@ -53,3 +53,6 @@
     display: none;
 }
 
+#charts, .chartsBtn {
+    display: none;
+}
