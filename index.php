@@ -70,7 +70,7 @@ $(document).ready(function() {
                 loadPhotos(timeParams);
                 return;
             }
-            $('html').css({backgroundImage:'url("'+img.url+'")'});
+            $('#photo').css({backgroundImage:'url("'+img.url+'")'});
             var imageDate = new Date(img.timestamp*1000);
             $('.progressInfo').text(getFormatedTime(imageDate));
             setTimeout(updateBackground,500);
@@ -265,6 +265,7 @@ $(document).ready(function() {
     <canvas id="humidityChart" width="1000" height="200"></canvas>
     <canvas id="pressureChart" width="1000" height="200"></canvas>
 </div>
+<div id="photo"></div>
 <div id="container">
     <div id="dataBlocksContainer">Waiting for data...</div>
     <div style="clear:both;"></div>
