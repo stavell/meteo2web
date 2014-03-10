@@ -99,7 +99,7 @@ $(document).ready(function() {
             $block.find('.temperature').text(data.temperature+' ℃');
             $block.find('.humidity').text(data.humidity+'% rH');
             $block.find('.pressure').text(data.pressure+' mb');
-            $block.find('.windDir').text(data.wind_dir+'°');
+            $block.find('.windDir').text(data.wind_dir_sym+' '+data.wind_dir+'°');
             $block.find('.windSpeed').text(data.wind_count+' m/s');
 
             var date = new Date(data.timestamp*1000);

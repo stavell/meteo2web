@@ -49,6 +49,7 @@ class Meteo2 {
                        )
                    )
                )			 					                    AS wind_dir,
+               dd.dir                                               AS wind_dir_sym,
                ROUND((SUM(d.wind_count) / SUM(d.samples)/6.5),1)    AS wind_count,
                SUM(d.samples)					                    AS samples,
                UNIX_TIMESTAMP(d.created_time)	                    AS timestamp,
@@ -56,6 +57,7 @@ class Meteo2 {
                UNIX_TIMESTAMP(MAX(d.created_time))	                AS end_timestamp,
                UNIX_TIMESTAMP(AVG(d.created_time))	                AS avg_timestamp
            FROM data_avg d
+           LEFT JOIN directions dd ON dd.id = ROUND(d.wind_dir / 22.5,0)
            JOIN (
                SELECT
                    @period:=%d,
