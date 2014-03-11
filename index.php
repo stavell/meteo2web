@@ -23,8 +23,8 @@ $(document).ready(function() {
     var onCSSLoad = function() {
 
         var timeParams = {
-            timeFrom: '-2 hour',
-            period:120,
+            timeFrom: '-10 hour',
+            period:30,
             asc: false
         };
 
@@ -132,7 +132,7 @@ $(document).ready(function() {
             loadPhotos(timeParams);
             updateData(function(r){
                 drawDataBlocks(r);
-                if(!isMobileURL()) updateChart(r);
+                updateChart(r);
             });
         }
 
@@ -160,6 +160,10 @@ $(document).ready(function() {
 
 
     var updateChart = function(response) {
+
+        response = response ? response : $('#charts')[0].response;
+
+        $('#charts')[0].response = response;
 
         var datasets = {
             windSpeed : {
@@ -235,19 +239,16 @@ $(document).ready(function() {
                 ,scaleLabel : "<%=value%>"+datasets[key].label
                 ,scaleFontFamily : "Verdana, Arial, Helvetica, sans-serif"
                 ,animationSteps : 60
-                ,animationEasing : "easeOutBounce"
+                ,animationEasing : "easeOutQuart"
                 ,scaleGridLineColor : "rgba(255,255,255,.05)"
             });
         }
-
-        $('.chartsBtn').click(function(){
-            $('#charts').animate({
-                opacity: "toggle"
-            });
-        });
-
     }
 
+    $('.chartsBtn').click(function(){
+        $('#charts').toggle();
+        if(!$(this).hasClass('close')) updateChart();
+    });
 
 });
 
@@ -259,7 +260,7 @@ $(document).ready(function() {
 
 <body>
 <div id="charts">
-    <span class="chartsBtn">Затвори</span>
+    <span class="chartsBtn close">Затвори</span>
     <canvas id="windSpeedChart" width="1000" height="200"></canvas>
     <canvas id="temperatureChart" width="1000" height="200"></canvas>
     <canvas id="humidityChart" width="1000" height="200"></canvas>
