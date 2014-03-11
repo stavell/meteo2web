@@ -23,8 +23,8 @@ $(document).ready(function() {
     var onCSSLoad = function() {
 
         var timeParams = {
-            timeFrom: '-10 hour',
-            period:30,
+            timeFrom: '-2 hour',
+            period:120,
             asc: false
         };
 
