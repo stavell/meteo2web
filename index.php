@@ -18,15 +18,21 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     window.location.href = window.location.href+'#m';
 }
 
+
+var updateDataTimeOut = 0;
+var updateBackgroundTimeOut = 0;
+
 $(document).ready(function() {
 
-    var onCSSLoad = function() {
+    var timeParams = {
+        timeFrom: '-1hour',
+        period:60,
+        asc: false
+    };
 
-        var timeParams = {
-            timeFrom: '-2 hour',
-            period:120,
-            asc: false
-        };
+    var load = function(){};
+
+    var onCSSLoad = function() {
 
         var ImgLoader = {
             files: [],
@@ -63,7 +69,6 @@ $(document).ready(function() {
             $('.progressInfo').text(done+'/'+ImgLoader.files.length);
         };
 
-
         var updateBackground = function() {
             var img = ImgLoader.files.pop();
             if(!img) {
@@ -73,7 +78,7 @@ $(document).ready(function() {
             $('#photo').css({backgroundImage:'url("'+img.url+'")'});
             var imageDate = new Date(img.timestamp*1000);
             $('.progressInfo').text(getFormatedTime(imageDate));
-            setTimeout(updateBackground,500);
+            updateBackgroundTimeOut = setTimeout(updateBackground,500);
         };
 
         var loadPhotos = function(timeParams){
@@ -119,22 +124,30 @@ $(document).ready(function() {
 
         var updateData = function(cb) {
             loadData(timeParams,cb);
-            setTimeout(function(){updateData(cb);},60*1000)
+            updateDataTimeOut = setTimeout(function(){updateData(cb);},60*1000)
         };
 
-        if(isMobileURL()) {
-            timeParams.asc = false;
-            updateData(function(r){
-                drawDataBlocks(r);
-            });
-        } else {
-            timeParams.asc = true;
-            loadPhotos(timeParams);
-            updateData(function(r){
-                drawDataBlocks(r);
-                updateChart(r);
-            });
-        }
+
+        load = function(){
+            clearTimeout(updateBackgroundTimeOut);
+            clearTimeout(updateDataTimeOut);
+
+            if(isMobileURL()) {
+                timeParams.asc = false;
+                updateData(function(r){
+                    drawDataBlocks(r);
+                });
+            } else {
+                timeParams.asc = true;
+                loadPhotos(timeParams);
+                updateData(function(r){
+                    drawDataBlocks(r);
+                    updateChart(r);
+                });
+            }
+        };
+
+        load();
 
     };
 
@@ -153,7 +166,6 @@ $(document).ready(function() {
     var getFormatedTime = function(date) {
         return (date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes();
     };
-
 
     $(window).bind('hashchange', onHashChange);
     $(window).trigger('hashchange');
@@ -250,6 +262,54 @@ $(document).ready(function() {
         if(!$(this).hasClass('close')) updateChart();
     });
 
+
+
+    $('.command').click(function(){
+        var valEl = $(this).parent().find('input.value');
+        var val = parseInt(valEl.val());
+        var adder = $(this).hasClass('plus') ? 1 : -1;
+        var nonZero = valEl.hasClass('non-zero');
+        var onlyPositive = valEl.hasClass('positive');
+        var onlyNegative = valEl.hasClass('negative');
+
+
+        if(onlyPositive && val + adder < 0) return;
+
+        if(onlyNegative && (val + adder) >= 0) return;
+
+        if(nonZero && (val + adder == 0)) return;
+
+        valEl.val( val + adder );
+
+        updateParams();
+    });
+
+
+    $('.confirm').click(function(){
+        load();
+    });
+
+    var updateParams = function() {
+        timeParams.period = $('input.period').val();
+        if(parseInt($('input.days').val())) {
+            timeParams.timeFrom = '-'+$('input.days').val() + ' day ' + $('input.hours').val() + 'hour';
+        } else {
+            timeParams.timeFrom = '-'+$('input.hours').val() + 'hour';
+        }
+    }
+
+    $(".numeric").keydown(function (e) {
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+
 });
 
 </script>
@@ -259,6 +319,35 @@ $(document).ready(function() {
 </head>
 
 <body>
+<div id="controls">
+
+    <div>Старт</div>
+
+    <div class="control">
+        <div class="command plus">+</div>
+        <input type="text" class="value numeric positive days" value="0" readonly="readonly"/>
+        <div class="command minus">-</div>
+    </div>
+
+    <div class="control">
+        <div class="command plus">+</div>
+        <input type="text" class="value numeric positive non-zero hours" value="1" readonly="readonly"/>
+        <div class="command minus">-</div>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div>Период</div>
+
+    <div class="control">
+        <div class="command plus">+</div>
+        <input type="text" class="value numeric positive non-zero period" value="60" readonly="readonly"/>
+        <div class="command minus">-</div>
+    </div>
+
+    <div><button class="confirm">Покажи</button></div>
+
+</div>
 <div id="charts">
     <span class="chartsBtn close">Затвори</span>
     <canvas id="windSpeedChart" width="1000" height="200"></canvas>
