@@ -31,7 +31,7 @@
     width: 4em;
 }
 .dataBlock > .windDir {
-    width: 2em;
+    width: 5em;
 }
 .dataBlock > .humidity {
     width: 4em;
@@ -53,6 +53,6 @@
     display: none;
 }
 
-#charts, .chartsBtn {
+#charts, .chartsBtn, #controls{
     display: none;
 }
