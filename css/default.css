@@ -117,7 +117,7 @@ html {
     position: relative;
     float: left;
     width: 40px;
-    height: 60px;
+    height: 65px;
     margin: 5px;
 }
 
@@ -138,10 +138,12 @@ html {
 
 .control > .plus {
     top:0px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .control > .minus{
     bottom:0px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
 }
 
 
