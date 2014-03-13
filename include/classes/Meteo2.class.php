@@ -80,7 +80,7 @@ class Meteo2 {
 
             $oFileUpload = new FileUpload();
             $oFileUpload->uploadFile(
-                sha1(file_get_contents($_FILES["file"]["tmp_name"])).'.'.pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION),
+                md5(file_get_contents($_FILES["file"]["tmp_name"])).'.'.pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION),
                 $_FILES["file"]["tmp_name"]
             );
 
