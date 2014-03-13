@@ -119,15 +119,13 @@ html {
     width: 40px;
     height: 60px;
     margin: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 .control > .command {
     position: absolute;
-    left: 0;
-    right: 0;
-    height: 20px;
     font-size: 20px;
-    line-height: 20px;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -149,8 +147,8 @@ html {
 .control > .value {
     height: 100%;
     width: 100%;
+    line-height: 100%;
     background-color: rgba(255,255,255,1);
-    border: 1px solid rgba(0,0,0,0.5);
     border-radius: 5px;
     text-align: center;
 }
