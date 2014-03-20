@@ -1,6 +1,5 @@
 #!/usr/bin/php
 <?php
-
 use shumenxc as xc;
 require_once('config.inc.php');
 
