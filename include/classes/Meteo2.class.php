@@ -119,19 +119,25 @@ class Meteo2 {
 
 
     public static function notifyBroadcaster($aData) {
-        $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1');
+        try{
 
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_PORT, 8001);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+            $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aData));
+            if(!$ch) throw new XCException("Curl init fail");
 
-        curl_exec($ch);
-        curl_close($ch);
+            curl_setopt($ch, CURLOPT_URL, '127.0.0.1');
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_PORT, 8001);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aData));
+
+            if(!curl_exec($ch)) throw new XCException("Curl exec fail");
+            curl_close($ch);
+
+        } catch( XCException $e) {}
+
     }
 
 } 
