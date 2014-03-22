@@ -107,6 +107,7 @@ class Meteo2 {
         $aData['created_time'] = date("Y-m-d H:i:s");
 
         \DB::insert('data',array($aData));
+        self::notifyBroadcaster($aData);
 
         return array($aData);
     }
@@ -116,5 +117,21 @@ class Meteo2 {
         return \DB::query('SELECT s.key, s.value as value FROM settings s where disabled != 1');
     }
 
+
+    public static function notifyBroadcaster($aData) {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1');
+
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_PORT, 8001);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aData));
+
+        curl_exec($ch);
+        curl_close($ch);
+    }
 
 } 
