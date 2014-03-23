@@ -1,24 +1,54 @@
 <?php
-    use shumenxc as xc;
-    require_once('config.inc.php');
+use shumenxc as xc;
+require_once('config.inc.php');
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-    header("Content-type: application/json; charset=UTF-8");
-    header('Access-Control-Allow-Origin: *');
+header("Content-type: application/json; charset=UTF-8");
+header('Access-Control-Allow-Origin: *');
 
 try {
-    $oMeteo2 = new xc\Meteo2();
-    $sMethod = !empty($_REQUEST['method']) ? $_REQUEST['method'] : false;
-    $aParams = !empty($_REQUEST['params']) ? json_decode($_REQUEST['params'],1) : array($_REQUEST);
 
-    if(!$sMethod || !method_exists($oMeteo2,$sMethod)) throw new xc\XCException('Invalid Method');
+    //legacy single request mode
+    if(empty($_REQUEST['requests'])) {
 
-    echo json_encode(call_user_func_array(array($oMeteo2,$sMethod),$aParams),JSON_NUMERIC_CHECK);
+        $sMethod = !empty($_REQUEST['method']) ? $_REQUEST['method'] : false;
+        $aParams = !empty($_REQUEST['params']) ? json_decode($_REQUEST['params'],1) : array($_REQUEST);
+
+        $oMeteo2 = new xc\Meteo2();
+        if(!$sMethod || !method_exists($oMeteo2,$sMethod)) throw new xc\XCException('Invalid Method');
+
+        echo json_encode(call_user_func_array(array($oMeteo2,$sMethod),$aParams),JSON_NUMERIC_CHECK);
+
+    } else {
+        //multple requests
+        $aRequests = json_decode($_REQUEST['requests'], 1);
+        $aResponse = array();
+
+        foreach($aRequests as $k => $aRequest) {
+            try{
+                list($sClassName, $sMethodName) = explode('.',$aRequest['target']);
+
+                $sClassName = 'shumenxc\\'.$sClassName;
+                if(empty($sClassName) || !class_exists($sClassName, true)) {
+                    throw new xc\XCException(sprintf("Клас \"%s\" не е намерен.", $sClassName));
+                }
+
+                $oClass = new $sClassName;
+
+                if(!is_callable(array($oClass, $sMethodName))) throw new xc\XCException(sprintf("Метод \"%s\" не може да бъде извикан", $sMethodName));
+
+                $aResponse[$k]['response'] = call_user_func_array(array($oClass, $sMethodName), $aRequest['params']);
+
+            } catch( xc\XCException $e ) {
+                $aResponse[$k]['error'] = $e->getJSObject();
+            }
+        }
+
+        die(json_encode($aResponse, JSON_NUMERIC_CHECK));
+    }
 
 } catch (Exception $e) {
-//    http_response_code(400);
     echo json_encode($e->getMessage());
 }
 

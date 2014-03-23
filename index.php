@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script type="text/javascript">
+    BASE_URL = '';
+</script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/Server.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/jquery.storageapi.js"></script>
 <script type="text/javascript" src="js/Chart.js"></script>
 
@@ -14,7 +19,7 @@ var isMobileURL = function(){
     return location.hash.toLowerCase() == '#m' ? true : false;
 }
 
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && !isMobileURL()) {
+if( App.isMobileBrowser && !isMobileURL()) {
     window.location.href = window.location.href+'#m';
 }
 
@@ -24,78 +29,47 @@ var updateBackgroundTimeOut = 0;
 
 $(document).ready(function() {
 
-    var timeParams = {
-        timeFrom: '-1hour',
-        period:60,
-        asc: false
-    };
-
     var load = function(){};
 
     var onCSSLoad = function() {
 
-        var ImgLoader = {
-            files: [],
-            readyFiles:[],
-            cache:{},
-            setFiles: function(files) {
-                ImgLoader.init();
-                ImgLoader.files = files;
-            },
-            init: function(){
-                ImgLoader.readyFiles = [];
-                ImgLoader.cache = {};
-            },
-            startLoading: function() {
-                for(var idx in ImgLoader.files) {
-                    var file = ImgLoader.files[idx];
-                    var src = file.url;
-                    ImgLoader.cache[src] = new Image();
-                    ImgLoader.cache[src].onload = ImgLoader.onImageLoaded;
-                    ImgLoader.cache[src].src = src;
-                }
-            },
-            onImageLoaded: function() {
-                ImgLoader.readyFiles.push(this.src);
-                if(ImgLoader.onProgressUpdate) ImgLoader.onProgressUpdate(ImgLoader.readyFiles.length);
-                if(ImgLoader.onFinish && ImgLoader.readyFiles.length == ImgLoader.files.length) ImgLoader.onFinish();
-            },
-            onFinish: null,
-            onProgressUpdate: null
+
+        App.ImgLoader.onProgressUpdate = function(done) {
+            $('.progressInfo').text(done+'/'+App.ImgLoader.files.length);
         };
 
-
-        ImgLoader.onProgressUpdate = function(done) {
-            $('.progressInfo').text(done+'/'+ImgLoader.files.length);
-        };
 
         var updateBackground = function() {
-            var img = ImgLoader.files.pop();
+            var img = App.ImgLoader.files.pop();
             if(!img) {
-                loadPhotos(timeParams);
+                loadPhotos(App.timeParams);
                 return;
             }
             $('#photo').css({backgroundImage:'url("'+img.url+'")'});
             var imageDate = new Date(img.timestamp*1000);
-            $('.progressInfo').text(getFormatedTime(imageDate));
+            $('.progressInfo').text(App.getFormatedTime(imageDate));
             updateBackgroundTimeOut = setTimeout(updateBackground,500);
         };
 
         var loadPhotos = function(timeParams){
             if(!timeParams) return;
-            $.get('api.php', {method: 'getPhotosForPeriod',params:JSON.stringify([timeParams.timeFrom, timeParams.period, false])}).done(function(response){
-                ImgLoader.setFiles(response);
-                ImgLoader.onFinish = function() {
+
+            Server.call('Meteo2.getPhotosForPeriod', [timeParams.timeFrom, timeParams.period, false], function(response){
+                App.ImgLoader.setFiles(response);
+                App.ImgLoader.onFinish = function() {
                     updateBackground();
                 };
-                ImgLoader.startLoading();
-            });
+                App.ImgLoader.startLoading();
+            } );
+
         };
 
         var loadData = function(timeParams,cb){
-            $.get('api.php',{method:'getWeatherDataForPeriod', params:JSON.stringify([timeParams.timeFrom, timeParams.period, 12, timeParams.asc])}).done(function(response){
+
+            Server.call('Meteo2.getWeatherDataForPeriod', [timeParams.timeFrom, timeParams.period, 12, timeParams.asc], function(response){
                 if(cb)cb(response);
             });
+
         };
 
         var createDataBlock = function(data) {
@@ -108,7 +82,7 @@ $(document).ready(function() {
             $block.find('.windSpeed').text(data.wind_count+' m/s');
 
             var date = new Date(data.timestamp*1000);
-            $block.find('.time').text(getFormatedTime(date));
+            $block.find('.time').text(App.getFormatedTime(date));
 
             return $block;
         };
@@ -123,7 +97,7 @@ $(document).ready(function() {
 
 
         var updateData = function(cb) {
-            loadData(timeParams,cb);
+            loadData(App.timeParams,cb);
             updateDataTimeOut = setTimeout(function(){updateData(cb);},60*1000)
         };
 
@@ -133,13 +107,13 @@ $(document).ready(function() {
             clearTimeout(updateDataTimeOut);
 
             if(isMobileURL()) {
-                timeParams.asc = false;
+                App.timeParams.asc = false;
                 updateData(function(r){
                     drawDataBlocks(r);
                 });
             } else {
-                timeParams.asc = true;
-                loadPhotos(timeParams);
+                App.timeParams.asc = true;
+                loadPhotos(App.timeParams);
                 updateData(function(r){
                     drawDataBlocks(r);
                     updateChart(r);
@@ -163,9 +137,6 @@ $(document).ready(function() {
     }
 
 
-    var getFormatedTime = function(date) {
-        return (date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes();
-    };
 
     $(window).bind('hashchange', onHashChange);
     $(window).trigger('hashchange');
@@ -219,10 +190,10 @@ $(document).ready(function() {
 
         var labels = [];
 
-        $.each(response,function(idx,val){
+        $.each(response, function(idx,val){
             var date = new Date(val.timestamp*1000);
 
-            labels.push(getFormatedTime(date));
+            labels.push(App.getFormatedTime(date));
 
             datasets.humidity.data.push(val.humidity);
             datasets.pressure.data.push(val.pressure);
@@ -255,7 +226,8 @@ $(document).ready(function() {
                 ,scaleGridLineColor : "rgba(255,255,255,.05)"
             });
         }
-    }
+    };
+
 
     $('.chartsBtn').click(function(){
         $('#charts').toggle();
