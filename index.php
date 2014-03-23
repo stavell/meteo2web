@@ -341,7 +341,7 @@ $(document).ready(function() {
 
     <div class="control">
         <div class="command plus">+</div>
-        <input type="text" class="value numeric positive non-zero period" value="60" readonly="readonly"/>
+        <input type="text" class="value numeric positive non-zero period" value="60"/>
         <div class="command minus">-</div>
     </div>
 
