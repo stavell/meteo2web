@@ -32,9 +32,8 @@ var webServer = new require('http').createServer(function (req, res) {
 webServer.listen(8001);
 
 var processNotification = function(request, data) {
-    for(var group in BroadcastClients){
-        for(var client in BroadcastClients[group]) {
-            BroadcastClients[group][client].send(data);
-        }
-    }
+    var group = request.url.replace('/','').trim();
+    if(!BroadcastClients[group]) return;
+
+    for(var client in BroadcastClients[group]) BroadcastClients[group][client].send(data);
 }
