@@ -5,7 +5,8 @@ var wss = new webSocketServer({port: 10080});
 
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
-        BroadcastClients[message] =  BroadcastClients[message] || [];
+        //todo: unsubscribe
+        BroadcastClients[message] = BroadcastClients[message] || [];
         BroadcastClients[message].push(this);
         ws.send("Registered as user "+BroadcastClients[message].length+" for ["+message+"]");
     });
