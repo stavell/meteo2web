@@ -112,7 +112,16 @@ class Meteo2 {
 
         \DB::insert('data', $aData);
 
-        self::notifyBroadcaster('weatherData', \DB::queryFirstRow("SELECT * FROM data WHERE id = ".\DB::insertId()));
+        $nSpeedConstant = floatval(self::$nSpeedConstant);
+
+        self::notifyBroadcaster('weatherData', \DB::queryFirstRow("
+               SELECT
+               d.*,
+               ROUND(SUM(d.wind_count) / {$nSpeedConstant}, 1)        AS wind_count,
+               UNIX_TIMESTAMP(d.created_time)	                    AS timestamp
+               FROM data d
+               WHERE d.id =
+        ".\DB::insertId()));
 
         return array($aData);
     }
