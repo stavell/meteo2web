@@ -119,25 +119,28 @@ class Meteo2 {
 
 
     public static function notifyBroadcaster($aData) {
+        if(empty($aData)) return;
 
         try{
-
             $ch = curl_init();
-
             if(!$ch) throw new XCException("Curl init fail");
 
+            $sJSON = json_encode($aData, JSON_NUMERIC_CHECK);
+
             curl_setopt($ch, CURLOPT_URL, '127.0.0.1');
-            curl_setopt($ch, CURLOPT_HEADER, false);
             curl_setopt($ch, CURLOPT_PORT, 8001);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aData));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $sJSON);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($sJSON))
+            );
 
             if(!curl_exec($ch)) throw new XCException("Curl exec fail");
             curl_close($ch);
 
         } catch( XCException $e) {}
-
     }
 
 } 
