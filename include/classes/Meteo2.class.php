@@ -106,7 +106,7 @@ class Meteo2 {
 
         $aData['created_time'] = date("Y-m-d H:i:s");
 
-        \DB::update('data',$aData);
+        \DB::insert('data', $aData);
 
         self::notifyBroadcaster('weatherData', \DB::queryFirstRow("SELECT * FROM data WHERE id = ".\DB::insertId()));
 
