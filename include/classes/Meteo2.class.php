@@ -117,7 +117,7 @@ class Meteo2 {
         self::notifyBroadcaster('weatherData', \DB::queryFirstRow("
                SELECT
                d.*,
-               ROUND(SUM(d.wind_count) / {$nSpeedConstant}, 1)        AS wind_count,
+               ROUND(SUM(d.wind_count) / {$nSpeedConstant}, 1)      AS wind_speed,
                UNIX_TIMESTAMP(d.created_time)	                    AS timestamp
                FROM data d
                WHERE d.id =
