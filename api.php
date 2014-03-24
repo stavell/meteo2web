@@ -15,6 +15,8 @@ try {
 
     if(!$sMethod || !method_exists($oMeteo2,$sMethod)) throw new xc\XCException('Invalid Method');
 
+    xc\Meteo2::notifyBroadcaster('requests', $_REQUEST);
+
     echo json_encode(call_user_func_array(array($oMeteo2,$sMethod),$aParams),JSON_NUMERIC_CHECK);
 
 } catch (Exception $e) {
