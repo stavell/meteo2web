@@ -10,6 +10,8 @@ namespace shumenxc;
 
 class Meteo2 {
 
+    private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
+
     public static function getPhotosForPeriod($from, $nPeriod = 60, $bAsc = true) {
         $from = $from == date("Y-m-d H:i:s",strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
 
@@ -34,6 +36,8 @@ class Meteo2 {
     public static function getWeatherDataForPeriod($from, $nPeriod = 60,$nSegments = 10, $bAsc = false) {
         $from = $from == date("Y-m-d H:i:s", strtotime($from)) ? $from : date("Y-m-d H:i:s", strtotime($from, time()));
 
+        $nSpeedConstant = floatval(self::$nSpeedConstant);
+
         $sQuery = "
            SELECT
                ROUND(AVG(d.temperature),1)		                    AS temperature,
@@ -50,7 +54,7 @@ class Meteo2 {
                    )
                )			 					                    AS wind_dir,
                dd.dir                                               AS wind_dir_sym,
-               ROUND((SUM(d.wind_count) / SUM(d.samples)/6.5),1)    AS wind_count,
+               ROUND((SUM(d.wind_count) / SUM(d.samples)/{$nSpeedConstant}),1)    AS wind_count,
                SUM(d.samples)					                    AS samples,
                UNIX_TIMESTAMP(d.created_time)	                    AS timestamp,
                UNIX_TIMESTAMP(MIN(d.created_time))	                AS start_timestamp,
