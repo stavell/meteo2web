@@ -107,7 +107,7 @@ class Meteo2 {
         $aData['created_time'] = date("Y-m-d H:i:s");
 
         \DB::insert('data',array($aData));
-        self::notifyBroadcaster($aData);
+        self::notifyBroadcaster('weatherData', $aData);
 
         return array($aData);
     }
@@ -118,7 +118,7 @@ class Meteo2 {
     }
 
 
-    public static function notifyBroadcaster($aData) {
+    public static function notifyBroadcaster($sTarget = '', $aData) {
         if(empty($aData)) return;
 
         try{
@@ -127,7 +127,7 @@ class Meteo2 {
 
             $sJSON = json_encode($aData, JSON_NUMERIC_CHECK);
 
-            curl_setopt($ch, CURLOPT_URL, '127.0.0.1');
+            curl_setopt($ch, CURLOPT_URL, '127.0.0.1/'.$sTarget);
             curl_setopt($ch, CURLOPT_PORT, 8001);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
             curl_setopt($ch, CURLOPT_POST, true);

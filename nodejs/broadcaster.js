@@ -1,7 +1,4 @@
-
 var webSocketServer = new require('ws').Server({port: 10080});
-
-
 
 var webServer = require('http').createServer(function (req, res) {
 
@@ -23,9 +20,7 @@ var webServer = require('http').createServer(function (req, res) {
 
     }
 
-});
-
-server.listen(8001);
+}).listen(8001);
 
 
 
