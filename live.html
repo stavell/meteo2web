@@ -33,7 +33,7 @@
 
             ws.onopen= function(){
                 log("Connected");
-                log("Write: weatherData");
+                log("Send: weatherData");
                 ws.send('weatherData');
             };
 
