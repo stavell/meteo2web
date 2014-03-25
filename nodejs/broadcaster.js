@@ -35,5 +35,11 @@ var processNotification = function(request, data) {
     var group = request.url.replace('/','').trim();
     if(!BroadcastClients[group]) return;
 
-    for(var client in BroadcastClients[group]) BroadcastClients[group][client].send(data);
+    for(var client in BroadcastClients[group]) {
+        try {
+            BroadcastClients[group][client].send(data);
+        } catch (e) {
+            delete BroadcastClients[group][client];
+        }
+    }
 }
