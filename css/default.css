@@ -1,6 +1,6 @@
 html {
     background: rgb(69,72,77); /* Old browsers */
-    background: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%,rgba(69,72,77,1) 75%); /* W3C */
+    background: radial-gradient(ellipse at center top , #000000 0%, rgba(0, 0, 0, 0.80) 75%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
