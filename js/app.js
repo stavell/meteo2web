@@ -1,7 +1,7 @@
 var App = {};
 
 App.timeParams = {
-    timeFrom: '- 4day 1hour',
+    timeFrom: '- 1hour',
     period:60,
     asc: false
 };
