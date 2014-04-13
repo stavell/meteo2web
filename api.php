@@ -27,6 +27,8 @@ try {
 
         foreach($aRequests as $k => $aRequest) {
             try{
+                xc\Meteo2::notifyBroadcaster('requests', $aRequest);
+
                 list($sClassName, $sMethodName) = explode('.',$aRequest['target']);
 
                 $sClassName = 'shumenxc\\'.$sClassName;
