@@ -23,11 +23,22 @@ class XCException extends \Exception {
             ),1)
         )));
 
-        parent::__construct($this->message,$this->code);
+        parent::__construct($message,$this->code);
     }
 
     protected function setAdditionalInfo($info) {
         $this->additionalInfo = $info;
+    }
+
+    public function getJSObject()
+    {
+        $aJSObj = array(
+            'message' => $this->getMessage(),
+            'code' => $this->getCode(),
+            'file' => $this->getFile(),
+            'line' => $this->getLine(),
+        );
+        return $aJSObj;
     }
 
 } 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stavel
- * Date: 12/8/13
- * Time: 20:58
- */
 
 namespace shumenxc;
 
@@ -13,7 +7,7 @@ class Meteo2 {
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
 
     public static function getPhotosForPeriod($from, $nPeriod = 60, $bAsc = true) {
-        $from = $from == date("Y-m-d H:i:s",strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
+        $from = $from == date("Y-m-d H:i:s", strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
 
         return \DB::query(sprintf("
             SELECT
