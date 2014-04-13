@@ -11,6 +11,7 @@ try {
 
     //legacy single request mode
     if(empty($_REQUEST['requests'])) {
+        xc\Meteo2::notifyBroadcaster('requests', $_REQUEST);
 
         $sMethod = !empty($_REQUEST['method']) ? $_REQUEST['method'] : false;
         $aParams = !empty($_REQUEST['params']) ? json_decode($_REQUEST['params'],1) : array($_REQUEST);
@@ -53,5 +54,3 @@ try {
 } catch (Exception $e) {
     echo json_encode($e->getMessage());
 }
-
-
