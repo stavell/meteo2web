@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 
-<meta name="viewport" content="initial-scale=1, maximum-scale=1">
-
 <script type="text/javascript">
     BASE_URL = '';
 </script>
@@ -69,7 +67,7 @@ $(document).ready(function() {
 
         var loadData = function(timeParams,cb){
 
-            Server.call('Meteo2.getWeatherDataForPeriod', [timeParams.timeFrom, timeParams.period, 12, timeParams.asc], function(response){
+            Server.call('Meteo2.getWeatherDataForPeriod', [timeParams.timeFrom, timeParams.period, !isMobileURL() ? 12 : 20, timeParams.asc], function(response){
                 if(cb)cb(response);
             });
 
