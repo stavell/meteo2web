@@ -33,6 +33,12 @@
 .dataBlock > .windDir {
     width: 4.5em;
 }
+.dataBlock > .pressure {
+    display: none;
+}
+.dataBlock > .humidity {
+    display: none;
+}
 .dataBlock > .time {
     float: left;
     width: 2.8em;
@@ -55,6 +61,6 @@
 
 @media only screen and (max-width: 35em) {
     .dataBlock {
-        font-size: 11px;
+        font-size: 17px;
     }
 }
