@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 <script type="text/javascript">
     BASE_URL = '';
 </script>
