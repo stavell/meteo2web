@@ -48,7 +48,7 @@ class Meteo2 {
                        )
                    ) <= 0,
 
-                   360 - CEIL(
+                   360 + CEIL(
                        DEGREES(
                                ATAN2(
                                    AVG(SIN(RADIANS(d.wind_dir))),
