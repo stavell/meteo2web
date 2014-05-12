@@ -37,42 +37,14 @@ class Meteo2 {
                ROUND(AVG(d.temperature),1)		                    AS temperature,
                CEIL(AVG(d.humidity))		 	                    AS humidity,
                ROUND(AVG(d.pressure))   		                    AS pressure,
-               IF(
-
-                   CEIL(
-                       DEGREES(
-                               ATAN2(
-                                   AVG(SIN(RADIANS(d.wind_dir))),
-                                   AVG(COS(RADIANS(d.wind_dir)))
-                               )
-                       )
-                   ) <= 0,
-
-                   360 + CEIL(
-                       DEGREES(
-                               ATAN2(
-                                   AVG(SIN(RADIANS(d.wind_dir))),
-                                   AVG(COS(RADIANS(d.wind_dir)))
-                               )
-                       )
-                   ),
-                   CEIL(
-                       DEGREES(
-                               ATAN2(
-                                   AVG(SIN(RADIANS(d.wind_dir))),
-                                   AVG(COS(RADIANS(d.wind_dir)))
-                               )
-                       )
-                   ))
-
-
-
-
-                   AS wind_dir,
-
-
-
-
+               CEIL(
+                   DEGREES(
+                           ATAN2(
+                               AVG(SIN(RADIANS(d.wind_dir))),
+                               AVG(COS(RADIANS(d.wind_dir)))
+                           )
+                   )
+               ))                                                   AS wind_dir,
                dd.dir                                               AS wind_dir_sym,
                ROUND((SUM(d.wind_count) / SUM(d.samples)/{$nSpeedConstant}),1)    AS wind_count,
                SUM(d.samples)					                    AS samples,
@@ -94,7 +66,11 @@ class Meteo2 {
            ORDER BY d.created_time %s
            LIMIT ".(int)$nSegments;
 
-        return \DB::query(sprintf($sQuery, (int)$nPeriod, (int)$nSegments, $from, $bAsc ? 'ASC' : 'DESC'));
+        $aResult = \DB::query(sprintf($sQuery, (int)$nPeriod, (int)$nSegments, $from, $bAsc ? 'ASC' : 'DESC'));
+
+        foreach($aResult as $k => $v) $aResult[$k]['wind_dir'] = $v['wind_dir'] <= 0 ? 360 + $v['wind_dir'] : $v['wind_dir'];
+
+        return $aResult;
     }
 
 
