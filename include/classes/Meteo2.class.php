@@ -44,7 +44,7 @@ class Meteo2 {
                                AVG(COS(RADIANS(d.wind_dir)))
                            )
                    )
-               ))                                                   AS wind_dir,
+               )                                                    AS wind_dir,
                dd.dir                                               AS wind_dir_sym,
                ROUND((SUM(d.wind_count) / SUM(d.samples)/{$nSpeedConstant}),1)    AS wind_count,
                SUM(d.samples)					                    AS samples,
