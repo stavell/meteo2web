@@ -20,7 +20,7 @@
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
@@ -53,20 +53,43 @@
     <!-- /.container -->
 </nav>
 
-<section class="intro">
+<section class="intro hidden-xs">
     <div class="intro-body">
-        <div class="container">
+        <div class="container-fluid">
+
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <!--<h1 class="brand-heading">Meteo 2</h1>-->
-                    <!--<p class="intro-text">A free, premium quality, responsive one page Bootstrap theme created by Start Bootstrap.</p>-->
-                    <div class="page-scroll">
-                        <a href="#about" class="btn btn-circle">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
+                <div class="col-sm-6 hidden-xs text-left">
+                    <span class="btn photo-control-prev" viewer=".intro">
+                        <i class="fa fa-4x fa-fast-backward animated"></i>
+                    </span>
+                </div>
+
+                <div class="col-sm-6 hidden-xs text-right">
+                    <span class="btn photo-control-next" viewer=".intro">
+                        <i class="fa fa-4x fa-fast-forward animated"></i>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="row imageLoaderProgress">
+                <div class="col-sm-12">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
                     </div>
                 </div>
             </div>
+
+
+            <div class="row" style="position: absolute;bottom: 10px;">
+                <blockquote class="text-left">
+                    <span class="btn btn-lg">
+                        <i class="fa fa-download animated"></i>
+                        <span class="photoInfo">--:--:--</span>
+                    </span>
+                </blockquote>
+            </div>
+
         </div>
     </div>
 </section>
@@ -115,12 +138,12 @@
 <div id="map"></div>
 
 <!-- Core JavaScript Files -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<!-- Google Maps API Key - You will need to use your own API key to use the map feature -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-3807106-7', 'stavl.com');ga('send', 'pageview');</script>
 
 <!-- Custom Theme JavaScript -->
 <script src="js/Server.js"></script>

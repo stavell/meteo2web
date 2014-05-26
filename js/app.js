@@ -30,12 +30,20 @@ App.ImgLoader = {
         }
     },
     onImageLoaded: function() {
+        if(App.ImgLoader.imageFilter) if(!App.ImgLoader.imageFilter.apply(this,[])) {
+            for(var idx in App.ImgLoader.files) {
+                if(App.ImgLoader.files[idx].url != this.src) continue;
+                return App.ImgLoader.files.splice(idx,1);
+            }
+        }
+
         App.ImgLoader.readyFiles.push(this.src);
-        if(App.ImgLoader.onProgressUpdate) App.ImgLoader.onProgressUpdate(App.ImgLoader.readyFiles.length);
+        if(App.ImgLoader.onProgressUpdate) App.ImgLoader.onProgressUpdate.apply(this,[App.ImgLoader.readyFiles.length,App.ImgLoader.files.length]);
         if(App.ImgLoader.onFinish && App.ImgLoader.readyFiles.length == App.ImgLoader.files.length) App.ImgLoader.onFinish();
     },
     onFinish: null,
-    onProgressUpdate: null
+    onProgressUpdate: null,
+    imageFilter: null
 };
 
 App.getFormatedTime = function(date) {
@@ -55,24 +63,57 @@ App.initCameraViewer = function(obj, params) {
         if(!el) return;
 
         el.fileIndex = 0;
+        el.delay = 500; //ms
+
+        el.interval = -1;
+        el.timeout = -1;
 
         el.onImageChanged = params.onImageChanged || function(){};
 
+
+
         el.setFiles = function(files) {
             el.files = files;
-            el.fileIndex = 0;
+            el.resetFileIndex();
             el.setImageFromIndex(el.fileIndex);
         };
 
-        el.showNext = function() {
-            if(!el.getFileByIndex(el.fileIndex+1)) return;
+
+        el.showNext = function(bLoop) {
+            el.pauseSlideshow();
+            return el._showNext(bLoop);
+        };
+
+
+        el.showPrev = function(bLoop){
+            el.pauseSlideshow();
+            return el._showPrev(bLoop);
+        };
+
+        el._showNext = function(bLoop) {
+            if(!el.getFileByIndex(el.fileIndex+1)) {
+                if(bLoop) {
+                    el.resetFileIndex(false);
+                    return el._showNext(bLoop);
+                }
+                return;
+            }
             el.fileIndex++;
+
             return el.setImageFromIndex(el.fileIndex);
         };
 
-        el.showPrev = function() {
-            if(!el.getFileByIndex(el.fileIndex-1)) return;
+
+        el._showPrev = function(bLoop) {
+            if(!el.getFileByIndex(el.fileIndex-1)) {
+                if(bLoop) {
+                    el.resetFileIndex(true);
+                    return el._showPrev(bLoop);
+                }
+                return;
+            }
             el.fileIndex--;
+
             return el.setImageFromIndex(el.fileIndex);
         };
 
@@ -86,14 +127,41 @@ App.initCameraViewer = function(obj, params) {
                 $(el).css('background-image','url('+file.url+')');
             }
 
-            el.onImageChanged.apply(el,[file]);
+            el.onImageChanged.apply(el,[file, el.fileIndex]);
             return file;
-        }
+        };
 
         el.getFileByIndex = function(idx) {
             if(el.files[idx]) return el.files[idx];
             return false;
+        };
+
+        el.resetFileIndex = function(bEnd) {
+            el.fileIndex = bEnd ? el.files.length-1 : 0;
+        };
+
+        el.startSlideshow = function(time) {
+            el.stopSlideshow();
+            el.delay = time || el.delay;
+            el.interval = setInterval(function(){el._showNext(true);}, el.delay);
+        };
+
+        el.stopSlideshow = function() {
+            if(el.interval < 0) return;
+            clearInterval(el.interval);
+            el.interval = -1;
+        };
+
+        el.pauseSlideshow = function(pauseTime) {
+            el.stopSlideshow();
+            if(el.timeout > -1) clearTimeout(el.timeout);
+
+            el.timeout = setTimeout(function(){el.startSlideshow()}, pauseTime || 3500);
         }
     });
-
 };
+
+App.getUrlVar = function(key){
+    var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+    return result && unescape(result[1]) || "";
+}

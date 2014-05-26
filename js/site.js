@@ -20,11 +20,22 @@ $(function() {
 
 
 
-    App.timeParams.timeFrom = '- 4 hour';
+    App.timeParams.timeFrom = App.getUrlVar('timeFrom') || '-1 hour';
+    App.timeParams.period = App.getUrlVar('period') || 60;
 
-    App.ImgLoader.onProgressUpdate = function (filesDone) {};
+    updateProgressBar = function(done,total) {
+        var progressBar = $('.imageLoaderProgress').find('.progress-bar');
+        if(done == total) $('.imageLoaderProgress').hide();
+        else $('.imageLoaderProgress').show();
+
+        progressBar.text(done+'/'+total).css('width',parseInt((done/total)*100)+'%');
+    };
 
 
+    App.ImgLoader.imageFilter = function(){ return this.width > 800;};
+    App.ImgLoader.onProgressUpdate = function(done,total) {
+        updateProgressBar(done,total);
+    };
     var loadPhotos = function (timeParams) {
         if (!timeParams) return;
 
@@ -34,38 +45,35 @@ $(function() {
             App.ImgLoader.onFinish = function () {
                 $('.intro')[0].setFiles(response);
 
-                setInterval(function(){ $('.intro')[0].showNext();}, 600);
-
-
+                $('.intro')[0].startSlideshow(600);
             };
         });
-
     };
 
 
-
     App.initCameraViewer('.intro', {
-        onImageChanged: function () {
-
+        onImageChanged: function (file, index) {
+            $('.photoInfo')[0].file = file;
+            $('.photoInfo').html('#' + index + ' ' + new Date(file.timestamp*1000).toLocaleTimeString());
         }
     });
 
 
+    $('.photoInfo').click(function(){
+        if(!this.file) return;
+        window.open(this.file.url);
+    });
 
-//
-//    $('.photo-control-prev').click(function () {
-//        $($(this).attr('viewer'))[0].showPrev();
-//    });
-//
-//    $('.photo-control-next').click(function () {
-//        $($(this).attr('viewer'))[0].showNext();
-//    });
+    $('.photo-control-prev').click(function () {
+        $($(this).attr('viewer'))[0].showPrev(true);
+    });
+
+    $('.photo-control-next').click(function () {
+        $($(this).attr('viewer'))[0].showNext(true);
+    });
 
 
     loadPhotos(App.timeParams);
-
-
-
 
 
 });
