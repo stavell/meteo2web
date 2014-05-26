@@ -1,4 +1,4 @@
-BASE_URL = '';
+BASE_URL = 'http://stavl.com/meteo2/';
 
 var App = {};
 
@@ -79,7 +79,13 @@ App.initCameraViewer = function(obj, params) {
         el.setImageFromIndex = function(idx) {
             var file = el.getFileByIndex(idx);
             if(!file) return false;
-            $(el).attr({src:file.url});
+
+            if(el.nodeName.toLowerCase() == 'img') {
+                $(el).attr({src:file.url});
+            } else {
+                $(el).css('background-image','url('+file.url+')');
+            }
+
             el.onImageChanged.apply(el,[file]);
             return file;
         }
