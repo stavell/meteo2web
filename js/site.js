@@ -22,7 +22,7 @@ $(function() {
     App.timeParams.timeFrom = App.getUrlVar('timeFrom') || '-1 hour';
     App.timeParams.period = App.getUrlVar('period') || 60;
 
-    updateProgressBar = function(done,total) {
+    var updateProgressBar = function(done,total) {
         var progressBar = $('.imageLoaderProgress').find('.progress-bar');
         if(done == total) $('.imageLoaderProgress').hide();
         else $('.imageLoaderProgress').show();
@@ -53,7 +53,7 @@ $(function() {
     App.initCameraViewer('.intro', {
         onImageChanged: function (file, index) {
             $('.photoInfo')[0].file = file;
-            $('.photoInfo').html('#' + index + ' ' + new Date(file.timestamp*1000).toLocaleTimeString());
+            $('.photoInfo').html(new Date(file.timestamp*1000).toLocaleTimeString());
         }
     });
 
@@ -75,13 +75,13 @@ $(function() {
     loadPhotos(App.timeParams);
 
 
-});
+    });
 
 //Google Map Skin - Get more at http://snazzymaps.com/
 var myOptions = {
-    zoom: 15,
-    center: new google.maps.LatLng(53.385873, -1.471471),
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    zoom: 10,
+    center: new google.maps.LatLng(43.358617472998986, 27.128695869445767),
+    mapTypeId: google.maps.MapTypeId.HYBRID,
     disableDefaultUI: true,
     styles: [{
         "featureType": "water",
@@ -193,4 +193,31 @@ var myOptions = {
     }]
 };
 
+
 var map = new google.maps.Map(document.getElementById('map'), myOptions);
+
+
+var poly = new google.maps.Polygon({
+    paths: [
+        new google.maps.LatLng(43.264378, 26.935230),
+        new google.maps.LatLng(43.451313, 27.063384),
+        new google.maps.LatLng(43.326556, 27.316752),
+        new google.maps.LatLng(43.255500, 26.945280),
+        new google.maps.LatLng(43.264378, 26.935230)
+    ],
+    strokeColor: '#FFFFFF',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FFFFFF',
+    fillOpacity: 0.35
+});
+
+var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(43.252662,26.927483),
+    map: map,
+    title: 'Камера',
+    icon: './assets/img/photo-marker.png'
+});
+
+poly.setMap(map);
+map.setZoom(10);
