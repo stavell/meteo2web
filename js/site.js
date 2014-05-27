@@ -18,9 +18,10 @@ $(function() {
     });
 
 
-
     App.timeParams.timeFrom = App.getUrlVar('timeFrom') || '-1 hour';
     App.timeParams.period = App.getUrlVar('period') || 60;
+
+
 
     var updateProgressBar = function(done,total) {
         var progressBar = $('.imageLoaderProgress').find('.progress-bar');
@@ -35,16 +36,19 @@ $(function() {
     App.ImgLoader.onProgressUpdate = function(done,total) {
         updateProgressBar(done,total);
     };
+
+
+    var imgViewer = $('.intro')[0];
+
     var loadPhotos = function (timeParams) {
         if (!timeParams) return;
-
+        imgViewer.stopSlideshow();
         Server.call('Meteo2.getPhotosForPeriod', [timeParams.timeFrom, timeParams.period], function (response) {
             App.ImgLoader.setFiles(response);
             App.ImgLoader.startLoading();
             App.ImgLoader.onFinish = function () {
-                $('.intro')[0].setFiles(response);
-
-                $('.intro')[0].startSlideshow(600);
+                imgViewer.setFiles(response);
+                imgViewer.startSlideshow(600);
             };
         });
     };
@@ -53,7 +57,7 @@ $(function() {
     App.initCameraViewer('.intro', {
         onImageChanged: function (file, index) {
             $('.photoInfo')[0].file = file;
-            $('.photoInfo').html(new Date(file.timestamp*1000).toLocaleTimeString());
+            $('.photoInfo').html(App.getFormatedDateTime(new Date(file.timestamp*1000)));
         }
     });
 
@@ -75,7 +79,7 @@ $(function() {
     loadPhotos(App.timeParams);
 
 
-    });
+});
 
 //Google Map Skin - Get more at http://snazzymaps.com/
 var myOptions = {

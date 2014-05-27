@@ -50,6 +50,9 @@ App.getFormatedTime = function(date) {
     return (date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes();
 };
 
+App.getFormatedDateTime = function(date) {
+    return date.getDate()+'.'+(date.getMonth()+1)+'.'+(date.getYear()+1990)+' '+(date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes();
+};
 
 
 
