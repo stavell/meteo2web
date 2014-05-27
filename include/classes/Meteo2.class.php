@@ -95,7 +95,7 @@ class Meteo2 {
     public function weatherData($aParams) {
         $aMap = array('p'=>'pressure','h'=>'humidity','t'=>'temperature','w'=>'wind_dir','s'=>'wind_count');
         $aPieces = explode(',',$aParams['data']);
-        if(count($aPieces) < count($aMap)) throw new XCException("Invalid Number of dataparams");
+        if(count($aPieces) < count($aMap)) throw new XCInvalidRequest("Invalid Number of dataparams");
 
         $aData = array('id'=>0);
         foreach($aPieces as $piece) {

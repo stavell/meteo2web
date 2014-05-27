@@ -12,9 +12,11 @@ class XCException extends \Exception {
 
     protected $additionalInfo = array();
 
+    protected $bLog = true;
+
     public function __construct($message = "", $query = "") {
 
-        \DB::insert('logs',array(array(
+        if($this->bLog) \DB::insert('logs',array(array(
             'message' => $message,
             'exception' => var_export(array(
                 'request' => $_REQUEST,
