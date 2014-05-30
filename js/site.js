@@ -19,7 +19,7 @@ $(function() {
 
 
     App.timeParams.timeFrom = App.getUrlVar('timeFrom') || '-1 hour';
-    App.timeParams.period = App.getUrlVar('period') || 60;
+    App.timeParams.period = App.getUrlVar('timeTo') || 60;
 
 
     var updateProgressBar = function(done,total) {
@@ -76,6 +76,13 @@ $(function() {
 
 
     loadPhotos(App.timeParams);
+
+    $(' .input-daterange').datepicker({
+        format: "dd-mm-yyyy",
+        weekStart: 1,
+        autoclose: true,
+        todayHighlight: true
+    });
 
 
 });

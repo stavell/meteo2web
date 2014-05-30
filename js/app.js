@@ -148,6 +148,7 @@ App.initCameraViewer = function(obj, params) {
         }
 
         el.startSlideshow = function(time) {
+            if(el.files.length < 2) return;
             el.stopSlideshow();
             el.delay = time || el.delay;
             el.interval = setInterval(function(){el._showNext(true);}, el.delay);

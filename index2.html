@@ -128,6 +128,13 @@
 </section>
 
 <section id="contact" class="container-fluid content-section text-center">
+
+    <div class="input-daterange input-group" id="datepicker">
+        <input type="text" class="input-sm form-control" name="start" />
+        <span class="input-group-addon"> до </span>
+        <input type="text" class="input-sm form-control" name="end" />
+    </div>
+
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <ul class="list-inline banner-social-buttons">
@@ -136,10 +143,10 @@
                 <li><a href="http://facebook.com/ShumenXC.Paragliding" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>
                 </li>
             </ul>
+
         </div>
         <div id="map"></div>
     </div>
-
 
 </section>
 
@@ -148,14 +155,15 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/datepicker/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
 <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-3807106-7', 'stavl.com');ga('send', 'pageview');</script>
 
 <!-- Custom Theme JavaScript -->
-<script src="js/Server.js"></script>
-<script src="js/site.js"></script>
-<script src="js/app.js"></script>
+<script src="js/Server.min.js"></script>
+<script src="js/site.min.js"></script>
+<script src="js/app.min.js"></script>
 
 
 
