@@ -22,7 +22,6 @@ $(function() {
     App.timeParams.period = App.getUrlVar('period') || 60;
 
 
-
     var updateProgressBar = function(done,total) {
         var progressBar = $('.imageLoaderProgress').find('.progress-bar');
         if(done == total) $('.imageLoaderProgress').hide();
@@ -48,23 +47,23 @@ $(function() {
             App.ImgLoader.startLoading();
             App.ImgLoader.onFinish = function () {
                 imgViewer.setFiles(response);
-                imgViewer.startSlideshow(600);
+                imgViewer.startSlideshow(650);
             };
         });
     };
 
 
     App.initCameraViewer('.intro', {
+
         onImageChanged: function (file, index) {
-            $('.photoInfo')[0].file = file;
             $('.photoInfo').html(App.getFormatedDateTime(new Date(file.timestamp*1000)));
         }
     });
 
-
-    $('.photoInfo').click(function(){
-        if(!this.file) return;
-        window.open(this.file.url);
+    $('.pause-slideshow').hover(function(){
+        imgViewer.stopSlideshow();
+    }, function(){
+        imgViewer.startSlideshow();
     });
 
     $('.photo-control-prev').click(function () {

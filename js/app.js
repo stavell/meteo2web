@@ -1,4 +1,4 @@
-BASE_URL = 'http://stavl.com/meteo2/';
+BASE_URL = 'http://localhost/branches/meteo2web/';
 
 var App = {};
 
@@ -142,6 +142,10 @@ App.initCameraViewer = function(obj, params) {
         el.resetFileIndex = function(bEnd) {
             el.fileIndex = bEnd ? el.files.length-1 : 0;
         };
+
+        el.getCurrentFile = function() {
+            return el.getFileByIndex(el.fileIndex);
+        }
 
         el.startSlideshow = function(time) {
             el.stopSlideshow();
