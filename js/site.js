@@ -77,15 +77,17 @@ $(function() {
 
     loadPhotos(App.timeParams);
 
-    $(' .input-daterange').datepicker({
-        format: "dd-mm-yyyy",
+    $('.input-daterange').datepicker({
+        format: "dd.mm.yyyy",
+        endDate: "today",
         weekStart: 1,
         autoclose: true,
         todayHighlight: true
     });
 
 
-});
+
+    });
 
 //Google Map Skin - Get more at http://snazzymaps.com/
 var myOptions = {

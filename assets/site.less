@@ -1,17 +1,16 @@
 @import "bootstrap/less/bootstrap";
 @import "font-awesome/less/font-awesome";
 
-@import "datepicker/less/datepicker3";
-
 @import "variables";
 
 @import "grayscale";
 
+@import "datepicker/less/datepicker3";
 
 
 .intro {
-  background: url('http://shumen-xc.org/meteo2/uploads/c8ffac92d5a5c21f34deecec7876de6b.jpg');
-  background-color: #000;
+  background: url('http://stavl.com/storage/c8ffac92d5a5c21f34deecec7876de6b.jpg');
+  background-color: @gray-darker;
   background-position: 0 0;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -24,3 +23,22 @@
 }
 
 
+.datepicker {
+  font-family: sans-serif;
+  color: @gray-darker;
+}
+
+.input-daterange {
+  input {
+    font-family: sans-serif;
+  }
+}
+
+.input-timerange {
+  .input-daterange();
+
+}
+
+.modal {
+  color: @gray-darker;
+}

@@ -46,6 +46,9 @@
                 <li class="page-scroll">
                     <a href="#contact">Контакти</a>
                 </li>
+                <li data-toggle="modal" data-target="#settingsPanel">
+                    <a><i class="fa fa-gears"></i> Настройки</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -84,20 +87,19 @@
             <div class="row" style="position: absolute;bottom: 10px;">
                 <blockquote class="text-left">
                     <div class="row">
-                       <ul class="list-unstyled list-inline">
-                           <li>
+                        <ul class="list-unstyled list-inline">
+                            <li>
                                 <span class="btn pause-slideshow"><i class="fa fa-download animated"></i>&nbsp; изтегли</span>
-                           </li>
-                           <li>
+                            </li>
+                            <li>
                                 <span class="btn pause-slideshow"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>
-                           </li>
-                           <li>
-                               <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span class="photoInfo">--.--.---- --:--:--</span></span>
-                           </li>
-                       </ul>
+                            </li>
+                            <li>
+                                <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span class="photoInfo">--.--.---- --:--:--</span></span>
+                            </li>
+                        </ul>
                     </div>
                 </blockquote>
-
             </div>
 
         </div>
@@ -105,6 +107,43 @@
 </section>
 
 <section id="about" class="container content-section text-center">
+
+
+
+    <div class="modal fade" id="settingsPanel" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-left">Настройки</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form form-horizontal text-left">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Период</label>
+
+                            <div class="input-daterange input-group col-sm-9" >
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" class="input-sm form-control" name="dateFrom" />
+                                <span class="input-group-addon"> до </span>
+                                <input type="text" class="input-sm form-control" name="dateTo" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
+                    <button type="button" class="btn btn-primary">ОК</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <h2>About Grayscale</h2>
@@ -128,12 +167,6 @@
 </section>
 
 <section id="contact" class="container-fluid content-section text-center">
-
-    <div class="input-daterange input-group" id="datepicker">
-        <input type="text" class="input-sm form-control" name="start" />
-        <span class="input-group-addon"> до </span>
-        <input type="text" class="input-sm form-control" name="end" />
-    </div>
 
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
