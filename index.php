@@ -76,13 +76,13 @@ $(document).ready(function() {
         var createDataBlock = function(data) {
             var $block = $('#dataBlockPrototype').clone().removeAttr('id');
 
-//            $block.find('.temperature').text(parseFloat(data.temperature).toFixed(1)+' ℃');
-            $block.find('.temperature').text( '--.- ℃');
+            $block.find('.temperature').text(parseFloat(data.temperature).toFixed(1)+' ℃');
             $block.find('.humidity').text(data.humidity+'% rH');
-//            $block.find('.pressure').text(data.pressure+' mb');
-            $block.find('.pressure').text('---'+' mb');
-            $block.find('.windDir').text(data.wind_dir_sym+' '+data.wind_dir+'°');
-            $block.find('.windSpeed').text(data.wind_count+' m/s');
+            $block.find('.pressure').text(data.pressure+' mb');
+//            $block.find('.windDir').text(data.wind_dir_sym+' '+data.wind_dir+'°');
+            $block.find('.windDir').text('---.- °');
+//            $block.find('.windSpeed').text(data.wind_count+' m/s');
+            $block.find('.windSpeed').text('-.- m/s');
 
             var date = new Date(data.timestamp*1000);
             $block.find('.time').text(App.getFormatedTime(date));
