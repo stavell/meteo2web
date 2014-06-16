@@ -53,7 +53,7 @@ Server.sendRequests = function() {
     }
     jQuery.ajax({
         type:'POST',
-        url:BASE_URL+'api.php',
+        url:'api.php',
         data:{
             requests:JSON.stringify(requests)
         },
@@ -85,5 +85,5 @@ Server.sendRequests = function() {
 };
 
 Server.defaultErrorFn = function(e) {
-    alert("Exception: "+e.message);
+    alert(e.message);
 }

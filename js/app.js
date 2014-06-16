@@ -1,5 +1,3 @@
-BASE_URL = 'http://localhost/branches/meteo2web/';
-
 var App = {};
 
 App.timeParams = {

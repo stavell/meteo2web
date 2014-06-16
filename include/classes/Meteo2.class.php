@@ -158,7 +158,7 @@ class Meteo2 {
         $aResult['timeTo']   = date('Y-m-d H:i:s', strtotime($something) > 10000 ? strtotime($something) : (intval($something)*60) + strtotime($timeFrom));
         $aResult['period']   = ceil((strtotime($aResult['timeTo']) - strtotime($aResult['timeFrom'])) / 60);
 
-        if( empty($aResult['timeFrom']) || empty($aResult['timeTo']) || $aResult['period'] <= 0) throw new XCInvalidParam("Invalid time period");
+        if( empty($aResult['timeFrom']) || empty($aResult['timeTo']) || $aResult['period'] <= 0 || $aResult['period'] > 30*24*60) throw new XCInvalidParam("Invalid time period");
 
         return $aResult;
     }
