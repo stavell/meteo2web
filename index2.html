@@ -38,15 +38,15 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#about">Данни</a>
+                    <a href="#data">Данни</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#download">Графики</a>
+                    <a href="#gallery">Галерия</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#contact">Контакти</a>
+                    <a href="#info">Инфо</a>
                 </li>
-                <li data-toggle="modal" data-target="#settingsPanel">
+                <li data-toggle="modal" class="hidden-xs" data-target="#settingsPanel">
                     <a><i class="fa fa-gears"></i> Настройки</a>
                 </li>
             </ul>
@@ -61,13 +61,13 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-sm-6 hidden-xs text-left">
+                <div class="col-sm-6 text-left">
                     <span class="btn photo-control-prev" viewer=".intro">
                         <i class="fa fa-4x fa-fast-backward animated"></i>
                     </span>
                 </div>
 
-                <div class="col-sm-6 hidden-xs text-right">
+                <div class="col-sm-6 text-right">
                     <span class="btn photo-control-next" viewer=".intro">
                         <i class="fa fa-4x fa-fast-forward animated"></i>
                     </span>
@@ -76,7 +76,7 @@
 
 
             <div class="row imageLoaderProgress">
-                <div class="col-sm-12">
+                <div class="col-sm-10 col-sm-push-1">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
                     </div>
@@ -84,31 +84,29 @@
             </div>
 
 
-            <div class="row" style="position: absolute;bottom: 10px;">
-                <blockquote class="text-left">
-                    <div class="row">
+            <div class="row" style="position: absolute; bottom: 10px;">
+                <div class="col-sm-12">
+                    <blockquote class="text-left">
                         <ul class="list-unstyled list-inline">
                             <li>
-                                <span class="btn pause-slideshow"><i class="fa fa-download animated"></i>&nbsp; изтегли</span>
+                                <span class="btn pause-slideshow btn-download-image"><i class="fa fa-download animated"></i>&nbsp; изтегли</span>
                             </li>
                             <li>
-                                <span class="btn pause-slideshow"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>
+                                <span class="btn pause-slideshow btn-pin-image" title="Очаквайте скоро!"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>
                             </li>
                             <li>
                                 <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span class="photoInfo">--.--.---- --:--:--</span></span>
                             </li>
                         </ul>
-                    </div>
-                </blockquote>
+                    </blockquote>
+                </div>
             </div>
 
         </div>
     </div>
 </section>
 
-<section id="about" class="container content-section text-center">
-
-
+<section id="data" class="container content-section text-center">
 
     <div class="modal fade" id="settingsPanel" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -117,44 +115,76 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title text-left">Настройки</h4>
                 </div>
+
                 <div class="modal-body">
 
-                    <div class="form form-horizontal text-left">
+                    <div class="form form-horizontal timePickers">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Период</label>
+                            <div class="col-sm-3 text-right">
+                                <label class="control-label">Начално време</label>
+                            </div>
 
-                            <div class="input-daterange input-group col-sm-9" >
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="input-sm form-control" name="dateFrom" />
-                                <span class="input-group-addon"> до </span>
-                                <input type="text" class="input-sm form-control" name="dateTo" />
+
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="time" class="form-control" name="timeFrom" placeholder="HH:MM" maxlength="5"/>
+                                    <span class="input-group-addon"> <i class="fa fa-clock-o"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="dateFrom" />
+                                    <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <label class="control-label">Крайно време</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="time" class="form-control" name="timeTo" placeholder="HH:MM" maxlength="5"/>
+                                    <span class="input-group-addon"> <i class="fa fa-clock-o"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="dateTo" />
+                                    <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-3 text-right">
+                                <label class="control-label">Времезадържане</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="slideshowInterval" placeholder="500" value="500"/>
+                                    <span class="input-group-addon">ms</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
-                    <button type="button" class="btn btn-primary">ОК</button>
+                    <button type="button" class="btn btn-primary modal-settings-ok-btn">Ок</button>
                 </div>
             </div>
         </div>
     </div>
 
 
-
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <h2>About Grayscale</h2>
-            <p>Grayscale is a premium quality, free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, all you need to do is download the template on the preview page. You can use this template for any purpose, personal or commercial.</p>
-            <p>This striking, black and white theme features stock photographs by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Map skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-            <p>With this template, just the slightest splash of color can make a huge impact on the overall presentation and design.</p>
-        </div>
-    </div>
 </section>
 
-<section id="download" class="content-section text-center">
+<section id="gallery" class="content-section text-center">
     <div class="download-section">
         <div class="container">
             <div class="col-lg-8 col-lg-offset-2">
@@ -166,7 +196,7 @@
     </div>
 </section>
 
-<section id="contact" class="container-fluid content-section text-center">
+<section id="info" class="container-fluid content-section text-center">
 
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">

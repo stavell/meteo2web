@@ -3,8 +3,8 @@ BASE_URL = 'http://localhost/branches/meteo2web/';
 var App = {};
 
 App.timeParams = {
-    timeFrom: '- 1hour',
-    period:60,
+    timeFrom: '-1 hour',
+    timeTo: 60,
     asc: false
 };
 
@@ -72,7 +72,6 @@ App.initCameraViewer = function(obj, params) {
         el.timeout = -1;
 
         el.onImageChanged = params.onImageChanged || function(){};
-
 
 
         el.setFiles = function(files) {
@@ -165,7 +164,17 @@ App.initCameraViewer = function(obj, params) {
             if(el.timeout > -1) clearTimeout(el.timeout);
 
             el.timeout = setTimeout(function(){el.startSlideshow()}, pauseTime || 3500);
-        }
+        };
+
+        el.setDelay = function(d) {
+            el.delay = parseInt(d);
+
+            if(el.interval > -1) {
+                el.stopSlideshow();
+                el.startSlideshow();
+            }
+        };
+
     });
 };
 

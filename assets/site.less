@@ -24,21 +24,33 @@
 
 
 .datepicker {
-  font-family: sans-serif;
   color: @gray-darker;
+  font-family: sans-serif;
+  z-index: 9999 !important;
 }
 
-.input-daterange {
+body {
   input {
     font-family: sans-serif;
   }
 }
 
-.input-timerange {
-  .input-daterange();
-
-}
-
 .modal {
   color: @gray-darker;
+
+  ::-moz-selection {
+    text-shadow: none;
+    background: lighten(@primary, 30%);
+  }
+
+  ::selection {
+    text-shadow: none;
+    background: lighten(@primary, 30%);
+  }
+
+  input {
+    text-align: center;
+  }
+
+
 }
