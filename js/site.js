@@ -96,7 +96,7 @@ $(function() {
 
         var startTime = new Date(new Date().getTime()-(60*60*1000));
 
-        if(1 || new Date().getDate() - startTime.getDate()) $('[name=dateFrom]').datepicker('setDate',[new Date(new Date().getTime()-(24*60*60*1000))]);
+        if(new Date().getDate() - startTime.getDate()) $('[name=dateFrom]').datepicker('setDate',[new Date(new Date().getTime()-(24*60*60*1000))]);
 
         $('[name=timeFrom]').val(App.getFormatedTime(startTime));
         $('[name=timeTo]').val(App.getFormatedTime(new Date()));
