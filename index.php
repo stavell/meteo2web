@@ -73,12 +73,21 @@ $(document).ready(function() {
 
         };
 
+	var baroHeight = function baroHeight(height,obs,temp) {
+        height *=3.2808;
+        temp = temp * 1.8 + 32;
+        temp += 459.67;
+        // Calculate altitude correction
+        var result = 29.92126 * (1 - (1 / Math.pow(10, ((0.0081350 * height) / (temp + (0.00178308 * height))))));
+        return result * 33.8637526
+	}
+
         var createDataBlock = function(data) {
             var $block = $('#dataBlockPrototype').clone().removeAttr('id');
 
             $block.find('.temperature').text(parseFloat(data.temperature).toFixed(1)+' ℃');
             $block.find('.humidity').text(data.humidity+'% rH');
-            $block.find('.pressure').text(data.pressure+' mb');
+            $block.find('.pressure').text(parseFloat(data.pressure + baroHeight(500,parseFloat(data.pressure),parseFloat(data.temperature))).toFixed(0)+' mb');
 //            $block.find('.windDir').text(data.wind_dir_sym+' '+data.wind_dir+'°');
             $block.find('.windDir').text('---.- °');
 //            $block.find('.windSpeed').text(data.wind_count+' m/s');
@@ -294,7 +303,7 @@ $(document).ready(function() {
 </head>
 
 <body>
-<div id="controls">
+<div id="controls" style="display:none">
 
     <div>Старт</div>
 

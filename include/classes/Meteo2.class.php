@@ -36,7 +36,7 @@ class Meteo2 {
            SELECT
                ROUND(AVG(d.temperature),1)		                    AS temperature,
                CEIL(AVG(d.humidity))		 	                    AS humidity,
-               ROUND(AVG(d.pressure))   		                    AS pressure,
+               ROUND(AVG(d.pressure),1)   		                    AS pressure,
                CEIL(
                    DEGREES(
                            ATAN2(

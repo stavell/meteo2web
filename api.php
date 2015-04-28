@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 
 header("Content-type: application/json; charset=UTF-8");
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name');
+header('Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS');
 
 try {
 

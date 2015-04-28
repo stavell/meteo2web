@@ -16,14 +16,6 @@ class XCException extends \Exception {
 
     public function __construct($message = "", $query = "") {
 
-        if($this->bLog) \DB::insert('logs',array(array(
-            'message' => $message,
-            'exception' => var_export(array(
-                'request' => $_REQUEST,
-                'trace' => debug_backtrace(),
-                'additionalInfo' => $this->additionalInfo
-            ),1)
-        )));
 
         parent::__construct($message,$this->code);
     }
