@@ -6,29 +6,26 @@ class Meteo2 {
 
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
 
-    public static function getPhotosForPeriod($from, $nPeriod = 60, $bAsc = true) {
-        $from = $from == date("Y-m-d H:i:s", strtotime($from)) ? $from : date("Y-m-d H:i:s",strtotime($from,time()));
+    public static function getPhotosForPeriod($from, $something = 60, $bAsc = true) {
+        $aTimes = self::makeTimeFromTo($from, $something);
 
         return \DB::query(sprintf("
             SELECT
               UNIX_TIMESTAMP(f.created_time) as timestamp,
               file2url(f.id) AS url
             FROM files f
-            JOIN (
-              SELECT
-                @timeFrom:='%s',
-                @period:=%s
-            ) t
+
             WHERE 1
-            AND f.created_time BETWEEN BINARY @timeFrom AND BINARY DATE_ADD(@timeFrom,INTERVAL @period MINUTE)
+            AND f.created_time BETWEEN '{$aTimes['timeFrom']}' AND '{$aTimes['timeTo']}'
             ORDER BY f.created_time %s
-        ", $from, $nPeriod, $bAsc ? 'ASC' : 'DESC'));
+        ", $bAsc ? 'ASC' : 'DESC'));
     }
 
     //6.5 oborota na propelera za sek = 1 m/s
     //from mysql date or php strtotime argument
-    public static function getWeatherDataForPeriod($from, $nPeriod = 60,$nSegments = 10, $bAsc = false) {
-        $from = $from == date("Y-m-d H:i:s", strtotime($from)) ? $from : date("Y-m-d H:i:s", strtotime($from, time()));
+    public static function getWeatherDataForPeriod($from, $something = 60, $nSegments = 10, $bAsc = false) {
+
+        $aTimes = self::makeTimeFromTo($from, $something);
 
         $nSpeedConstant = floatval(self::$nSpeedConstant);
 
@@ -66,7 +63,7 @@ class Meteo2 {
            ORDER BY d.created_time %s
            LIMIT ".(int)$nSegments;
 
-        $aResult = \DB::query(sprintf($sQuery, (int)$nPeriod, (int)$nSegments, $from, $bAsc ? 'ASC' : 'DESC'));
+        $aResult = \DB::query(sprintf($sQuery, (int)$aTimes['period'], (int)$nSegments, $aTimes['timeFrom'], $bAsc ? 'ASC' : 'DESC'));
 
         foreach($aResult as $k => $v) $aResult[$k]['wind_dir'] = $v['wind_dir'] <= 0 ? 360 + $v['wind_dir'] : $v['wind_dir'];
 
@@ -156,4 +153,18 @@ class Meteo2 {
         } catch( XCException $e) {}
     }
 
+<<<<<<< HEAD
 } 
+=======
+    private static function makeTimeFromTo($timeFrom, $something) {
+        $aResult['timeFrom'] = date('Y-m-d H:i:s', strtotime($timeFrom));
+        $aResult['timeTo']   = date('Y-m-d H:i:s', strtotime($something) > 10000 ? strtotime($something) : (intval($something)*60) + strtotime($timeFrom));
+        $aResult['period']   = ceil((strtotime($aResult['timeTo']) - strtotime($aResult['timeFrom'])) / 60);
+
+        if( empty($aResult['timeFrom']) || empty($aResult['timeTo']) || $aResult['period'] <= 0 || $aResult['period'] > 30*24*60) throw new XCInvalidParam("Invalid time period");
+
+        return $aResult;
+    }
+
+} 
+>>>>>>> 194e4fbcf4796aa5e09c124a85b2d6f03ffde8c8

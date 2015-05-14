@@ -1,10 +1,8 @@
-BASE_URL = 'http://stavl.com/meteo2/';
-
 var App = {};
 
 App.timeParams = {
-    timeFrom: '- 1hour',
-    period:60,
+    timeFrom: '-1 hour',
+    timeTo: 60,
     asc: false
 };
 
@@ -72,7 +70,6 @@ App.initCameraViewer = function(obj, params) {
         el.timeout = -1;
 
         el.onImageChanged = params.onImageChanged || function(){};
-
 
 
         el.setFiles = function(files) {
@@ -143,7 +140,12 @@ App.initCameraViewer = function(obj, params) {
             el.fileIndex = bEnd ? el.files.length-1 : 0;
         };
 
+        el.getCurrentFile = function() {
+            return el.getFileByIndex(el.fileIndex);
+        }
+
         el.startSlideshow = function(time) {
+            if(el.files.length < 2) return;
             el.stopSlideshow();
             el.delay = time || el.delay;
             el.interval = setInterval(function(){el._showNext(true);}, el.delay);
@@ -160,7 +162,17 @@ App.initCameraViewer = function(obj, params) {
             if(el.timeout > -1) clearTimeout(el.timeout);
 
             el.timeout = setTimeout(function(){el.startSlideshow()}, pauseTime || 3500);
-        }
+        };
+
+        el.setDelay = function(d) {
+            el.delay = parseInt(d);
+
+            if(el.interval > -1) {
+                el.stopSlideshow();
+                el.startSlideshow();
+            }
+        };
+
     });
 };
 

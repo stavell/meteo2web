@@ -5,10 +5,12 @@
 
 @import "grayscale";
 
+@import "datepicker/less/datepicker3";
+
 
 .intro {
-  background: url('http://shumen-xc.org/meteo2/uploads/c8ffac92d5a5c21f34deecec7876de6b.jpg');
-  background-color: #000;
+  background: url('http://stavl.com/storage/c8ffac92d5a5c21f34deecec7876de6b.jpg');
+  background-color: @gray-darker;
   background-position: 0 0;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -21,3 +23,34 @@
 }
 
 
+.datepicker {
+  color: @gray-darker;
+  font-family: sans-serif;
+  z-index: 9999 !important;
+}
+
+body {
+  input {
+    font-family: sans-serif;
+  }
+}
+
+.modal {
+  color: @gray-darker;
+
+  ::-moz-selection {
+    text-shadow: none;
+    background: lighten(@primary, 30%);
+  }
+
+  ::selection {
+    text-shadow: none;
+    background: lighten(@primary, 30%);
+  }
+
+  input {
+    text-align: center;
+  }
+
+
+}

@@ -18,10 +18,11 @@ $(function() {
     });
 
 
-    App.timeParams.timeFrom = App.getUrlVar('timeFrom') || '-1 hour';
-    App.timeParams.period = App.getUrlVar('period') || 60;
-
-
+    var updateTimeParams = function(){
+        App.timeParams.timeFrom = App.getUrlVar('timeFrom') || '-1 hour';
+        App.timeParams.timeTo = App.getUrlVar('timeTo') || 60;
+    };
+    updateTimeParams();
 
     var updateProgressBar = function(done,total) {
         var progressBar = $('.imageLoaderProgress').find('.progress-bar');
@@ -38,33 +39,34 @@ $(function() {
     };
 
 
-    var imgViewer = $('.intro')[0];
+    imgViewer = $('.intro')[0];
 
     var loadPhotos = function (timeParams) {
         if (!timeParams) return;
         imgViewer.stopSlideshow();
-        Server.call('Meteo2.getPhotosForPeriod', [timeParams.timeFrom, timeParams.period], function (response) {
+        Server.call('Meteo2.getPhotosForPeriod', [timeParams.timeFrom, timeParams.timeTo], function (response) {
             App.ImgLoader.setFiles(response);
             App.ImgLoader.startLoading();
             App.ImgLoader.onFinish = function () {
                 imgViewer.setFiles(response);
-                imgViewer.startSlideshow(600);
+                imgViewer.startSlideshow();
             };
         });
     };
 
 
     App.initCameraViewer('.intro', {
+
         onImageChanged: function (file, index) {
-            $('.photoInfo')[0].file = file;
             $('.photoInfo').html(App.getFormatedDateTime(new Date(file.timestamp*1000)));
         }
+
     });
 
-
-    $('.photoInfo').click(function(){
-        if(!this.file) return;
-        window.open(this.file.url);
+    $('.pause-slideshow').hover(function(){
+        imgViewer.stopSlideshow();
+    }, function(){
+        imgViewer.startSlideshow();
     });
 
     $('.photo-control-prev').click(function () {
@@ -75,9 +77,56 @@ $(function() {
         $($(this).attr('viewer'))[0].showNext(true);
     });
 
+    $('.btn-download-image').click(function(){
+        window.open(imgViewer.getCurrentFile()['url']);
+    });
 
-    loadPhotos(App.timeParams);
 
+
+    $('[name=dateFrom],[name=dateTo]').datepicker({
+        format: "dd.mm.yyyy",
+        endDate: "today",
+        weekStart: 1,
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    var initModalFields = function(){
+        $('[name=dateFrom],[name=dateTo]').datepicker('setDate',[Date()]);
+
+        var startTime = new Date(new Date().getTime()-(60*60*1000));
+
+        if(new Date().getDate() - startTime.getDate()) $('[name=dateFrom]').datepicker('setDate',[new Date(new Date().getTime()-(24*60*60*1000))]);
+
+        $('[name=timeFrom]').val(App.getFormatedTime(startTime));
+        $('[name=timeTo]').val(App.getFormatedTime(new Date()));
+
+        $('[name=slideshowInterval]').val(imgViewer.delay);
+
+    };
+    initModalFields();
+
+
+    $('.modal-settings-ok-btn').click(function(){
+        var timeFrom = $('[name=dateFrom]').val()+' '+$('[name=timeFrom]').val();
+        var timeTo   = $('[name=dateTo]').val()+' '+$('[name=timeTo]').val();
+
+        imgViewer.setDelay($('[name=slideshowInterval]').val());
+
+        history.pushState(null, null, location.origin+location.pathname+'?timeFrom='+timeFrom+'&timeTo='+timeTo);
+
+        updateTimeParams();
+        loadData();
+    });
+
+
+    var loadData = function(){
+
+        loadPhotos(App.timeParams);
+
+    };
+
+    loadData();
 
 });
 
@@ -219,7 +268,7 @@ var poly = new google.maps.Polygon({
 var marker = new google.maps.Marker({
     position: new google.maps.LatLng(43.252662,26.927483),
     map: map,
-    title: 'Камера',
+    title: 'Камерата!',
     icon: './assets/img/photo-marker.png'
 });
 

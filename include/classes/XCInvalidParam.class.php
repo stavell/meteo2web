@@ -13,7 +13,7 @@ class XCInvalidParam extends XCException {
     protected $message = "Invalid param";
 
     public function __construct($message = "", $code = "") {
-        parent::__construct($this->getMessage(),$this->code);
+        parent::__construct($message,$code);
     }
 
 } 
