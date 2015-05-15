@@ -153,10 +153,8 @@ class Meteo2 {
         } catch( XCException $e) {}
     }
 
-<<<<<<< HEAD
-} 
-=======
     private static function makeTimeFromTo($timeFrom, $something) {
+if($something == 'null' || empty($something)) $something = 60;
         $aResult['timeFrom'] = date('Y-m-d H:i:s', strtotime($timeFrom));
         $aResult['timeTo']   = date('Y-m-d H:i:s', strtotime($something) > 10000 ? strtotime($something) : (intval($something)*60) + strtotime($timeFrom));
         $aResult['period']   = ceil((strtotime($aResult['timeTo']) - strtotime($aResult['timeFrom'])) / 60);
@@ -167,4 +165,3 @@ class Meteo2 {
     }
 
 } 
->>>>>>> 194e4fbcf4796aa5e09c124a85b2d6f03ffde8c8
