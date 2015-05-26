@@ -73,14 +73,14 @@ $(document).ready(function() {
 
         };
 
-	var baroHeight = function baroHeight(height,obs,temp) {
-        height *=3.2808;
-        temp = temp * 1.8 + 32;
-        temp += 459.67;
-        // Calculate altitude correction
-        var result = 29.92126 * (1 - (1 / Math.pow(10, ((0.0081350 * height) / (temp + (0.00178308 * height))))));
-        return result * 33.8637526
-	}
+        var baroHeight = function baroHeight(height,obs,temp) {
+            height *=3.2808;
+            temp = temp * 1.8 + 32;
+            temp += 459.67;
+            // Calculate altitude correction
+            var result = 29.92126 * (1 - (1 / Math.pow(10, ((0.0081350 * height) / (temp + (0.00178308 * height))))));
+            return result * 33.8637526
+        };
 
         var createDataBlock = function(data) {
             var $block = $('#dataBlockPrototype').clone().removeAttr('id');

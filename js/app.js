@@ -142,7 +142,7 @@ App.initCameraViewer = function(obj, params) {
 
         el.getCurrentFile = function() {
             return el.getFileByIndex(el.fileIndex);
-        }
+        };
 
         el.startSlideshow = function(time) {
             if(el.files.length < 2) return;
@@ -179,4 +179,4 @@ App.initCameraViewer = function(obj, params) {
 App.getUrlVar = function(key){
     var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
     return result && unescape(result[1]) || "";
-}
+};

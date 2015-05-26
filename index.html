@@ -12,8 +12,9 @@
     <link href="assets/site.css" rel="stylesheet" type="text/css">
 
     <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -26,7 +27,7 @@
                 <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand" href="#page-top">
-                <i class="fa fa-cloud"></i>  <span class="light">Shumen-XC</span> Meteo 2
+                <i class="fa fa-cloud"></i> <span class="light">Shumen-XC</span> Meteo 2
             </a>
         </div>
 
@@ -38,16 +39,16 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#data">Данни</a>
+                    <a href="#data">Data</a>
                 </li>
-                <li class="page-scroll">
-                    <a href="#gallery">Галерия</a>
-                </li>
-                <li class="page-scroll">
-                    <a href="#info">Инфо</a>
-                </li>
-                <li data-toggle="modal" class="hidden-xs" data-target="#settingsPanel">
-                    <a><i class="fa fa-gears"></i> Настройки</a>
+                <!--<li class="page-scroll">-->
+                <!--<a href="#gallery">Галерия</a>-->
+                <!--</li>-->
+                <!--<li class="page-scroll">-->
+                <!--<a href="#info">Инфо</a>-->
+                <!--</li>-->
+                <li data-toggle="modal"  data-target="#settingsPanel">
+                    <a><i class="fa fa-gears"></i> Settings</a>
                 </li>
             </ul>
         </div>
@@ -78,7 +79,8 @@
             <div class="row imageLoaderProgress">
                 <div class="col-sm-10 col-sm-push-1">
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                             aria-valuemax="100" style="width:0%"></div>
                     </div>
                 </div>
             </div>
@@ -89,13 +91,15 @@
                     <blockquote class="text-left">
                         <ul class="list-unstyled list-inline">
                             <li>
-                                <span class="btn pause-slideshow btn-download-image"><i class="fa fa-download animated"></i>&nbsp; изтегли</span>
+                                <span class="btn pause-slideshow btn-download-image"><i
+                                        class="fa fa-download animated"></i>&nbsp; download</span>
                             </li>
+                            <!--<li>-->
+                            <!--<span class="btn pause-slideshow btn-pin-image" title="Очаквайте скоро!"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>-->
+                            <!--</li>-->
                             <li>
-                                <span class="btn pause-slideshow btn-pin-image" title="Очаквайте скоро!"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>
-                            </li>
-                            <li>
-                                <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span class="photoInfo">--.--.---- --:--:--</span></span>
+                                <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span
+                                        class="photoInfo">--.--.---- --:--:--</span></span>
                             </li>
                         </ul>
                     </blockquote>
@@ -108,7 +112,38 @@
 
 <section id="data" class="container content-section text-center">
 
-    <div class="modal fade" id="settingsPanel" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="row">
+
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <ul class="list-unstyled live-data">
+                    <li class="ws-time"></li>
+                    <li class="ws-windSpeed"><strong>...</strong></li>
+                    <li class="ws-windDir"><strong >...</strong></li>
+                    <li class="ws-temperature"><strong>...</strong></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="col-lg-8 col-lg-offset-2">
+            <table class="table" id="weather_data">
+            </table>
+        </div>
+
+        <table style="display: none">
+            <tr id="weather_row_template">
+                <th scope="row" class="wr-time">12:37</th>
+                <td class="wr-windDir"> NNW (123.4°)</td>
+                <td class="wr-windSpeed">--.- m/s</td>
+                <td class="wr-temperature">12.3 °C</td>
+                <td class="wr-pressure">1034 mb</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="modal fade" id="settingsPanel" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -128,13 +163,14 @@
 
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <input type="time" class="form-control" name="timeFrom" placeholder="HH:MM" maxlength="5"/>
+                                    <input type="time" class="form-control" name="timeFrom" placeholder="HH:MM"
+                                           maxlength="5"/>
                                     <span class="input-group-addon"> <i class="fa fa-clock-o"></i></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="dateFrom" />
+                                    <input type="text" class="form-control" name="dateFrom"/>
                                     <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
@@ -146,13 +182,14 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <input type="time" class="form-control" name="timeTo" placeholder="HH:MM" maxlength="5"/>
+                                    <input type="time" class="form-control" name="timeTo" placeholder="HH:MM"
+                                           maxlength="5"/>
                                     <span class="input-group-addon"> <i class="fa fa-clock-o"></i></span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="dateTo" />
+                                    <input type="text" class="form-control" name="dateTo"/>
                                     <span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
@@ -164,7 +201,8 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="slideshowInterval" placeholder="500" value="500"/>
+                                    <input type="text" class="form-control" name="slideshowInterval" placeholder="500"
+                                           value="500"/>
                                     <span class="input-group-addon">ms</span>
                                 </div>
                             </div>
@@ -175,59 +213,60 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
-                    <button type="button" class="btn btn-primary modal-settings-ok-btn">Ок</button>
+                    <button type="button" class="btn btn-primary modal-settings-ok-btn" data-dismiss="modal">Ок</button>
                 </div>
             </div>
         </div>
     </div>
 
-
 </section>
 
-<section id="gallery" class="content-section text-center">
-    <div class="download-section">
-        <div class="container">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Download Grayscale</h2>
-                <p>You can download Grayscale for free on the download page at Start Bootstrap. You can also get the source code directly from GitHub if you prefer. Additionally, Grayscale is the first Start Bootstrap theme to come with a LESS file for easy color customization!</p>
-                <a href="http://startbootstrap.com/grayscale" class="btn btn-default btn-lg">Visit Download Page</a>
-            </div>
-        </div>
-    </div>
-</section>
 
 <section id="info" class="container-fluid content-section text-center">
 
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <ul class="list-inline banner-social-buttons">
-                <li><a href="http://forums.shumen-xc.org" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-link fa-fw"></i>  <span class="network-name">forums.shumen-xc.org</span></a>
+                <li><a href="http://forums.shumen-xc.org" target="_blank" class="btn btn-default btn-lg"><i
+                        class="fa fa-link fa-fw"></i> <span class="network-name">forums.shumen-xc.org</span></a>
                 </li>
-                <li><a href="http://facebook.com/ShumenXC.Paragliding" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>
+                <li><a href="http://facebook.com/ShumenXC.Paragliding" target="_blank" class="btn btn-default btn-lg"><i
+                        class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>
                 </li>
             </ul>
 
         </div>
-        <div id="map"></div>
+        <div id="map" class="hidden-xs"></div>
     </div>
 
 </section>
 
 
 <!-- Core JavaScript Files -->
-<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/datepicker/js/bootstrap-datepicker.min.js"></script>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
-<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-3807106-7', 'stavl.com');ga('send', 'pageview');</script>
+<script type="text/javascript"
+        src="//maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+<script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-3807106-7', 'stavl.com');
+ga('send', 'pageview');</script>
 
 <!-- Custom Theme JavaScript -->
-<script src="js/Server.min.js"></script>
-<script src="js/site.min.js"></script>
-<script src="js/app.min.js"></script>
-
+<script src="js/Server.js"></script>
+<script src="js/site.js"></script>
+<script src="js/app.js"></script>
 
 
 </body>

@@ -39,7 +39,7 @@ $(function() {
     };
 
 
-    imgViewer = $('.intro')[0];
+    var imgViewer = $('.intro')[0];
 
     var loadPhotos = function (timeParams) {
         if (!timeParams) return;
@@ -120,13 +120,74 @@ $(function() {
     });
 
 
+    var loadWeatherData = function(timeParams) {
+        if (!timeParams) return;
+        Server.call('Meteo2.getWeatherDataForPeriod', [timeParams.timeFrom, timeParams.period, 20, timeParams.asc], function(response){
+            $('#weather_data').html(null);
+            $.each(response,function(idx,data){
+                $('#weather_data').append(makeWeatherTableRow(data));
+            });
+        });
+    };
+
+    var baroHeight = function baroHeight(height,obs,temp) {
+        height *=3.2808;
+        temp = temp * 1.8 + 32;
+        temp += 459.67;
+        // Calculate altitude correction
+        var result = 29.92126 * (1 - (1 / Math.pow(10, ((0.0081350 * height) / (temp + (0.00178308 * height))))));
+        return result * 33.8637526
+    };
+
+    var makeWeatherTableRow = function(data) {
+        var $block = $('#weather_row_template').clone().removeAttr('id');
+
+        $block.find('.wr-temperature').text(parseFloat(data.temperature).toFixed(1)+' ℃');
+        $block.find('.wr-humidity').text(data.humidity+'% rH');
+        $block.find('.wr-pressure').text(parseFloat(data.pressure + baroHeight(500,parseFloat(data.pressure),parseFloat(data.temperature))).toFixed(0)+' mb');
+//            $block.find('.windDir').text(data.wind_dir_sym+' '+data.wind_dir+'°');
+        $block.find('.wr-windDir').text('---.- °');
+//            $block.find('.windSpeed').text(data.wind_count+' m/s');
+        $block.find('.wr-windSpeed').text('-.- m/s');
+
+        var date = new Date(data.timestamp*1000);
+        $block.find('.wr-time').text(App.getFormatedDateTime(date));
+
+        return $block;
+    };
+
     var loadData = function(){
-
         loadPhotos(App.timeParams);
-
+        loadWeatherData(App.timeParams);
     };
 
     loadData();
+
+
+    var ws = new WebSocket('ws://stavl.com:10080');
+
+    ws.onopen= function(){
+        ws.send('weatherData');
+    };
+
+    ws.onerror = function(){
+        console.log(arguments);
+    };
+
+    ws.onmessage = function(m){
+        console.log(m.data);
+        try{
+            var data = JSON.parse(m.data);
+            var date = new Date(data.timestamp*1000);
+
+            $('.live-data').css({opacity: 0.8});
+            $('.ws-time').text('Live data from: ' + (date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes() + ':' + (date.getSeconds()< 10 ? '0':'') + date.getSeconds());
+            $('.ws-windSpeed').html($("<strong></strong>").text('-.- m/s'));
+            $('.ws-windDir').html($("<strong></strong>").text('---.- °'));
+            $('.ws-temperature').html($("<strong></strong>").text(parseFloat(data.temperature).toFixed(1)+' ℃'));
+            $('.live-data').animate({opacity: 0.5}, 500);
+        } catch(e){}
+    };
 
 });
 
@@ -274,3 +335,4 @@ var marker = new google.maps.Marker({
 
 poly.setMap(map);
 map.setZoom(10);
+
