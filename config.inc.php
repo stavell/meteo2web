@@ -1,6 +1,9 @@
 <?php
 mb_internal_encoding("UTF-8");
 
+define('BASE_PATH',dirname(dirname(__FILE__)));
+set_include_path( get_include_path().PATH_SEPARATOR.BASE_PATH.'/');
+
 require_once(dirname(__FILE__).'config.php');
 
 class Autoloader {
