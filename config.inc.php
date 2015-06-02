@@ -1,7 +1,7 @@
 <?php
 mb_internal_encoding("UTF-8");
 
-require_once('config.php');
+require_once(dirname(__FILE__).'config.php');
 
 class Autoloader {
     public static $aPaths = array();
