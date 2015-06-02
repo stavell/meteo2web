@@ -8,3 +8,5 @@ $nLastDataTime = strtotime(\DB::queryFirstField('SELECT created_time FROM data O
 if($nLastDataTime < strtotime("-5 min") || $nLastPhotoTime < strtotime("-15 min") ) {
     mail("svelchev@gmail.com, stavel@icloud.com", "Shumen-XC Meteo Alert", "Last photo: ".date("Y-m-d H:i:s",$nLastPhotoTime)."\n"."Last data: ".date("Y-m-d H:i:s",$nLastDataTime));
 }
+
+echo date("Y-m-d H:i:s");
