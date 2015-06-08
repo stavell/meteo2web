@@ -6,7 +6,7 @@ $nLastPhotoTime = strtotime(DB::queryFirstField('SELECT created_time FROM files 
 $nLastDataTime = strtotime(DB::queryFirstField('SELECT created_time FROM data ORDER BY created_time desc limit 1'));
 
 $matches=array();
-preg_match('/\d{0,}(?=%\s)/', shell_exec('df -h | grep /dev/disk0s2'), $matches);
+preg_match('/\d{0,}(?=%\s)/', shell_exec('df -h | grep '.ROOT_DISK), $matches);
 $diskUsagePercentage = intval(reset($matches));
 
 
