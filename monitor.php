@@ -10,7 +10,7 @@ preg_match('/\d{0,}(?=%\s)/', shell_exec('df -h | grep '.ROOT_DISK), $matches);
 $diskUsagePercentage = intval(reset($matches));
 
 
-if($nLastDataTime < strtotime("-5 min") || $nLastPhotoTime < strtotime("-15 min") || $diskUsagePercentage >= 90) {
+if($nLastDataTime < strtotime("-5 min") || $nLastPhotoTime < strtotime("-15 min") || $diskUsagePercentage >= 98) {
     mail("svelchev@gmail.com, stavel@icloud.com, zlati.dimitrov@gmail.com", "Shumen-XC Meteo Alert", "Disk usage: ".$diskUsagePercentage."%"."\n"."Last photo: ".date("Y-m-d H:i:s",$nLastPhotoTime)."\n"."Last data: ".date("Y-m-d H:i:s",$nLastDataTime)."\n".'http://stavl.com/meteo2/smsReboot.php');
 }
 
