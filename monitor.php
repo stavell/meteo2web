@@ -11,7 +11,7 @@ $diskUsagePercentage = intval(reset($matches));
 
 
 if($nLastDataTime < strtotime("-5 min") || $nLastPhotoTime < strtotime("-15 min") || $diskUsagePercentage >= 90) {
-    mail("svelchev@gmail.com, stavel@icloud.com, zlati.dimitrov@gmail.com", "Shumen-XC Meteo Alert", "Disk usage: ".$diskUsagePercentage."%"."\n"."Last photo: ".date("Y-m-d H:i:s",$nLastPhotoTime)."\n"."Last data: ".date("Y-m-d H:i:s",$nLastDataTime)."\n"."Send SMS to +359876277058 to reboot. \n https://www.vivaonline.bg \n svelchev@gmail.com / Stanislav64");
+    mail("svelchev@gmail.com, stavel@icloud.com, zlati.dimitrov@gmail.com", "Shumen-XC Meteo Alert", "Disk usage: ".$diskUsagePercentage."%"."\n"."Last photo: ".date("Y-m-d H:i:s",$nLastPhotoTime)."\n"."Last data: ".date("Y-m-d H:i:s",$nLastDataTime)."\n".'<a href="http://stavl.com/meteo2/smsReboot.php">Изпрати SMS рестарт</a>');
 }
 
 echo date("Y-m-d H:i:s");
