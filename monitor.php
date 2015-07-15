@@ -11,7 +11,7 @@ $diskUsagePercentage = intval(reset($matches));
 
 
 if($nLastDataTime < strtotime("-10 min") || $nLastPhotoTime < strtotime("-20 min") || $diskUsagePercentage >= 98) {
-    mail("svelchev@gmail.com, stavel@icloud.com, zlati.dimitrov@gmail.com", "Shumen-XC Meteo Alert", "Disk usage: ".$diskUsagePercentage."%"."\n"."Last photo: ".date("Y-m-d H:i:s",$nLastPhotoTime)."\n"."Last data: ".date("Y-m-d H:i:s",$nLastDataTime)."\n".'http://stavl.com/meteo2/smsReboot.php');
+    mail("svelchev@gmail.com, stavel@icloud.com", "Shumen-XC Meteo Alert", "Disk usage: ".$diskUsagePercentage."%"."\n"."Last photo: ".date("Y-m-d H:i:s",$nLastPhotoTime)."\n"."Last data: ".date("Y-m-d H:i:s",$nLastDataTime)."\n".'http://stavl.com/meteo2/smsReboot.php');
 }
 
 echo date("Y-m-d H:i:s");
