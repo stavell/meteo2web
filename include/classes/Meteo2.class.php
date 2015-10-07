@@ -2,6 +2,8 @@
 
 namespace shumenxc;
 
+use Facebook\Authentication\AccessTokenMetadata;
+use Facebook\Authentication\OAuth2Client;
 use Facebook\Facebook;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphUser;
@@ -190,8 +192,14 @@ class Meteo2 {
         return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
     }
 
-    public function getCurrentUserInfo() {
-        if(empty($_SESSION['fb_access_token'])) throw new \Exception("Access denied");
+
+    public function getCurrentFBUserInfo() {
+        if(empty($_SESSION['fb_access_token'])) return false;
+        return $this->getFBUserInfo($_SESSION['fb_access_token']);
+    }
+
+    public function getFBUserInfo($authToken) {
+        if(empty($authToken)) throw new \Exception("No auth token");
 
         /** @var FacebookResponse $response */
         $response = self::getFB()->get('/me?fields=id,name,email', $_SESSION['fb_access_token']);
@@ -199,7 +207,16 @@ class Meteo2 {
         /** @var GraphUser $user */
         $user = $response->getGraphUser();
 
-        return $user->asArray();
+        /** @var OAuth2Client $oAuth2Client */
+        $oAuth2Client = self::getFB()->getOAuth2Client();
+
+        /** @var AccessTokenMetadata $tokenMetadata */
+        $tokenMetadata = $oAuth2Client->debugToken($authToken);
+
+        return array(
+            'user' => $user->asArray(),
+            'tokenMetadata' => $tokenMetadata->getMetadata(),
+        );
     }
 
 
