@@ -189,13 +189,17 @@ $(function() {
     };
 
 
-    $(".fb-login").click(function(){
-        Server.call('FbUsers.getLoginURL',null,function(url){
-            window.open(url,'_blank');
+    if(window.location.hash == '#fblogin'){
+        Server.call('FbUsers.getCurrentUserInfo',null,function(info){
+            console.log(info);
         });
-    });
-
-
+    } else {
+        $(".fb-login").click(function(){
+            Server.call('FbUsers.getLoginURL',null,function(url){
+                window.open(url,'_blank');
+            });
+        });
+    }
 
 });
 
