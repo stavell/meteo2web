@@ -2,31 +2,10 @@
 
 namespace shumenxc;
 
-use Facebook\Authentication\AccessTokenMetadata;
-use Facebook\Authentication\OAuth2Client;
-use Facebook\Facebook;
-use Facebook\FacebookResponse;
-use Facebook\GraphNodes\GraphUser;
 
 class Meteo2 {
 
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
-
-    private static $fb = null;
-
-    /**
-     * @return Facebook
-     */
-    public static function getFB() {
-        if(!self::$fb){
-            self::$fb = new Facebook([
-                'app_id' => '1085641581447273',
-                'app_secret' => FB_APP_SECRET,
-                'default_graph_version' => 'v2.4',
-            ]);
-        }
-        return self::$fb;
-    }
 
     public static function getPhotosForPeriod($from, $something = 60, $bAsc = true) {
         $aTimes = self::makeTimeFromTo($from, $something);
@@ -184,40 +163,6 @@ class Meteo2 {
         if( empty($aResult['timeFrom']) || empty($aResult['timeTo']) || $aResult['period'] <= 0 || $aResult['period'] > 30*24*60) throw new XCInvalidParam("Invalid time period");
 
         return $aResult;
-    }
-
-    public function getFBLoginURL() {
-        $helper = self::getFB()->getRedirectLoginHelper();
-        $permissions = ['email','public_profile'];
-        return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
-    }
-
-
-    public function getCurrentFBUserInfo() {
-        if(empty($_SESSION['fb_access_token'])) return false;
-        return $this->getFBUserInfo($_SESSION['fb_access_token']);
-    }
-
-    public function getFBUserInfo($authToken) {
-        if(empty($authToken)) throw new \Exception("No auth token");
-
-        /** @var FacebookResponse $response */
-        $response = self::getFB()->get('/me?fields=id,name,email', $_SESSION['fb_access_token']);
-
-        /** @var GraphUser $user */
-        $user = $response->getGraphUser();
-
-        /** @var OAuth2Client $oAuth2Client */
-        $oAuth2Client = self::getFB()->getOAuth2Client();
-
-        /** @var AccessTokenMetadata $tokenMetadata */
-        $tokenMetadata = $oAuth2Client->debugToken($authToken);
-
-        return array(
-            'user' => $user->asArray(),
-            'tokenExpiresAt' => $tokenMetadata->getExpiresAt(),
-            'tokenIssuedAt' => $tokenMetadata->getIssuedAt(),
-        );
     }
 
 

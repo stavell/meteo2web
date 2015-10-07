@@ -2,7 +2,7 @@
 
 require_once('config.inc.php');
 
-$helper = \shumenxc\Meteo2::getFB()->getRedirectLoginHelper();
+$helper = \shumenxc\FbUsers::getFB()->getRedirectLoginHelper();
 
 try {
     $accessToken = $helper->getAccessToken();
@@ -30,10 +30,11 @@ if (! isset($accessToken)) {
     exit;
 }
 
-$oAuth2Client = \shumenxc\Meteo2::getFB()->getOAuth2Client();
-$tokenMetadata = $oAuth2Client->debugToken($accessToken);
-$tokenMetadata->validateExpiration();
-
-$_SESSION['fb_access_token'] = $accessToken->getValue();
+try{
+    \shumenxc\FbUsers::logUser($accessToken);
+} catch (Exception $e) {
+    var_dump($e->getMessage());
+    die;
+}
 
 header('Location: http://stavl.com/meteo2');
