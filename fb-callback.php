@@ -2,13 +2,7 @@
 
 require_once('config.inc.php');
 
-$fb = new Facebook\Facebook([
-    'app_id' => '1085641581447273',
-    'app_secret' => FB_APP_SECRET,
-    'default_graph_version' => 'v2.4',
-]);
-
-$helper = $fb->getRedirectLoginHelper();
+$helper = \shumenxc\Meteo2::getFB()->getRedirectLoginHelper();
 
 try {
     $accessToken = $helper->getAccessToken();
@@ -36,38 +30,10 @@ if (! isset($accessToken)) {
     exit;
 }
 
-// Logged in
-echo '<h3>Access Token</h3>';
-var_dump($accessToken->getValue());
-
-// The OAuth 2.0 client handler helps us manage access tokens
-$oAuth2Client = $fb->getOAuth2Client();
-
-// Get the access token metadata from /debug_token
+$oAuth2Client = \shumenxc\Meteo2::getFB()->getOAuth2Client();
 $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-echo '<h3>Metadata</h3>';
-var_dump($tokenMetadata);
-
-// Validation (these will throw FacebookSDKException's when they fail)
-$tokenMetadata->validateAppId($config['app_id']);
-// If you know the user ID this access token belongs to, you can validate it here
-// $tokenMetadata->validateUserId('123');
 $tokenMetadata->validateExpiration();
 
-if (! $accessToken->isLongLived()) {
-    // Exchanges a short-lived access token for a long-lived one
-    try {
-        $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-    } catch (Facebook\Exceptions\FacebookSDKException $e) {
-        echo "<p>Error getting long-lived access token: " . $helper->getMessage() . "</p>";
-        exit;
-    }
-    echo '<h3>Long-lived</h3>';
-    var_dump($accessToken->getValue());
-}
+$_SESSION['fb_access_token'] = $accessToken->getValue();
 
-$_SESSION['fb_access_token'] = (string) $accessToken;
-
-// User is logged in with a long-lived access token.
-// You can redirect them to a members-only page.
-// header('Location: https://example.com/members.php');
+header('Location: http://stavl.com/meteo2');

@@ -3,10 +3,28 @@
 namespace shumenxc;
 
 use Facebook\Facebook;
+use Facebook\FacebookResponse;
+use Facebook\GraphNodes\GraphUser;
 
 class Meteo2 {
 
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
+
+    private static $fb = null;
+
+    /**
+     * @return Facebook
+     */
+    public static function getFB() {
+        if(!self::$fb){
+            self::$fb = new Facebook([
+                'app_id' => '1085641581447273',
+                'app_secret' => FB_APP_SECRET,
+                'default_graph_version' => 'v2.4',
+            ]);
+        }
+        return self::$fb;
+    }
 
     public static function getPhotosForPeriod($from, $something = 60, $bAsc = true) {
         $aTimes = self::makeTimeFromTo($from, $something);
@@ -167,18 +185,22 @@ class Meteo2 {
     }
 
     public function getFBLoginURL() {
-        $fb = new Facebook([
-            'app_id' => '1085641581447273',
-            'app_secret' => FB_APP_SECRET,
-            'default_graph_version' => 'v2.4',
-        ]);
-
-        $helper = $fb->getRedirectLoginHelper();
+        $helper = self::getFB()->getRedirectLoginHelper();
         $permissions = ['email','public_profile'];
         return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
     }
 
+    public function getCurrentUserInfo() {
+        if(empty($_SESSION['fb_access_token'])) throw new \Exception("Access denied");
 
+        /** @var FacebookResponse $response */
+        $response = self::getFB()->get('/me?fields=id,name', $_SESSION['fb_access_token']);
+
+        /** @var GraphUser $user */
+        $user = $response->getGraphUser();
+
+        return $user->asArray();
+    }
 
 
 } 
