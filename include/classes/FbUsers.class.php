@@ -76,8 +76,6 @@ class FbUsers {
     }
 
     public static function getUserInfo($accessToken) {
-        self::isLoggedIn();
-
         /** @var FacebookResponse $response */
         $response = self::getFB()->get('/me?fields=id,name,email', $_SESSION['fb_access_token']);
 
@@ -95,6 +93,10 @@ class FbUsers {
             'token_issued_at' => $tokenMetadata->getIssuedAt() ? $tokenMetadata->getIssuedAt()->getTimestamp() : 0,
             'token_expires_at' => $tokenMetadata->getExpiresAt() ? $tokenMetadata->getExpiresAt()->getTimestamp() : 0,
         );
+    }
+
+    public function logOut() {
+
     }
 
 } 
