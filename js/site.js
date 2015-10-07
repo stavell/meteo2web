@@ -175,7 +175,6 @@ $(function() {
     };
 
     ws.onmessage = function(m){
-        console.log(m.data);
         try{
             var data = JSON.parse(m.data);
             var date = new Date(data.timestamp*1000);
