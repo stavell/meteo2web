@@ -162,7 +162,7 @@ $(function() {
             if(info['login_url']) {
                 $(".fb-login").click(function(){
                     Server.call('FbUsers.getLoginURL',null,function(url){
-                        window.open(url,'_blank');
+                        window.open(url['login_url'],'_blank');
                     });
                 });
             } else {
