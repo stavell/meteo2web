@@ -37,4 +37,4 @@ try{
     die;
 }
 
-header('Location: http://stavl.com/meteo2');
+header('Location: http://stavl.com/meteo2#'.$_REQUEST['redirect_hash']);

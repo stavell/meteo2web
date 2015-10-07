@@ -188,6 +188,15 @@ $(function() {
         } catch(e){}
     };
 
+
+    $(".fb-login").click(function(){
+        Server.call('FbUsers.getLoginURL',null,function(url){
+            window.open(url,'_blank');
+        });
+    });
+
+
+
 });
 
 //Google Map Skin - Get more at http://snazzymaps.com/

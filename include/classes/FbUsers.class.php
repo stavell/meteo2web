@@ -67,7 +67,7 @@ class FbUsers {
     public function getLoginURL() {
         $helper = self::getFB()->getRedirectLoginHelper();
         $permissions = ['email','public_profile'];
-        return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
+        return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php?redirect_hash=fblogin', $permissions);
     }
 
     public function getCurrentUserInfo() {
