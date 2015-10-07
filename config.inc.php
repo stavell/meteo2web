@@ -3,6 +3,7 @@ mb_internal_encoding("UTF-8");
 
 define('BASE_PATH',dirname(__FILE__));
 set_include_path(get_include_path().PATH_SEPARATOR.BASE_PATH.'/');
+session_start();
 
 require_once('config.php');
 
