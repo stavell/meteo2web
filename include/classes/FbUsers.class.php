@@ -42,8 +42,8 @@ class FbUsers {
             } catch (\Exception $e) {}
         }
 
-        $userInfo = self::getUserInfo($accessToken);
-        $_SESSION['user'] = $userInfo;
+        $userInfo = self::getUserInfoFromToken($accessToken);
+        $_SESSION['user_info'] = $userInfo;
 
         $user = array(
             'user_id' => $userInfo['user']['id'],
@@ -58,24 +58,22 @@ class FbUsers {
     }
 
     public static function isLoggedIn() {
-        if(empty($_SESSION['fb_access_token'])) throw new XCAuthFailed();
-
-        $user = \DB::queryFirstRow("SELECT user_id FROM fb_users WHERE token = '{$_SESSION['fb_access_token']}' AND token_expires_at > NOW()");
-        if(empty($user)) throw new XCAuthFailed;
+        if(empty($_SESSION['fb_access_token']) || $_SESSION['token_expires_at'] < time()) return false;
+        return true;
     }
 
     public function getLoginURL() {
         $helper = self::getFB()->getRedirectLoginHelper();
         $permissions = ['email','public_profile'];
-        return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php?redirect_hash=fblogin', $permissions);
+        return array('login_url' => $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php?redirect_hash=fblogin', $permissions));
     }
 
-    public function getCurrentUserInfo() {
-        self::isLoggedIn();
-        return $this->getUserInfo($_SESSION['fb_access_token']);
+    public static function getCurrentUserInfo() {
+        if(!self::isLoggedIn()) return self::getLoginURL();
+        return $_SESSION['user_info'];
     }
 
-    public static function getUserInfo($accessToken) {
+    public static function getUserInfoFromToken($accessToken) {
         /** @var FacebookResponse $response */
         $response = self::getFB()->get('/me?fields=id,name,email', $accessToken);
 

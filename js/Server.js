@@ -1,7 +1,7 @@
 var Server = {};
 
 Server.requestBuffer = [];
-Server.sendRequestWaitTimer = -1;
+Server.sendRequestWaitTimer = 5;
 Server.sendRequestWaitTime = 100;
 
 Server.call = function(target, params, successFn, errorFn, context) {

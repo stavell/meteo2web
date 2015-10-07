@@ -159,6 +159,7 @@ $(function() {
     var loadData = function(){
         loadPhotos(App.timeParams);
         loadWeatherData(App.timeParams);
+        loadUserInfo();
     };
 
     loadData();
@@ -188,18 +189,21 @@ $(function() {
         } catch(e){}
     };
 
-
-    if(window.location.hash == '#fblogin'){
+    var loadUserInfo = function() {
         Server.call('FbUsers.getCurrentUserInfo',null,function(info){
-            console.log(info);
+            if(info['login_url']) {
+                $(".fb-login").click(function(){
+                    Server.call('FbUsers.getLoginURL',null,function(url){
+                        window.open(url,'_blank');
+                    });
+                });
+            } else {
+                $(".fb-login").off('click');
+                $(".fb-title").text(info['user']['name']);
+            }
         });
-    } else {
-        $(".fb-login").click(function(){
-            Server.call('FbUsers.getLoginURL',null,function(url){
-                window.open(url,'_blank');
-            });
-        });
-    }
+    };
+
 
 });
 
