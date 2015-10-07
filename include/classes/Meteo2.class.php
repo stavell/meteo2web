@@ -194,7 +194,7 @@ class Meteo2 {
         if(empty($_SESSION['fb_access_token'])) throw new \Exception("Access denied");
 
         /** @var FacebookResponse $response */
-        $response = self::getFB()->get('/me?fields=id,name', $_SESSION['fb_access_token']);
+        $response = self::getFB()->get('/me', $_SESSION['fb_access_token']);
 
         /** @var GraphUser $user */
         $user = $response->getGraphUser();
