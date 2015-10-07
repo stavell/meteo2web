@@ -167,7 +167,6 @@ class Meteo2 {
     }
 
     public function getFBLoginURL() {
-
         $fb = new Facebook([
             'app_id' => '1085641581447273',
             'app_secret' => FB_APP_SECRET,
@@ -175,10 +174,11 @@ class Meteo2 {
         ]);
 
         $helper = $fb->getRedirectLoginHelper();
-
-        $permissions = ['email']; // Optional permissions
+        $permissions = ['email','public_profile'];
         return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
     }
+
+
 
 
 } 
