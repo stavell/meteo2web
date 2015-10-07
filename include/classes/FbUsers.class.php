@@ -94,7 +94,7 @@ class FbUsers {
     }
 
     public function logOut() {
-
+        $_SESSION = array();
     }
 
 } 
