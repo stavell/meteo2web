@@ -60,7 +60,7 @@ class FbUsers {
     public static function isLoggedIn() {
         if(empty($_SESSION['fb_access_token'])) throw new XCAuthFailed();
 
-        $user = \DB::queryFirstRow("SELECT id_user FROM fb_users WHERE token = {$_SESSION['fb_access_token']} AND token_expires_at > NOW()");
+        $user = \DB::queryFirstRow("SELECT userid FROM fb_users WHERE token = {$_SESSION['fb_access_token']} AND token_expires_at > NOW()");
         if(empty($user)) throw new XCAuthFailed;
     }
 
