@@ -36,5 +36,6 @@ try{
     var_dump($e->getMessage());
     die;
 }
-?>
-<script>window.close();</script>
+header('Location: http://stavl.com/meteo2');
+
+
