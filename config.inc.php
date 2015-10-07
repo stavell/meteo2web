@@ -1,6 +1,9 @@
 <?php
 mb_internal_encoding("UTF-8");
 
+define('BASE_PATH',dirname(__FILE__));
+set_include_path(get_include_path().PATH_SEPARATOR.BASE_PATH.'/');
+
 require_once('config.php');
 
 class Autoloader {
@@ -24,12 +27,13 @@ class Autoloader {
 }
 Autoloader::$aPaths = array(
     '' => array(
-        '',
-        'include',
+        BASE_PATH.'/',
+        BASE_PATH.'/include',
+        BASE_PATH.get_include_path(),
         get_include_path(),
     ),
     'shumenxc\\' => array(
-        'include/classes'
+        BASE_PATH.'/include/classes'
     )
 );
 spl_autoload_register(array('Autoloader','autoload'));
