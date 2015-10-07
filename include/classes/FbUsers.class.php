@@ -50,8 +50,8 @@ class FbUsers {
             'name'    => $userInfo['user']['name'],
             'email'   => $userInfo['user']['email'],
             'token'   => $accessToken->getValue(),
-            'token_issued_at'  => $userInfo['token_issued_at'] ? date('Y-m-d H:i:s',$userInfo['token_issued_at']->getTimestamp()) : 0,
-            'token_expires_at' => $userInfo['token_expires_at'] ? date('Y-m-d H:i:s',$userInfo['token_expires_at']->getTimestamp()) : 0,
+            'token_issued_at'  => date('Y-m-d H:i:s',$userInfo['token_issued_at']),
+            'token_expires_at' => date('Y-m-d H:i:s',$userInfo['token_expires_at']),
         );
 
         \DB::insertUpdate('fb_users', $user);
@@ -94,8 +94,8 @@ class FbUsers {
 
         return array(
             'user' => $user->asArray(),
-            'tokenExpiresAt' => $tokenMetadata->getExpiresAt(),
-            'tokenIssuedAt' => $tokenMetadata->getIssuedAt(),
+            'token_issued_at' => $tokenMetadata->getIssuedAt() ? $tokenMetadata->getIssuedAt()->getTimestamp() : 0,
+            'token_expires_at' => $tokenMetadata->getExpiresAt() ? $tokenMetadata->getExpiresAt()->getTimestamp() : 0,
         );
     }
 
