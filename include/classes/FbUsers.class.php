@@ -64,21 +64,19 @@ class FbUsers {
         if(empty($user)) throw new XCAuthFailed;
     }
 
-
-    public function getFBLoginURL() {
+    public function getLoginURL() {
         $helper = self::getFB()->getRedirectLoginHelper();
         $permissions = ['email','public_profile'];
         return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
     }
 
-
-    public function getCurrentFBUserInfo() {
-        if(empty($_SESSION['fb_access_token'])) return false;
+    public function getCurrentUserInfo() {
+        self::isLoggedIn();
         return $this->getUserInfo($_SESSION['fb_access_token']);
     }
 
     public static function getUserInfo($accessToken) {
-        if(empty($accessToken)) throw new \Exception("No auth token");
+        self::isLoggedIn();
 
         /** @var FacebookResponse $response */
         $response = self::getFB()->get('/me?fields=id,name,email', $_SESSION['fb_access_token']);
