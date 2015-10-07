@@ -166,6 +166,7 @@ $(function() {
                         window.open(url['login_url'],'_blank');
                     });
                 });
+                $(".fb-title").text("login");
             } else {
                 $(".fb-login").off('click');
                 $(".fb-login").click(function(){
