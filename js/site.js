@@ -160,6 +160,7 @@ $(function() {
     var loadUserInfo = function() {
         Server.call('FbUsers.getCurrentUserInfo',null,function(info){
             if(info['login_url']) {
+                $(".fb-login").off('click');
                 $(".fb-login").click(function(){
                     Server.call('FbUsers.getLoginURL',null,function(url){
                         window.open(url['login_url'],'_blank');
