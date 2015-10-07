@@ -58,7 +58,7 @@ class FbUsers {
     }
 
     public static function isLoggedIn() {
-        if(empty($_SESSION['fb_access_token']) || $_SESSION['token_expires_at'] < time()) return false;
+        if(empty($_SESSION['fb_access_token']) || (isset($_SESSION['token_expires_at']) && $_SESSION['token_expires_at'] < time())) return false;
         return true;
     }
 
