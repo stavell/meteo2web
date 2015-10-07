@@ -33,3 +33,5 @@ Autoloader::$aPaths = array(
     )
 );
 spl_autoload_register(array('Autoloader','autoload'));
+
+require_once __DIR__ . '/vendor/autoload.php';

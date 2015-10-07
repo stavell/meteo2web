@@ -2,6 +2,8 @@
 
 namespace shumenxc;
 
+use Facebook\Facebook;
+
 class Meteo2 {
 
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
@@ -154,7 +156,7 @@ class Meteo2 {
     }
 
     private static function makeTimeFromTo($timeFrom, $something) {
-if($something == 'null' || empty($something)) $something = 60;
+        if($something == 'null' || empty($something)) $something = 60;
         $aResult['timeFrom'] = date('Y-m-d H:i:s', strtotime($timeFrom));
         $aResult['timeTo']   = date('Y-m-d H:i:s', strtotime($something) > 10000 ? strtotime($something) : (intval($something)*60) + strtotime($timeFrom));
         $aResult['period']   = ceil((strtotime($aResult['timeTo']) - strtotime($aResult['timeFrom'])) / 60);
@@ -163,5 +165,20 @@ if($something == 'null' || empty($something)) $something = 60;
 
         return $aResult;
     }
+
+    public function getFBLoginURL() {
+
+        $fb = new Facebook([
+            'app_id' => '1085641581447273',
+            'app_secret' => '{your-app-secret}',
+            'default_graph_version' => 'v2.4',
+        ]);
+
+        $helper = $fb->getRedirectLoginHelper();
+
+        $permissions = ['email']; // Optional permissions
+        return $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions);
+    }
+
 
 } 
