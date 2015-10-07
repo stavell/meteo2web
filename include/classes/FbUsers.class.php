@@ -28,11 +28,15 @@ class FbUsers {
 
     /**
      * @param AccessToken $accessToken
+     * @throws XCAuthFailed
+     * @throws \Exception
      */
     public static function logUser(AccessToken $accessToken) {
         $userInfo = self::getUserInfo($accessToken);
         $_SESSION['user'] = $userInfo;
         $_SESSION['fb_access_token'] = $accessToken->getValue();
+
+        if(!self::getFB()->getOAuth2Client()->debugToken($accessToken)->getIsValid()) throw new XCAuthFailed;
 
         if(!$accessToken->isLongLived()) {
             try {
