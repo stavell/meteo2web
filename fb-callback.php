@@ -36,5 +36,5 @@ try{
     var_dump($e->getMessage());
     die;
 }
-
-header('Location: http://stavl.com/meteo2#'.$_REQUEST['redirect_hash']);
+?>
+<script>window.close();</script>

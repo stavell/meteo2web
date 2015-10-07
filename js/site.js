@@ -163,7 +163,7 @@ $(function() {
                 $(".fb-login").off('click');
                 $(".fb-login").click(function(){
                     Server.call('FbUsers.getLoginURL',null,function(url){
-                        window.open(url['login_url'],'_blank');
+                        window.open('login.php?url='+encodeURIComponent(url['login_url']), '_blank');
                     });
                 });
                 $(".fb-title").text("login");
