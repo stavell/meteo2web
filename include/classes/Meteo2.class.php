@@ -170,7 +170,7 @@ class Meteo2 {
 
         $fb = new Facebook([
             'app_id' => '1085641581447273',
-            'app_secret' => '{your-app-secret}',
+            'app_secret' => FB_APP_SECRET,
             'default_graph_version' => 'v2.4',
         ]);
 
