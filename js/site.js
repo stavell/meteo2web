@@ -167,6 +167,9 @@ $(function() {
                 });
             } else {
                 $(".fb-login").off('click');
+                $(".fb-login").click(function(){
+                    if(confirm("Logout?")) Server.call('FbUsers.logOut',null,function(){});
+                });
                 $(".fb-title").text(info['user']['name']);
             }
         });
