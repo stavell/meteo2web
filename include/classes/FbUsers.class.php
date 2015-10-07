@@ -77,7 +77,7 @@ class FbUsers {
 
     public static function getUserInfo($accessToken) {
         /** @var FacebookResponse $response */
-        $response = self::getFB()->get('/me?fields=id,name,email', $_SESSION['fb_access_token']);
+        $response = self::getFB()->get('/me?fields=id,name,email', $accessToken);
 
         /** @var GraphUser $user */
         $user = $response->getGraphUser();
