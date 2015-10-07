@@ -89,7 +89,7 @@ if(!empty($_REQUEST['reboot'])) {
     curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($aSMSFormData));
 
     $r = curl_exec($ch);
-
+echo $r;
     echo strpos($r,"Съобщението е изпратено успешно!") ? "OK" : "Fail";
 }
 
