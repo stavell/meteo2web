@@ -32,8 +32,6 @@ class FbUsers {
      * @throws \Exception
      */
     public static function logUser(AccessToken $accessToken) {
-        $userInfo = self::getUserInfo($accessToken);
-        $_SESSION['user'] = $userInfo;
         $_SESSION['fb_access_token'] = $accessToken->getValue();
 
         if(!self::getFB()->getOAuth2Client()->debugToken($accessToken)->getIsValid()) throw new XCAuthFailed;
@@ -43,6 +41,9 @@ class FbUsers {
                 $accessToken = self::getFB()->getOAuth2Client()->getLongLivedAccessToken($accessToken);
             } catch (\Exception $e) {}
         }
+
+        $userInfo = self::getUserInfo($accessToken);
+        $_SESSION['user'] = $userInfo;
 
         $user = array(
             'user_id' => $userInfo['user']['id'],
