@@ -215,7 +215,8 @@ class Meteo2 {
 
         return array(
             'user' => $user->asArray(),
-            'tokenMetadata' => $tokenMetadata->getMetadata(),
+            'tokenExpiresAt' => $tokenMetadata->getExpiresAt(),
+            'tokenIssuedAt' => $tokenMetadata->getIssuedAt(),
         );
     }
 
