@@ -68,6 +68,12 @@ class FbUsers {
         return array('login_url' => $helper->getLoginUrl('http://stavl.com/meteo2/fb-callback.php', $permissions));
     }
 
+    public static function getLogoutURL() {
+        if(!self::isLoggedIn()) return false;
+        $helper = self::getFB()->getRedirectLoginHelper();
+        return $helper->getLogoutUrl($_SESSION['fb_access_token'],'http://stavl.com/meteo2');
+    }
+
     public static function getCurrentUserInfo() {
         if(!self::isLoggedIn()) return self::getLoginURL();
         return $_SESSION['user_info'];
