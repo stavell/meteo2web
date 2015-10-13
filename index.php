@@ -4,7 +4,9 @@ require_once('config.inc.php');
 try {
     \shumenxc\Users::handleOAuthLogin($_REQUEST);
 
-} catch(Exception $e){}
+} catch(Exception $e){
+    die(var_export($e,true));
+}
 
 ?>
 <!DOCTYPE html>
