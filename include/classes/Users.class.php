@@ -20,13 +20,13 @@ class Users {
 
         $userInfo = array(
             'provider' => $userInfo['provider'],
-            'user_id'  => $userInfo['id'],
+            'user_id'  => $userInfo['user_id'],
             'name'     => $userInfo['name'],
             'email'    => $userInfo['email'],
             'token'    => $userInfo['token']
         );
 
-       \DB::update('users', $userInfo);
+       \DB::insertUpdate('users', $userInfo);
 
        $_SESSION['user'] = $userInfo;
     }
