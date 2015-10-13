@@ -41,7 +41,6 @@ class Users {
 
     public function logout() {
         $_SESSION['user'] = null;
-        return true;
     }
 
     public function getLoginURLs() {
