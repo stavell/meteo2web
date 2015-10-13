@@ -16,7 +16,7 @@ class Users {
     }
 
     protected static function logUser($userInfo){
-        if(empty($userInfo['id']) || empty($userInfo['provider'])) throw new XCException("Empty user data");
+        if(empty($userInfo['user_id']) || empty($userInfo['provider'])) throw new XCException("Empty user data");
 
         $userInfo = array(
             'provider' => $userInfo['provider'],

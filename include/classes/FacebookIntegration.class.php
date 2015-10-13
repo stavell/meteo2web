@@ -59,7 +59,7 @@ class FacebookIntegration {
         return array(
             'provider' => 'facebook',
             'user_id'  => $user->asArray()['id'],
-            'username' => $user->asArray()['name'],
+            'name'     => $user->asArray()['name'],
             'email'    => $user->asArray()['email'],
             'token'    => $accessToken,
         );
