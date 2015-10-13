@@ -4,7 +4,7 @@ namespace shumenxc;
 class Users {
 
     public static function handleOAuthLogin($params){
-        if(empty($params['provider'])) return;
+        if(empty($params['provider'])) throw new XCException('No OAuth provider specified');
 
         switch($params['provider']) {
             case 'facebook':
