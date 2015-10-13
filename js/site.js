@@ -178,7 +178,8 @@ $(function() {
         loadPhotos(App.timeParams);
         loadWeatherData(App.timeParams);
         loadUserInfo();
-    }();
+        if(cb) cb();
+    };
 
     loadData(function(){
 
