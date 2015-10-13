@@ -22,7 +22,7 @@ class DB {
     public static $password = METEO2_DB_PASS;
     public static $host = METEO2_DB_HOST;
     public static $port = null;
-    public static $encoding = 'utf-8';
+    public static $encoding = 'utf8';
 
     // configure workings
     public static $queryMode = 'queryAllRows';
