@@ -26,7 +26,7 @@ class Users {
             'token'    => $userInfo['token']
         );
 
-       \DB::insertUpdate('users', $userInfo);
+       \DB::update('users', $userInfo);
 
        $_SESSION['user'] = $userInfo;
     }
