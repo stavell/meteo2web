@@ -155,37 +155,44 @@ $(function() {
 
 
     var loadUserInfo = function() {
-        Server.call('Users.getLoginURLs',null,function(urls){App.loginURLs = urls;});
-        Server.call('Users.getCurrentUserBaseInfo',null,function(info){App.user = info;},function(){App.user = null;});
+        Server.call('Users.getLoginURLs',null,function(urls){
+            App.loginURLs = urls;
+            updateUIStuff();
+        });
+        Server.call('Users.getCurrentUserBaseInfo',null,function(info){
+            App.user = info;
+            updateUIStuff();
+        },function(){
+            App.user = null;
+            updateUIStuff();
+        });
     };
+
+    $("a.fb-login").click(function(){
+        if(App.user) {
+            Server.call('Users.logout',null,function(){
+                location.href = location.href+'';
+            });
+        } else {
+            window.location.href = App.loginURLs['facebook'];
+        }
+    });
 
     var updateUIStuff = function(){
         if(App.user) {
-            $("a.fb-login").click(function(){
-                Server.call('Users.logout',null,function(){
-                    location.href = location.href+'';
-                });
-            });
             $("span.fb-title").text(App.user['name'] ? App.user['name'] : App.user['user_id']);
         } else {
-            $("a.fb-login").click(function(){
-                window.location.href = App.loginURLs['facebook'];
-            });
+            $("span.fb-title").text("Login");
         }
     };
 
-    var loadData = function(cb){
+    var loadData = function(){
         loadPhotos(App.timeParams);
         loadWeatherData(App.timeParams);
         loadUserInfo();
-        if(cb) setTimeout(function(){cb();},0);
     };
 
-    loadData(function(){
-
-        updateUIStuff();
-
-    });
+    loadData();
 
 
     var ws = new WebSocket('ws://stavl.com:10080');
