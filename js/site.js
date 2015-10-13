@@ -156,7 +156,7 @@ $(function() {
 
     var loadUserInfo = function() {
         Server.call('Users.getLoginURLs',null,function(urls){App.loginURLs = urls;});
-        Server.call('Users.getCurrentUser',null,function(info){App.user = info;},function(){App.user = null;});
+        Server.call('Users.getCurrentUserBaseInfo',null,function(info){App.user = info;},function(){App.user = null;});
     };
 
     var updateUIStuff = function(){
@@ -174,13 +174,18 @@ $(function() {
         }
     };
 
-    var loadData = function(){
+    var loadData = function(cb){
         loadPhotos(App.timeParams);
         loadWeatherData(App.timeParams);
         loadUserInfo();
+    }();
+
+    loadData(function(){
 
         updateUIStuff();
-    }();
+
+    });
+
 
     var ws = new WebSocket('ws://stavl.com:10080');
 

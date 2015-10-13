@@ -31,9 +31,12 @@ class Users {
        $_SESSION['user'] = $userInfo;
     }
 
-    public static function getCurrentUser() {
+    public static function getCurrentUserBaseInfo() {
         if(empty($_SESSION['user'])) throw new XCException("Not logged in");
-        return $_SESSION['user'];
+        return [
+            'provider' => $_SESSION['user']['provider'],
+            'name'     => $_SESSION['user']['name']
+        ];
     }
 
     public function logout() {
