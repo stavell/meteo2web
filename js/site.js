@@ -163,7 +163,7 @@ $(function() {
         if(App.user) {
             $("a.fb-login").click(function(){
                 Server.call('Users.logout',null,function(){
-                    location.href = location.href;
+                    location.href = location.href+'';
                 });
             });
             $("span.fb-title").text(App.user['name'] ? App.user['name'] : App.user['user_id']);
@@ -178,7 +178,7 @@ $(function() {
         loadPhotos(App.timeParams);
         loadWeatherData(App.timeParams);
         loadUserInfo();
-        if(cb) cb();
+        if(cb) setTimeout(function(){cb();},0);
     };
 
     loadData(function(){
