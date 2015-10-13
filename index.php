@@ -3,7 +3,7 @@ require_once('config.inc.php');
 
 try {
     \shumenxc\Users::handleOAuthLogin($_REQUEST);
-//    header('Location: http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+    header('Location: http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
 } catch(Exception $e){}
 
 ?>
