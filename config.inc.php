@@ -37,6 +37,7 @@ Autoloader::$aPaths = array(
         BASE_PATH.'/include/classes'
     )
 );
+
 spl_autoload_register(array('Autoloader','autoload'));
 
 require_once BASE_PATH . '/vendor/autoload.php';

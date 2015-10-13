@@ -47,6 +47,9 @@ try {
 
             } catch( xc\XCException $e ) {
                 $aResponse[$k]['error'] = $e->getJSObject();
+            } catch( Exception $e) {
+                $e = new xc\XCException($e->getMessage());
+                $aResponse[$k]['error'] = $e->getJSObject();
             }
         }
 

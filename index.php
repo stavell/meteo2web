@@ -1,3 +1,12 @@
+<?php
+require_once('config.inc.php');
+
+try {
+    \shumenxc\Users::handleOAuthLogin($_REQUEST);
+
+} catch(Exception $e){}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

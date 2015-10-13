@@ -15,8 +15,6 @@ class XCException extends \Exception {
     protected $bLog = true;
 
     public function __construct($message = "", $query = "") {
-
-
         parent::__construct($message,$this->code);
     }
 

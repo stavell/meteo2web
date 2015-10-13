@@ -56,11 +56,9 @@ $(function() {
 
 
     App.initCameraViewer('.intro', {
-
         onImageChanged: function (file, index) {
             $('.photoInfo').html(App.getFormatedDateTime(new Date(file.timestamp*1000)));
         }
-
     });
 
     $('.pause-slideshow').hover(function(){
@@ -80,7 +78,6 @@ $(function() {
     $('.btn-download-image').click(function(){
         window.open(imgViewer.getCurrentFile()['url']);
     });
-
 
 
     $('[name=dateFrom],[name=dateTo]').datepicker({
@@ -158,34 +155,32 @@ $(function() {
 
 
     var loadUserInfo = function() {
-        Server.call('FbUsers.getCurrentUserInfo',null,function(info){
-            if(info['login_url']) {
-                $(".fb-login").off('click');
-                $(".fb-login").click(function(){
-                    Server.call('FbUsers.getLoginURL',null,function(url){
-                        window.open(url['login_url'], '_blank');
-                        window.close();
-                    });
+        Server.call('Users.getLoginURLs',null,function(urls){App.loginURLs = urls;});
+        Server.call('Users.getCurrentUser',null,function(info){App.user = info;},function(){App.user = null;});
+    };
+
+    var updateUIStuff = function(){
+        if(App.user) {
+            $("a.fb-login").click(function(){
+                Server.call('Users.logout',null,function(){
+                    location.href = location.href;
                 });
-                $(".fb-title").text("login");
-            } else {
-                $(".fb-login").off('click');
-                $(".fb-login").click(function(){
-                    if(confirm("Logout?")) Server.call('FbUsers.logOut',null,function(){loadUserInfo();});
-                });
-                $(".fb-title").text(info['user']['name']);
-            }
-        });
+            });
+            $("span.fb-title").text(App.user['name'] ? App.user['name'] : App.user['user_id']);
+        } else {
+            $("a.fb-login").click(function(){
+                window.location.href = App.loginURLs['facebook'];
+            });
+        }
     };
 
     var loadData = function(){
         loadPhotos(App.timeParams);
         loadWeatherData(App.timeParams);
         loadUserInfo();
-    };
 
-    loadData();
-
+        updateUIStuff();
+    }();
 
     var ws = new WebSocket('ws://stavl.com:10080');
 

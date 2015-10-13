@@ -182,3 +182,4 @@ App.getUrlVar = function(key){
 };
 
 App.user = null;
+App.loginURLs = null;
