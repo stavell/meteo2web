@@ -171,7 +171,7 @@ $(function() {
     $("a.fb-login").click(function(){
         if(App.user) {
             Server.call('Users.logout',null,function(){
-                window.location.href = window.location.href+'';
+                window.location.href = window.location.href+'#logout';
             });
         } else {
             window.location.href = App.loginURLs['facebook'];
