@@ -173,7 +173,7 @@ class Meteo2 {
         $file = \DB::queryOneRow("SELECT * FROM files WHERE id = {$nIDFile}");
         if(empty($file)) throw new XCException("File not found");
 
-        \DB::update('pinned_files', [
+        \DB::insertUpdate('pinned_files', [
             'id_file' => $file['id'],
             'id_user' => $_SESSION['user']['id'],
         ]);
