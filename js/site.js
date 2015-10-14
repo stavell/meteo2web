@@ -54,6 +54,10 @@ $(function() {
         });
     };
 
+    $('.btn-pin-image').click(function(){
+        Server.call("Meteo2.pinFile",[imgViewer.getCurrentFile()['id']],function(r){alert("Pinned!");},function(){alert("Please log in.")});
+    });
+
 
     App.initCameraViewer('.intro', {
         onImageChanged: function (file, index) {

@@ -103,12 +103,11 @@ try {
                     <blockquote class="text-left">
                         <ul class="list-unstyled list-inline">
                             <li>
-                                <span class="btn pause-slideshow btn-download-image"><i
-                                        class="fa fa-download animated"></i>&nbsp; download</span>
+                                <span class="btn pause-slideshow btn-download-image"><i class="fa fa-download animated"></i>&nbsp; download</span>
                             </li>
-                            <!--<li>-->
-                            <!--<span class="btn pause-slideshow btn-pin-image" title="Очаквайте скоро!"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>-->
-                            <!--</li>-->
+                            <li>
+                                <span class="btn pause-slideshow btn-pin-image"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>
+                            </li>
                             <li>
                                 <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span
                                         class="photoInfo">--.--.---- --:--:--</span></span>
@@ -240,10 +239,10 @@ try {
         <div class="col-lg-8 col-lg-offset-2">
             <ul class="list-inline banner-social-buttons">
                 <li><a href="http://forums.shumen-xc.org" target="_blank" class="btn btn-default btn-lg"><i
-                        class="fa fa-link fa-fw"></i> <span class="network-name">forums.shumen-xc.org</span></a>
+                            class="fa fa-link fa-fw"></i> <span class="network-name">forums.shumen-xc.org</span></a>
                 </li>
                 <li><a href="http://facebook.com/ShumenXC.Paragliding" target="_blank" class="btn btn-default btn-lg"><i
-                        class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>
+                            class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>
                 </li>
             </ul>
 
@@ -263,17 +262,17 @@ try {
 <script type="text/javascript"
         src="//maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
 <script>(function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-ga('create', 'UA-3807106-7', 'stavl.com');
-ga('send', 'pageview');</script>
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-3807106-7', 'stavl.com');
+    ga('send', 'pageview');</script>
 
 <!-- Custom Theme JavaScript -->
 <script src="js/Server.js"></script>
