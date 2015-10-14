@@ -56,13 +56,13 @@ class FacebookIntegration {
         /** @var GraphUser $user */
         $user = $response->getGraphUser();
 
-        return array(
-            'provider' => 'facebook',
-            'user_id'  => $user->asArray()['id'],
-            'name'     => $user->asArray()['name'],
-            'email'    => $user->asArray()['email'],
-            'token'    => $accessToken,
-        );
+        return [
+            'provider'     => 'facebook',
+            'external_id'  => $user->asArray()['id'],
+            'name'         => $user->asArray()['name'],
+            'email'        => $user->asArray()['email'],
+            'token'        => $accessToken,
+        ];
     }
 
 } 

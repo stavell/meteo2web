@@ -16,19 +16,13 @@ class Users {
     }
 
     protected static function logUser($userInfo){
-        if(empty($userInfo['user_id']) || empty($userInfo['provider'])) throw new XCException("Empty user data");
-
-        $userInfo = array(
-            'provider' => $userInfo['provider'],
-            'user_id'  => $userInfo['user_id'],
-            'name'     => $userInfo['name'],
-            'email'    => $userInfo['email'],
-            'token'    => $userInfo['token']
-        );
+       if(empty($userInfo['user_id']) || empty($userInfo['provider'])) throw new XCException("Empty user data");
 
        \DB::insertUpdate('users', $userInfo);
+       $user = \DB::queryFirstRow("SELECT * FROM users WHERE external_id = %s AND provider=%s", $userInfo['external_id'], $userInfo['provider']);
 
-       $_SESSION['user'] = $userInfo;
+       if(empty($user)) throw new XCException("DB user not found");
+       $_SESSION['user'] = $user;
     }
 
     public static function getCurrentUserBaseInfo() {
@@ -41,6 +35,10 @@ class Users {
 
     public function logout() {
         $_SESSION['user'] = null;
+    }
+
+    public static function checkIsLoggedIn(){
+        return !empty($_SESSION['user']);
     }
 
     public function getLoginURLs() {

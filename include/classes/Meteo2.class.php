@@ -12,10 +12,10 @@ class Meteo2 {
 
         return \DB::query(sprintf("
             SELECT
+              f.id,
               UNIX_TIMESTAMP(f.created_time) as timestamp,
               file2url(f.id) AS url
             FROM files f
-
             WHERE 1
             AND f.created_time BETWEEN '{$aTimes['timeFrom']}' AND '{$aTimes['timeTo']}'
             ORDER BY f.created_time %s
@@ -163,6 +163,19 @@ class Meteo2 {
         if( empty($aResult['timeFrom']) || empty($aResult['timeTo']) || $aResult['period'] <= 0 || $aResult['period'] > 30*24*60) throw new XCInvalidParam("Invalid time period");
 
         return $aResult;
+    }
+
+    public function pinFile($nIDFile) {
+        Users::checkIsLoggedIn();
+        if(empty($nIDFile)) throw new XCInvalidParam("No file specified");
+
+        $file = \DB::queryOneRow("SELECT * FROM files WHERE id = %i", $nIDFile);
+        if(empty($file)) throw new XCException("File not found");
+
+        \DB::update('pinned_files', [
+            'id_file' => $file['id'],
+            'id_user' => $_SESSION['user']['id'],
+        ]);
     }
 
 
