@@ -55,7 +55,7 @@ $(function() {
     };
 
     $('.btn-pin-image').click(function(){
-        Server.call("Meteo2.pinFile",[imgViewer.getCurrentFile()['id']],function(r){alert("Pinned!");},function(){alert("Please log in.")});
+        Server.call("Meteo2.pinFile",[imgViewer.getCurrentFile()['id']],function(r){alert("Pinned!");},function(e){alert("Please log in.");console.log(arguments);});
     });
 
 
