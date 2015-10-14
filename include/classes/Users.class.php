@@ -16,7 +16,7 @@ class Users {
     }
 
     protected static function logUser($userInfo){
-       if(empty($userInfo['user_id']) || empty($userInfo['provider'])) throw new XCException("Empty user data");
+       if(empty($userInfo['external_id']) || empty($userInfo['provider'])) throw new XCException("Empty user data");
 
        \DB::insertUpdate('users', $userInfo);
        $user = \DB::queryFirstRow("SELECT * FROM users WHERE external_id = %s AND provider=%s", $userInfo['external_id'], $userInfo['provider']);
