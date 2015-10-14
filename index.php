@@ -57,7 +57,7 @@ try {
                 <!--<a href="#info">Инфо</a>-->
                 <!--</li>-->
                 <li data-toggle="modal"  data-target="#settingsPanel">
-                    <a><i class="fa fa-gears"></i> Settings</a>
+                    <a><i class="fa fa-gears"></i>Settings</a>
                 </li>
                 <li data-toggle="modal">
                     <a class="fb-login"><i class="fa fa-facebook fa-fw"></i><span class="fb-title">login</span></a>
@@ -106,7 +106,7 @@ try {
                                 <span class="btn pause-slideshow btn-download-image"><i class="fa fa-download animated"></i>&nbsp; download</span>
                             </li>
                             <li>
-                                <span class="btn pause-slideshow btn-pin-image"><i class="fa fa-heart animated"></i>&nbsp; отбележи</span>
+                                <span class="btn pause-slideshow btn-pin-image"><i class="fa fa-heart animated"></i>&nbsp; pin it!</span>
                             </li>
                             <li>
                                 <span class="btn pause-slideshow"><i class="fa fa-clock-o animated"></i>&nbsp; <span
