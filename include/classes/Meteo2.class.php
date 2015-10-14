@@ -169,7 +169,8 @@ class Meteo2 {
         Users::checkIsLoggedIn();
         if(empty($nIDFile)) throw new XCInvalidParam("No file specified");
 
-        $file = \DB::queryOneRow("SELECT * FROM files WHERE id = %i", $nIDFile);
+        $nIDFile = intval($nIDFile);
+        $file = \DB::queryOneRow("SELECT * FROM files WHERE id = {$nIDFile}");
         if(empty($file)) throw new XCException("File not found");
 
         \DB::update('pinned_files', [
