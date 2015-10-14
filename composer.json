@@ -1,6 +1,7 @@
 {
     "require" : {
         "facebook/php-sdk-v4" : "~5.0",
-        "google/apiclient": "1.0.*@beta"
+        "google/apiclient": "1.0.*@beta",
+        "guzzlehttp/guzzle": "~6.1"
     }
 }
