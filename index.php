@@ -19,7 +19,7 @@ try {
     <meta property="og:url" content="http://stavl.com/meteo2/"/>
     <meta property="og:title" content="Shumen-XC Meteo"/>
     <meta property="og:site_name" content="Shumen-XC Meteo" />
-    <meta property="og:image" content="<?=reset(\shumenxc\Meteo2::getPhotosForPeriod('-3 hour'),'now',false)['url'];?>"/>
+    <meta property="og:image" content="<?=reset(\shumenxc\Meteo2::getPhotosForPeriod('-1 hour'),null,false)['url'];?>"/>
 
     <title>Shumen-XC Meteo 2</title>
 
