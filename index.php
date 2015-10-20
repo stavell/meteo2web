@@ -20,7 +20,7 @@ try {
     <meta property="og:title" content="Shumen-XC Meteo"/>
     <meta property="og:site_name" content="Shumen-XC Meteo" />
     <meta property="og:image" content="<?=end(\shumenxc\Meteo2::getPhotosForPeriod('-1 hour'))['url'];?>"/>
-
+    <meta property="og:description" content="Photos and weather information from Shumen plateau provided by Shumen-XC paragliding club."/>
     <title>Shumen-XC Meteo 2</title>
 
     <link href="assets/site.css" rel="stylesheet" type="text/css">
