@@ -16,13 +16,18 @@ try {
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <?php
+        $photo = end(\shumenxc\Meteo2::getPhotosForPeriod('-1 hour'));
+    ?>
     <meta property="fb:app_id" content="406234999472934"/>
     <meta property="og:url" content="http://stavl.com/meteo2/"/>
     <meta property="og:rich_attachment" content="true"/>
     <meta property="og:title" content="Shumen-XC Meteo"/>
     <meta property="og:site_name" content="Shumen-XC Meteo" />
-    <meta property="og:image" content="<?=end(\shumenxc\Meteo2::getPhotosForPeriod('-1 hour'))['url'];?>"/>
-    <meta property="og:description" content="Photos and weather information from Shumen plateau provided by Shumen-XC paragliding club."/>
+    <meta property="og:image" content="<?=$photo['url'];?>"/>
+    <meta property="og:description" content="
+            Current view at <?=date('d.m.Y H:i',$photo['timestamp']);?>.
+            Photos and weather information from Shumen plateau provided by Shumen-XC paragliding club."/>
     <title>Shumen-XC Meteo 2</title>
 
     <link href="assets/site.css" rel="stylesheet" type="text/css">
