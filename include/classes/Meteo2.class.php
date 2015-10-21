@@ -182,7 +182,7 @@ class Meteo2 {
 
         FacebookIntegration::postPhoto(array (
             'url'       => $file['url'],
-            'caption'   => date(' H:i d.m.Y'),
+            'caption'   => date('H:i часа на d.m.Y.',strtotime($file['created_time'])),
             'place'     => '113826332087638',
         ));
     }
