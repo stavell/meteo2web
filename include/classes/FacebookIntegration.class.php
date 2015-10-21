@@ -3,6 +3,8 @@ namespace shumenxc;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
+use Facebook\FacebookApp;
+use Facebook\FacebookRequest;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphUser;
 
@@ -43,7 +45,7 @@ class FacebookIntegration {
     }
 
     public static function getLoginURL() {
-        return self::getFB()->getRedirectLoginHelper()->getLoginUrl('http://stavl.com/meteo2/?provider=facebook', ['email','public_profile']);
+        return self::getFB()->getRedirectLoginHelper()->getLoginUrl('http://stavl.com/meteo2/?provider=facebook', ['email','public_profile', 'publish_actions']);
     }
 
     /**
@@ -63,6 +65,10 @@ class FacebookIntegration {
             'email'        => $user->asArray()['email'],
             'token'        => $accessToken,
         ];
+    }
+
+    public static function postPhoto($params) {
+        return self::getFB()->post('/'.FB_PAGE_ID.'/photos', $params, $_SESSION['user']['token']);
     }
 
 } 

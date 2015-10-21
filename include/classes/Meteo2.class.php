@@ -3,6 +3,8 @@
 namespace shumenxc;
 
 
+use Facebook\FacebookRequest;
+
 class Meteo2 {
 
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
@@ -170,13 +172,19 @@ class Meteo2 {
         if(empty($nIDFile)) throw new XCInvalidParam("No file specified");
 
         $nIDFile = intval($nIDFile);
-        $file = \DB::queryOneRow("SELECT * FROM files WHERE id = {$nIDFile}");
+        $file = \DB::queryOneRow("SELECT f.*, file2url(f.id) as url FROM files f WHERE id = {$nIDFile}");
         if(empty($file)) throw new XCException("File not found");
 
         \DB::insertUpdate('pinned_files', [
             'id_file' => $file['id'],
             'id_user' => $_SESSION['user']['id'],
         ]);
+
+        FacebookIntegration::postPhoto(array (
+            'url'       => $file['url'],
+            'caption'   => date(' H:i d.m.Y'),
+            'place'     => '113826332087638',
+        ));
     }
 
 
