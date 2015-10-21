@@ -25,6 +25,7 @@ try {
     <meta property="og:title" content="Shumen-XC Meteo"/>
     <meta property="og:site_name" content="Shumen-XC Meteo" />
     <meta property="og:image" content="<?=$photo['url'];?>"/>
+    <meta property="og:updated_time" content="<?=$photo['timestamp'];?>"/>
     <meta property="og:description" content="
             Current view at <?=date('d.m.Y H:i',$photo['timestamp']);?>.
             Photos and weather information from Shumen plateau provided by Shumen-XC paragliding club."/>
