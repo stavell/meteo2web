@@ -45,10 +45,10 @@ class Meteo2 {
                            )
                    )
                )                                                    AS wind_dir,
-               dd.dir                                               AS wind_dir_sym,
+               MAX(dd.dir)                                               AS wind_dir_sym,
                ROUND((SUM(d.wind_count) / SUM(d.samples)/{$nSpeedConstant}),1)    AS wind_count,
                SUM(d.samples)					                    AS samples,
-               UNIX_TIMESTAMP(d.created_time)	                    AS timestamp,
+               UNIX_TIMESTAMP(AVG(d.created_time))	                    AS timestamp,
                UNIX_TIMESTAMP(MIN(d.created_time))	                AS start_timestamp,
                UNIX_TIMESTAMP(MAX(d.created_time))	                AS end_timestamp,
                UNIX_TIMESTAMP(AVG(d.created_time))	                AS avg_timestamp
@@ -63,7 +63,7 @@ class Meteo2 {
            WHERE 1
                AND d.created_time BETWEEN BINARY @timeFrom AND BINARY DATE_ADD(@timeFrom,INTERVAL @period MINUTE)
            GROUP BY UNIX_TIMESTAMP(d.created_time) DIV ((@period DIV @segments)*60)
-           ORDER BY d.created_time %s
+           ORDER BY timestamp %s
            LIMIT ".(int)$nSegments;
 
         $aResult = \DB::query(sprintf($sQuery, (int)$aTimes['period'], (int)$nSegments, $aTimes['timeFrom'], $bAsc ? 'ASC' : 'DESC'));
