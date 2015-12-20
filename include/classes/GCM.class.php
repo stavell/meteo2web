@@ -11,7 +11,8 @@ class GCM {
             'token' => $token,
             'deviceBrand' => $deviceBrand,
             'deviceModel' => $deviceModel,
-            'androidVersion' => $androidVersion
+            'androidVersion' => $androidVersion,
+            'updated_time' => date('Y-m-d H:i:s')
         );
 
         \DB::insertUpdate('devices', $device);
