@@ -25,11 +25,11 @@ class GCM {
 
 
     public static function ackMessage($messageID){
-        $message = \DB::queryOneRow("select message_id from messages where message_id = %s",$messageID);
-        if(empty($messageID)) throw new XCInvalidParam;
+        $message = \DB::queryFirstRow("select message_id from messages where message_id = %s", $messageID);
+        if(empty($message)) throw new XCInvalidParam;
 
         $message['receive_time'] = date('Y-m-d H:i:s');
-        \DB::update('messages', $message);
+        \DB::update('messages', $message, "message_id=%s", $messageID);
 
         return true;
     }
