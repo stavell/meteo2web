@@ -24,21 +24,22 @@ class GCM {
     }
 
 
-    public static function notifyDevice($id, $message) {
+    public static function notifyDevice($id, $data) {
         $client = new Client();
 
         $token = \DB::queryFirstField("SELECT token FROM devices WHERE id = $id");
         if(empty($token)) throw new XCInvalidParam("No device found");
 
+        /** @noinspection PhpUndefinedConstantInspection */
         $response = $client->request('POST', 'https://gcm-http.googleapis.com/gcm/send', [
             'headers' => [
                 'Authorization' => 'key='.GCM_AUTH
             ],
             'json' => [
                 'to' => $token,
-                'data' => [
-                    'message' => $message
-                ]
+                'priority' => 'high',
+                'collapse_key' => sha1(time()),
+                'data' => $data
             ]
         ]);
 
