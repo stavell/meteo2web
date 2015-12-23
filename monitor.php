@@ -11,9 +11,9 @@ $diskUsagePercentage = intval(reset($matches));
 
 
 if($nLastDataTime < strtotime("-10 min")) {
-    xc\GCM::notifyDevice(2, array('message'=>"No data comming"));
+    xc\GCM::notifyDeviceByToken(2, array('message'=>"No data comming"));
 } elseif($nLastPhotoTime < strtotime("-20 min")){
-    xc\GCM::notifyDevice(2, array('message'=>"No photos comming"));
+    xc\GCM::notifyDeviceByToken(2, array('message'=>"No photos comming"));
 } else if($diskUsagePercentage >= 99) {
-    xc\GCM::notifyDevice(2, array('message'=>"Disk usage alert"));
+    xc\GCM::notifyDeviceByToken(2, array('message'=>"Disk usage alert"));
 }
