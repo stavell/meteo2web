@@ -10,11 +10,11 @@ class Notifications {
         $data['message_id'] = sha1(json_encode($payload).time().microtime(1));
         $data['payload'] = json_encode($payload, JSON_BIGINT_AS_STRING | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        $message['message_id'] = $data['message_id'];
-        $message['device_to'] = $deviceID;
-        $message['message'] = json_encode($data,JSON_BIGINT_AS_STRING | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-        \DB::insertUpdate('messages', $message);
+        \DB::insertUpdate('messages', array(
+            'message_id' => $data['message_id'],
+            'device_to' => $deviceID,
+            'message' => $data['payload']
+        ));
 
         return GCM::notifyDeviceByToken($token, $data);
     }
