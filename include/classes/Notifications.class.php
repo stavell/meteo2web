@@ -13,7 +13,7 @@ class Notifications {
         \DB::insertUpdate('messages', array(
             'message_id' => $data['message_id'],
             'device_to' => $deviceID,
-            'message' => $data
+            'message' => $data['payload']
         ));
 
         return GCM::notifyDeviceByToken($token, $data);
