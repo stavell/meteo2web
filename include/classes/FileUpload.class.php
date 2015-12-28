@@ -12,12 +12,16 @@ class FileUpload {
 
     private $aDevice = array();
 
-    public function __construct() {
-        $this->aDevice = \DB::queryFirstRow("SELECT * FROM file_devices WHERE is_default = 1");
-        if(empty($this->aDevice)) throw new XCException('No default file device');
+    public function __construct($nID = null) {
+        $this->initDevice($nID);
     }
 
-    public function uploadFile($sFileName,$sFilePath) {
+    private function initDevice($nID = null) {
+        $this->aDevice = empty($nID) ? \DB::queryFirstRow("SELECT * FROM file_devices WHERE is_default = 1") : \DB::queryFirstRow("SELECT * FROM file_devices WHERE id = %d", $nID);
+        if(empty($this->aDevice)) throw new XCException('Invalid file device');
+    }
+
+    public function uploadFile($sFileName, $sFilePath) {
         if(empty($sFileName) || empty($sFilePath)) throw new XCException('Bad upload data');
 
         $sUrl = sprintf("%s://%s:%s@%s/%s/%s",

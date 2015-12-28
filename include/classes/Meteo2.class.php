@@ -1,9 +1,5 @@
 <?php
-
 namespace shumenxc;
-
-
-use Facebook\FacebookRequest;
 
 class Meteo2 {
 
@@ -18,6 +14,7 @@ class Meteo2 {
               UNIX_TIMESTAMP(f.created_time) as timestamp,
               file2url(f.id) AS url
             FROM files f
+            JOIN file_devices fd ON fd.id = f.id_device AND fd.is_default = 1
             WHERE 1
             AND f.created_time BETWEEN '{$aTimes['timeFrom']}' AND '{$aTimes['timeTo']}'
             ORDER BY f.created_time %s
@@ -186,5 +183,20 @@ class Meteo2 {
         ));
     }
 
+
+    public function weatherPhoto2($data) {
+        if(empty($data)) throw new XCInvalidParam;
+        $fileName = md5($data).'.jpg';
+
+        $path = "php://temp/".$fileName;
+
+        $bytesWritten = file_put_contents($path, base64_decode($data));
+        if(empty($bytesWritten)) throw new XCException;
+
+        $oFileUpload = new FileUpload(4);
+        $oFileUpload->uploadFile($fileName, $path);
+
+        unlink($path);
+    }
 
 } 
