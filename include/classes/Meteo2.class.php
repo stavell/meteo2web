@@ -190,7 +190,7 @@ class Meteo2 {
 
         $path = "php://temp/".$fileName;
 
-        $bytesWritten = file_put_contents($path, base64_decode($data));
+        $bytesWritten = file_put_contents($path, self::base64_url_decode($data));
         if(empty($bytesWritten)) throw new XCException;
 
         $oFileUpload = new FileUpload(4);
@@ -199,4 +199,7 @@ class Meteo2 {
         unlink($path);
     }
 
+    private static function base64_url_decode($input) {
+        return base64_decode(strtr($input, '-_,', '+/='));
+    }
 } 
