@@ -183,20 +183,14 @@ class Meteo2 {
         ));
     }
 
-
-    public function weatherPhoto2($data) {
+    public function weatherPhoto2($data, $message_id = null) {
         if(empty($data)) throw new XCInvalidParam;
         $fileName = md5($data).'.jpg';
 
-        $path = "php://temp/".$fileName;
-
-        $bytesWritten = file_put_contents($path, self::base64_url_decode($data));
-        if(empty($bytesWritten)) throw new XCException;
-
         $oFileUpload = new FileUpload(4);
-        $oFileUpload->uploadFile($fileName, $path);
+        $aFile = $oFileUpload->uploadFileContent($fileName,  self::base64_url_decode($data));
 
-        unlink($path);
+        if(!empty($message_id)) \DB::update('messages', array('response' => json_encode(array('id_file' => $aFile['id']))), 'message_id=%s', $message_id);
     }
 
     private static function base64_url_decode($input) {

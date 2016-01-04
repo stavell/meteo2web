@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 
 class GCM {
 
-    public static function registerDevice($id = null, $token, $deviceBrand = null, $deviceModel = null, $androidVersion = null) {
+    public static function registerDevice($id = null, $token, $deviceBrand = null, $deviceModel = null, $androidVersion = null, $cameraParams = null) {
         if(empty($token)) throw new XCInvalidParam("no token");
 
         $device = array(
@@ -14,6 +14,7 @@ class GCM {
             'deviceBrand' => $deviceBrand,
             'deviceModel' => $deviceModel,
             'androidVersion' => $androidVersion,
+            'cameraParams' => $cameraParams,
             'updated_time' => date('Y-m-d H:i:s')
         );
 

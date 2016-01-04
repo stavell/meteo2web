@@ -22,7 +22,12 @@ class FileUpload {
     }
 
     public function uploadFile($sFileName, $sFilePath) {
-        if(empty($sFileName) || empty($sFilePath)) throw new XCException('Bad upload data');
+        return $this->uploadFileContent($sFileName, file_get_contents($sFilePath));
+    }
+
+
+    public function uploadFileContent($sFileName, $content) {
+        if(empty($sFileName) || empty($content)) throw new XCException('Bad upload data');
 
         $sUrl = sprintf("%s://%s:%s@%s/%s/%s",
             $this->aDevice['type'],
@@ -36,8 +41,7 @@ class FileUpload {
         $handle = fopen($sUrl, "w");
         if(!$handle) throw new XCException('Can not open file device or file exists');
 
-        fputs($handle, file_get_contents($sFilePath));
-
+        fputs($handle, $content);
         fclose($handle);
 
         $aFile = array(
@@ -47,7 +51,6 @@ class FileUpload {
 
         \DB::insert('files', array($aFile));
         $aFile['id'] = \DB::insertId();
-
 
         return $aFile;
     }
