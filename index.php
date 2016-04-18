@@ -284,7 +284,7 @@ try {
 
 
 <!-- Core JavaScript Files -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/datepicker/js/bootstrap-datepicker.min.js"></script>
