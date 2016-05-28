@@ -45,11 +45,12 @@ class Notifications {
     }
 
     public static function receiveDeviceMessage($deviceID, $payload) {
+
         $message['message_id'] = self::generateMessageID($payload);
         $message['source_device_id'] = $deviceID;
         $message['message'] = $payload;
 
-        \DB::update('messages', $message);
+        \DB::insertUpdate('messages', $message);
     }
 
 
