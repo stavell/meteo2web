@@ -30,5 +30,16 @@ class Notifications {
         return true;
     }
 
+    public static function setResponse($messageID, $response) {
+        $message = \DB::queryFirstRow("select message_id from messages where message_id = %s", $messageID);
+        if(empty($message)) throw new XCInvalidParam;
+
+        $message['response_time'] = date('Y-m-d H:i:s');
+        $message['response'] = $response;
+
+        \DB::update('messages', $message, "message_id=%s", $messageID);
+        return true;
+    }
+
 
 }
