@@ -39,7 +39,7 @@ class GCM {
             ]
         ];
 
-        $response = $client->request('POST', 'https://gcm-http.googleapis.com/gcm/send', $params);
+        $response = $client->request('POST', 'https://fcm.googleapis.com/fcm/send', $params);
         $result = json_decode($response->getBody()->getContents(), true);
 
         if(empty($result['success'])) throw new XCInvalidParam;
