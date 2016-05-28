@@ -26,7 +26,7 @@ class FileUpload {
     }
 
 
-    public function uploadFileContent($sFileName, $content) {
+    public function uploadFileContent($sFileName, $content, $params = array()) {
         if(empty($sFileName) || empty($content)) throw new XCException('Bad upload data');
 
         $sUrl = sprintf("%s://%s:%s@%s/%s/%s",
@@ -48,6 +48,7 @@ class FileUpload {
             'filename' => $sFileName,
             'id_device' => $this->aDevice['id']
         );
+        $aFile = array_merge($aFile,$params);
 
         \DB::insert('files', array($aFile));
         $aFile['id'] = \DB::insertId();

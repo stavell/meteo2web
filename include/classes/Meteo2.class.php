@@ -17,6 +17,7 @@ class Meteo2 {
             JOIN file_devices fd ON fd.id = f.id_device AND fd.is_default = 1
             WHERE 1
             AND f.created_time BETWEEN '{$aTimes['timeFrom']}' AND '{$aTimes['timeTo']}'
+            AND f.source_device_id = 0
             ORDER BY f.created_time %s
         ", $bAsc ? 'ASC' : 'DESC'));
     }
@@ -187,8 +188,10 @@ class Meteo2 {
         if(empty($data)) throw new XCInvalidParam;
         $fileName = md5($data).'.jpg';
 
-        $oFileUpload = new FileUpload(4);
-        $aFile = $oFileUpload->uploadFileContent($fileName,  self::base64_url_decode($data));
+        $message = \DB::queryFirstRow("select message_id from messages where message_id = %s", $message_id);
+
+        $oFileUpload = new FileUpload();
+        $aFile = $oFileUpload->uploadFileContent($fileName,  self::base64_url_decode($data), ['source_device_id' => $message['destination_device_id']]);
 
         if(!empty($message_id)) \DB::update('messages', array('response' => json_encode(array('id_file' => $aFile['id']))), 'message_id=%s', $message_id);
     }
