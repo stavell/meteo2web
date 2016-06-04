@@ -193,7 +193,7 @@ class Meteo2 {
         $oFileUpload = new FileUpload();
         $aFile = $oFileUpload->uploadFileContent($fileName,  self::base64_url_decode($data), ['source_device_id' => $message['destination_device_id']]);
 
-        if(!empty($message_id)) \DB::update('messages', array('response' => json_encode(array('id_file' => $aFile['id']))), 'message_id=%s', $message_id);
+        if(!empty($message_id)) \DB::update('messages', array('response' => json_encode(array('id_file' => $aFile['id'])),'response_time' => date('Y-m-d H:i:s')), 'message_id=%s', $message_id);
         return $aFile;
     }
 
