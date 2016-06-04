@@ -33,7 +33,7 @@ class Notifications {
         return true;
     }
 
-    public static function setResponse($messageID, $response) {
+    public static function respondToMessage($messageID, $response) {
         $message = \DB::queryFirstRow("select message_id from messages where message_id = %s", $messageID);
         if(empty($message)) throw new XCInvalidParam;
 
