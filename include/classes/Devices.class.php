@@ -7,6 +7,7 @@ class Devices {
         $message['device_id'] = $idDevice;
         $message['status'] = $status;
         $message['info'] = empty($info) ? '' : $info;
+        $message['created_time'] = date('Y-m-d H:i:s');
         \DB::insert('device_status_events', $message);
     }
 
