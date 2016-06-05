@@ -3,7 +3,7 @@ namespace shumenxc;
 
 class Devices {
 
-    public function statusUpdate($idDevice, $status, $info = ''){
+    public static function statusUpdate($idDevice, $status, $info = ''){
         $message['device_id'] = $idDevice;
         $message['status'] = $status;
         $message['info'] = $info;
