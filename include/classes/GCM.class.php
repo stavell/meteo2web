@@ -24,7 +24,7 @@ class GCM {
         return \DB::queryOneRow("select * from devices where id = $id");
     }
 
-    public static function notifyDeviceByToken($token, $payload) {
+    public static function notifyDeviceByToken($token, $payload = null, $notification = null) {
         $client = new Client();
 
         /** @noinspection PhpUndefinedConstantInspection */
@@ -34,10 +34,12 @@ class GCM {
             ],
             'json' => [
                 'to' => $token,
-                'priority' => 'high',
-                'data' => $payload
+                'priority' => 'high'
             ]
         ];
+
+        if(!empty($payload)) $params['json']['data'] = $payload;
+        if(!empty($notification)) $params['json']['notification'] = $notification;
 
         $response = $client->request('POST', 'https://fcm.googleapis.com/fcm/send', $params);
         $result = json_decode($response->getBody()->getContents(), true);
