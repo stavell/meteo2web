@@ -9,11 +9,19 @@ $matches=array();
 preg_match('/\d{0,}(?=%\s)/', shell_exec('df -h | grep '.ROOT_DISK), $matches);
 $diskUsagePercentage = intval(reset($matches));
 
+$message = '';
 
-if($nLastDataTime < strtotime("-10 min")) {
-    xc\Notifications::sendMessage(2, array('message'=>"No data coming"));
-} elseif($nLastPhotoTime < strtotime("-20 min")){
-    xc\Notifications::sendMessage(2, array('message'=>"No photos coming"));
-} else if($diskUsagePercentage >= 99) {
-    xc\Notifications::sendMessage(2, array('message'=>"Disk usage alert"));
+if($nLastDataTime < strtotime("-10 min")) $message[] = 'No data';
+if($nLastPhotoTime < strtotime("-20 min")) $message[] = 'No photos';
+if($diskUsagePercentage >= 99) $message[] = 'Low disk space';
+
+if(!empty($message)) {
+    $notification = [
+        'title' => 'Meteo2 Alert '.date('c'),
+        'body' => implode(', ',$message)
+    ];
+
+    $token = DB::queryOneField("SELECT token FROM devices WHERE id = 7");
+    \shumenxc\GCM::notifyDeviceByToken($token, null, $notification);
 }
+
