@@ -199,7 +199,7 @@ $(function() {
     loadData();
 
 
-    var ws = new WebSocket('wss://stavl.com:10080');
+    var ws = new WebSocket('ws://stavl.com:10080');
 
     ws.onopen= function(){
         ws.send('weatherData');
