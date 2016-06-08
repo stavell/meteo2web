@@ -13,13 +13,14 @@ class Notifications {
 
         $payload['message_id'] = self::generateMessageID($payload);
 
-        \DB::insertUpdate('messages', array(
+        \DB::insert('messages', array(
             'message_id' => $payload['message_id'],
             'destination_device_id' => $deviceID,
             'message' => json_encode($payload, JSON_BIGINT_AS_STRING | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         ));
 
-        return GCM::notifyDeviceByToken($token, $payload);
+        GCM::notifyDeviceByToken($token, $payload);
+        return $payload['message_id'];
     }
 
 
