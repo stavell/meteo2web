@@ -5,11 +5,12 @@ use GuzzleHttp\Client;
 
 class GCM {
 
-    public static function registerDevice($id = null, $token, $deviceBrand = null, $deviceModel = null, $androidVersion = null, $cameraParams = null) {
+    public static function registerDevice($id = null, $token, $identificator, $deviceBrand = null, $deviceModel = null, $androidVersion = null, $cameraParams = null) {
         if(empty($token)) throw new XCInvalidParam("no token");
 
         $device = array(
             'id' => $id,
+            'deviceID' => $identificator,
             'token' => $token,
             'deviceBrand' => $deviceBrand,
             'deviceModel' => $deviceModel,
@@ -19,13 +20,12 @@ class GCM {
         );
 
         \DB::insertUpdate('devices', $device);
-        if(empty($id)) $id = \DB::insertId();
 
-        return \DB::queryOneRow("select * from devices where id = $id");
+        return \DB::queryOneRow("select * from devices where deviceID = %s", $identificator);
     }
 
     public static function notifyDeviceByToken($token, $payload = null, $notification = null, $additionalParams = null) {
-        $client = new Client();
+        $client = new Client(['verify' => false]);
 
         /** @noinspection PhpUndefinedConstantInspection */
         $params = [

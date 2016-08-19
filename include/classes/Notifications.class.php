@@ -8,6 +8,7 @@ class Notifications {
     }
 
     public static function sendMessage($deviceID, $payload) {
+        \DB::startTransaction();
         $token = \DB::queryFirstField("SELECT token FROM devices WHERE id = $deviceID");
         if(empty($token)) throw new XCInvalidParam("No device found");
 
@@ -20,6 +21,7 @@ class Notifications {
         ));
 
         GCM::notifyDeviceByToken($token, $payload);
+        \DB::commit();
         return $payload['message_id'];
     }
 
