@@ -9,7 +9,6 @@ class GCM {
         if(empty($token)) throw new XCInvalidParam("no token");
 
         $device = array(
-            'id' => empty($id) ? null : $id,
             'deviceID' => $identificator,
             'token' => $token,
             'deviceBrand' => $deviceBrand,
