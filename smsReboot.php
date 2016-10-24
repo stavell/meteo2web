@@ -6,7 +6,8 @@
  * Time: 12:16
  */
 
-if(!empty($_REQUEST['reboot'])) {
+
+function reboot() {
 
     $sSignInURL = 'https://www.vivaonline.bg/login/cgi-bin/sso.cgi';
 
@@ -29,10 +30,10 @@ if(!empty($_REQUEST['reboot'])) {
     curl_setopt($ch, CURLOPT_TIMEOUT, 60);
     curl_setopt($ch, CURLOPT_COOKIEJAR, "cookies.txt");
     curl_setopt($ch, CURLOPT_COOKIEFILE, "cookies.txt");
-    curl_setopt( $ch, CURLOPT_COOKIESESSION, true );
+    curl_setopt($ch, CURLOPT_COOKIESESSION, true);
 
-    curl_setopt($ch,CURLOPT_POST, count($aData));
-    curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($aData));
+    curl_setopt($ch, CURLOPT_POST, count($aData));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aData));
 
 
     $t = microtime(true);
@@ -41,7 +42,7 @@ if(!empty($_REQUEST['reboot'])) {
 
 
     $matches = array();
-    preg_match_all("/(&sid=)(?<sid>.*)(&)/",$r,$matches);
+    preg_match_all("/(&sid=)(?<sid>.*)(&)/", $r, $matches);
 
     $sSID = reset($matches['sid']);
 
@@ -52,8 +53,8 @@ if(!empty($_REQUEST['reboot'])) {
     $aLog['sid'] = $sSID;
     $aLog['lang'] = 'bg';
     curl_setopt($ch, CURLOPT_URL, "https://www.vivaonline.bg/c/portal/login?esc=1&lang=bg&sid=$sSID&lang=bg");
-    curl_setopt($ch,CURLOPT_POST, count($aLog));
-    curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($aLog));
+    curl_setopt($ch, CURLOPT_POST, count($aLog));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aLog));
 
     $r = curl_exec($ch);
 
@@ -84,13 +85,18 @@ if(!empty($_REQUEST['reboot'])) {
     $aSMSFormData['_smsportlet_WAR_smsportlet_message'] = 'reboot';
 
 
-    curl_setopt($ch,CURLOPT_URL, "https://www.vivaonline.bg/sms-centre?".http_build_query($aSMSGetData));
-    curl_setopt($ch,CURLOPT_POST, count($aSMSFormData));
-    curl_setopt($ch,CURLOPT_POSTFIELDS, http_build_query($aSMSFormData));
+    curl_setopt($ch, CURLOPT_URL, "https://www.vivaonline.bg/sms-centre?" . http_build_query($aSMSGetData));
+    curl_setopt($ch, CURLOPT_POST, count($aSMSFormData));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($aSMSFormData));
 
     $r = curl_exec($ch);
-echo $r;
-    echo strpos($r,"Съобщението е изпратено успешно!") ? "OK" : "Fail";
+//    echo $r;
+    return strpos($r, "Съобщението е изпратено успешно!");
+}
+
+
+if(!empty($_REQUEST['reboot'])) {
+    echo reboot() ? "OK" : "Fail";
 }
 
 ?>
