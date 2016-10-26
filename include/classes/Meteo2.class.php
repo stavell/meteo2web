@@ -25,7 +25,7 @@ class Meteo2 {
     //6.5 oborota na propelera za sek = 1 m/s
     //from mysql date or php strtotime argument
     public static function getWeatherDataForPeriod($from, $something = 60, $nSegments = 10, $bAsc = false) {
-
+        return;
         $aTimes = self::makeTimeFromTo($from, $something);
 
         $nSpeedConstant = floatval(self::$nSpeedConstant);
