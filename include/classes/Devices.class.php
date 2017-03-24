@@ -8,7 +8,7 @@ class Devices {
         $message['device_id'] = $request['device_id'];
         $message['status'] = $request['status'];
         $message['info'] = json_encode($request['info'], JSON_BIGINT_AS_STRING | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        $message['created_time'] = $request['timestamp'] ? date('Y-m-d H:i:s', strtotime($request['timestamp'])) : date('Y-m-d H:i:s');
+        $message['created_time'] = $request['timestamp'] ? date('Y-m-d H:i:s', $request['timestamp']) : date('Y-m-d H:i:s');
         \DB::insert('device_status_events', $message);
     }
 
