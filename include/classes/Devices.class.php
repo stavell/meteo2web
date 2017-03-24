@@ -22,7 +22,7 @@ class Devices {
     }
 
     public static function getDeviceByKey($key) {
-        return \DB::queryOneRow('id', "SELECT id FROM devices WHERE `key` = %s", $key);
+        return \DB::queryOneRow("SELECT * FROM devices WHERE `key` = %s", $key);
     }
 
 }
