@@ -1,26 +1,28 @@
 <?php
+
 namespace shumenxc;
 
 use GuzzleHttp\Client;
 
 class GCM {
 
-    public static function registerDevice($id = null, $token, $identificator, $deviceBrand = null, $deviceModel = null, $androidVersion = null, $cameraParams = null) {
+    public static function registerDevice($key = null, $token, $deviceBrand = null, $deviceModel = null, $androidVersion = null, $cameraParams = null) {
         if(empty($token)) throw new XCInvalidParam("no token");
+        if(empty($key)) throw new XCInvalidParam("no key");
 
-        $device = array(
-            'deviceID' => $identificator,
-            'token' => $token,
-            'deviceBrand' => $deviceBrand,
-            'deviceModel' => $deviceModel,
-            'androidVersion' => $androidVersion,
-            'cameraParams' => $cameraParams,
-            'updated_time' => date('Y-m-d H:i:s')
-        );
+        $device = Devices::getDeviceByKey($key);
+        if(empty($device)) throw new XCInvalidParam("No device with key:" . $key);
+
+        $device['token'] = $token;
+        $device['deviceBrand'] = $deviceBrand;
+        $device['deviceModel'] = $deviceModel;
+        $device['androidVersion'] = $androidVersion;
+        $device['cameraParams'] = $cameraParams;
+        $device['updated_time'] = date('Y-m-d H:i:s');
 
         \DB::insertUpdate('devices', $device);
 
-        return \DB::queryOneRow("select * from devices where deviceID = %s", $identificator);
+        return Devices::getDeviceByKey($key);
     }
 
     public static function notifyDeviceByToken($token, $payload = null, $notification = null, $additionalParams = null) {
@@ -29,7 +31,7 @@ class GCM {
         /** @noinspection PhpUndefinedConstantInspection */
         $params = [
             'headers' => [
-                'Authorization' => 'key='.GCM_AUTH
+                'Authorization' => 'key=' . GCM_AUTH
             ],
             'json' => [
                 'to' => $token,
