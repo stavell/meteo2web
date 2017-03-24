@@ -25,7 +25,6 @@ class Notifications {
         return $payload['message_id'];
     }
 
-
     public static function ackMessage($messageID) {
         $message = \DB::queryFirstRow("select message_id from messages where message_id = %s", $messageID);
         if(empty($message)) throw new XCInvalidParam;
@@ -46,15 +45,5 @@ class Notifications {
         \DB::update('messages', $message, "message_id=%s", $messageID);
         return true;
     }
-
-    public static function receiveDeviceMessage($deviceID, $payload) {
-
-        $message['message_id'] = self::generateMessageID($payload);
-        $message['source_device_id'] = $deviceID;
-        $message['message'] = $payload;
-
-        \DB::insertUpdate('messages', $message);
-    }
-
 
 }

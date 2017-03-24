@@ -184,14 +184,14 @@ class Meteo2 {
         ));
     }
 
-    public function weatherPhoto2($data, $message_id = null) {
+    public function weatherPhotoFromMessage($data, $message_id = null, $timestamp = null) {
         if(empty($data)) throw new XCInvalidParam;
         $fileName = md5($data).'.jpg';
 
         $message = \DB::queryFirstRow("select * from messages where message_id = %s", $message_id);
 
         $oFileUpload = new FileUpload();
-        $aFile = $oFileUpload->uploadFileContent($fileName,  self::base64_url_decode($data), ['source_device_id' => $message['destination_device_id']]);
+        $aFile = $oFileUpload->uploadFileContent($fileName,  self::base64_url_decode($data), ['source_device_id' => $message['destination_device_id'], 'created_time' => date('Y-m-d H:i:s', $timestamp ? $timestamp : time())]);
 
         if(!empty($message_id)) \DB::update('messages', array('response' => json_encode(array('id_file' => $aFile['id'])),'response_time' => date('Y-m-d H:i:s')), 'message_id=%s', $message_id);
         return $aFile;
