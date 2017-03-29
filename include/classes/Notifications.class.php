@@ -49,10 +49,9 @@ class Notifications {
 
 
     public static function getMessage($messageID) {
-        if(empty($messageID)) throw new XCInvalidParam();
-        $json = \DB::queryOneField("SELECT message FROM messages WHERE message_id = %s", $messageID);
-        if(empty($json)) throw new XCInvalidParam();
-        return json_decode($json, JSON_UNESCAPED_UNICODE);
+        $message = \DB::queryFirstRow("select message from messages where message_id = %s", $messageID);
+        if(empty($message)) throw new XCInvalidParam;
+        return json_decode($message['message'], JSON_UNESCAPED_UNICODE);
     }
 
 
