@@ -1,9 +1,10 @@
 <?php
+
 namespace shumenxc;
 
 class Notifications {
 
-    private static function generateMessageID($payload){
+    private static function generateMessageID($payload) {
         return sha1(json_encode($payload) . time() . microtime(1));
     }
 
@@ -45,5 +46,14 @@ class Notifications {
         \DB::update('messages', $message, "message_id=%s", $messageID);
         return true;
     }
+
+
+    public static function getMessage($messageID) {
+        if(empty($messageID)) throw new XCInvalidParam();
+        $json = \DB::queryOneField("SELECT message FROM messages WHERE id = %s", $messageID);
+        if(empty($json)) throw new XCInvalidParam();
+        return json_decode($json, JSON_UNESCAPED_UNICODE);
+    }
+
 
 }
