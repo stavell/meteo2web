@@ -44,7 +44,7 @@ $(function() {
     var loadPhotos = function (timeParams) {
         if (!timeParams) return;
         imgViewer.stopSlideshow();
-        Server.call('Meteo2.getPhotosForPeriod', [timeParams.timeFrom, timeParams.timeTo], function (response) {
+        Server.call('Meteo2.getPhotosForPeriod', [timeParams.timeFrom, timeParams.timeTo, true, App.getUrlVar('deviceKey')], function (response) {
             App.ImgLoader.setFiles(response);
             App.ImgLoader.startLoading();
             App.ImgLoader.onFinish = function () {
