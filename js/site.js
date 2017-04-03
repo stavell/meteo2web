@@ -199,30 +199,30 @@ $(function() {
     loadData();
 
 
-    var ws = new WebSocket('ws://stavl.com:10080');
-
-    ws.onopen= function(){
-        ws.send('weatherData');
-    };
-
-    ws.onerror = function(){
-        console.log(arguments);
-    };
-
-    ws.onmessage = function(m){
-        try{
-            var data = JSON.parse(m.data);
-            var date = new Date(data.timestamp*1000);
-
-            $('.live-data').css({opacity: 0.8});
-            $('.ws-time').text('Live data from: ' + (date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes() + ':' + (date.getSeconds()< 10 ? '0':'') + date.getSeconds());
-            $('.ws-windSpeed').html($("<strong></strong>").text('-.- m/s'));
-            $('.ws-windDir').html($("<strong></strong>").text('---.- °'));
-            $('.ws-temperature').html($("<strong></strong>").text(parseFloat(data.temperature).toFixed(1)+' ℃'));
-            $('.live-data').animate({opacity: 0.5}, 500);
-        } catch(e){}
-    };
-
+    // var ws = new WebSocket('ws://stavl.com:10080');
+    //
+    // ws.onopen= function(){
+    //     ws.send('weatherData');
+    // };
+    //
+    // ws.onerror = function(){
+    //     console.log(arguments);
+    // };
+    //
+    // ws.onmessage = function(m){
+    //     try{
+    //         var data = JSON.parse(m.data);
+    //         var date = new Date(data.timestamp*1000);
+    //
+    //         $('.live-data').css({opacity: 0.8});
+    //         $('.ws-time').text('Live data from: ' + (date.getHours()< 9 ? '0':'')+date.getHours() + ':' + (date.getMinutes()< 10 ? '0':'') + date.getMinutes() + ':' + (date.getSeconds()< 10 ? '0':'') + date.getSeconds());
+    //         $('.ws-windSpeed').html($("<strong></strong>").text('-.- m/s'));
+    //         $('.ws-windDir').html($("<strong></strong>").text('---.- °'));
+    //         $('.ws-temperature').html($("<strong></strong>").text(parseFloat(data.temperature).toFixed(1)+' ℃'));
+    //         $('.live-data').animate({opacity: 0.5}, 500);
+    //     } catch(e){}
+    // };
+    //
 
 
 });
