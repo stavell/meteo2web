@@ -114,7 +114,7 @@ $(function() {
 
         imgViewer.setDelay($('[name=slideshowInterval]').val());
 
-        history.pushState(null, null, location.origin+location.pathname+'?timeFrom='+timeFrom+'&timeTo='+timeTo);
+        history.pushState(null, null, location.origin+location.pathname+'?timeFrom='+timeFrom+'&timeTo='+timeTo+'&deviceKey='+App.getUrlVar('deviceKey'));
 
         updateTimeParams();
         loadData();
