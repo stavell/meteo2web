@@ -5,8 +5,9 @@ class Meteo2 {
 
     private static $nSpeedConstant = 6.5; //pulses per second for 1 m/s
 
-    public static function getPhotosForPeriod($from, $something = 60, $bAsc = true) {
+    public static function getPhotosForPeriod($from, $something = 60, $bAsc = true, $deviceKey = '') {
         $aTimes = self::makeTimeFromTo($from, $something);
+        $deviceId = intval(!empty($deviceKey) ? Devices::getDeviceByKey($deviceKey)['id'] : 0);
 
         return \DB::query(sprintf("
             SELECT
@@ -17,7 +18,7 @@ class Meteo2 {
             JOIN file_devices fd ON fd.id = f.id_device AND fd.is_default = 1
             WHERE 1
             AND f.created_time BETWEEN '{$aTimes['timeFrom']}' AND '{$aTimes['timeTo']}'
-            AND f.source_device_id = 0
+            AND f.source_device_id = $deviceId
             ORDER BY f.created_time %s
         ", $bAsc ? 'ASC' : 'DESC'));
     }
