@@ -123,12 +123,12 @@ $(function() {
 
     var loadWeatherData = function(timeParams) {
         if (!timeParams) return;
-        Server.call('Meteo2.getWeatherDataForPeriod', [timeParams.timeFrom, timeParams.period, 20, timeParams.asc], function(response){
-            $('#weather_data').html(null);
-            $.each(response,function(idx,data){
-                $('#weather_data').append(makeWeatherTableRow(data));
-            });
-        });
+        // Server.call('Meteo2.getWeatherDataForPeriod', [timeParams.timeFrom, timeParams.period, 20, timeParams.asc], function(response){
+        //     $('#weather_data').html(null);
+        //     $.each(response,function(idx,data){
+        //         $('#weather_data').append(makeWeatherTableRow(data));
+        //     });
+        // });
     };
 
     var baroHeight = function baroHeight(height,obs,temp) {
