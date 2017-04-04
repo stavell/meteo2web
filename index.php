@@ -290,7 +290,7 @@ try {
 <script src="assets/datepicker/js/bootstrap-datepicker.min.js"></script>
 
 <script type="text/javascript"
-        src="//maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+        src="//maps.googleapis.com/maps/api/js?key=AIzaSyA8TEv7TWyNr_eB8EXPEfA1PSeCnxsY0OY&sensor=false"></script>
 <script>(function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
