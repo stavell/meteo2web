@@ -159,36 +159,36 @@ try {
 </section>
 
 <section id="data" class="container content-section text-center">
-
-    <div class="row">
-
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <ul class="list-unstyled live-data">
-                    <li class="ws-time"></li>
-                    <li class="ws-windSpeed"><strong>...</strong></li>
-                    <li class="ws-windDir"><strong >...</strong></li>
-                    <li class="ws-temperature"><strong>...</strong></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="col-lg-8 col-lg-offset-2">
-            <table class="table" id="weather_data">
-            </table>
-        </div>
-
-        <table style="display: none">
-            <tr id="weather_row_template">
-                <th scope="row" class="wr-time">12:37</th>
-                <td class="wr-windDir"> NNW (123.4°)</td>
-                <td class="wr-windSpeed">--.- m/s</td>
-                <td class="wr-temperature">12.3 °C</td>
-                <td class="wr-pressure">1034 mb</td>
-            </tr>
-        </table>
-    </div>
+<!---->
+<!--    <div class="row">-->
+<!---->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-8 col-lg-offset-2">-->
+<!--                <ul class="list-unstyled live-data">-->
+<!--                    <li class="ws-time"></li>-->
+<!--                    <li class="ws-windSpeed"><strong>...</strong></li>-->
+<!--                    <li class="ws-windDir"><strong >...</strong></li>-->
+<!--                    <li class="ws-temperature"><strong>...</strong></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!---->
+<!--        <div class="col-lg-8 col-lg-offset-2">-->
+<!--            <table class="table" id="weather_data">-->
+<!--            </table>-->
+<!--        </div>-->
+<!---->
+<!--        <table style="display: none">-->
+<!--            <tr id="weather_row_template">-->
+<!--                <th scope="row" class="wr-time">12:37</th>-->
+<!--                <td class="wr-windDir"> NNW (123.4°)</td>-->
+<!--                <td class="wr-windSpeed">--.- m/s</td>-->
+<!--                <td class="wr-temperature">12.3 °C</td>-->
+<!--                <td class="wr-pressure">1034 mb</td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
 
 
     <div class="modal fade" id="settingsPanel" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
