@@ -268,26 +268,26 @@ try {
     </div>
 
 </section>
-
-
-<section id="info" class="container-fluid content-section text-center">
-
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <ul class="list-inline banner-social-buttons">
-                <li><a href="http://forums.shumen-xc.org" target="_blank" class="btn btn-default btn-lg"><i
-                            class="fa fa-link fa-fw"></i> <span class="network-name">forums.shumen-xc.org</span></a>
-                </li>
-                <li><a href="http://facebook.com/ShumenXC.Paragliding" target="_blank" class="btn btn-default btn-lg"><i
-                            class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>
-                </li>
-            </ul>
-
-        </div>
-        <div id="map" class="hidden-xs"></div>
-    </div>
-
-</section>
+<!---->
+<!---->
+<!--<section id="info" class="container-fluid content-section text-center">-->
+<!---->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-8 col-lg-offset-2">-->
+<!--            <ul class="list-inline banner-social-buttons">-->
+<!--                <li><a href="http://forums.shumen-xc.org" target="_blank" class="btn btn-default btn-lg"><i-->
+<!--                            class="fa fa-link fa-fw"></i> <span class="network-name">forums.shumen-xc.org</span></a>-->
+<!--                </li>-->
+<!--                <li><a href="http://facebook.com/ShumenXC.Paragliding" target="_blank" class="btn btn-default btn-lg"><i-->
+<!--                            class="fa fa-facebook fa-fw"></i> <span class="network-name">ShumenXC.Paragliding</span></a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!---->
+<!--        </div>-->
+<!--        <div id="map" class="hidden-xs"></div>-->
+<!--    </div>-->
+<!---->
+<!--</section>-->
 
 
 <!-- Core JavaScript Files -->
